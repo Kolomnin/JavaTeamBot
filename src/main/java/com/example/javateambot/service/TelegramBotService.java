@@ -1,7 +1,9 @@
 package com.example.javateambot.service;
 
 import com.example.javateambot.entity.User;
-import com.example.javateambot.repository.UserRepository;
+//import com.example.javateambot.repository.UserRepository;
+import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,24 +11,36 @@ import java.time.LocalDate;
 
 @Service
 public class TelegramBotService {
-    private final UserRepository userRepository;
+//    private final UserRepository userRepository;
 
-    public TelegramBotService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public TelegramBotService(TelegramBot telegramBot) {
+//        this.userRepository = userRepository;
+        this.telegramBot = telegramBot;
     }
 
 
     //КОНСУЛЬТАЦИЯ С НОВЫМ ПОЛЬЗОВАТЕЛЕМ
     private static final String NAME_OF_SCHELTER = "The Best Shelter";
 
+    private final TelegramBot telegramBot;
+    public String sendWelcomeMessage(Long chatId) {
+        return "Добрый день! Приветствуем Вас в приюте для животных \"" + NAME_OF_SCHELTER + "\".\n" +
+                "Выберите пожалуйста, что Вас интересует:\n" +
+                "1. Я впервые здесь и хочу узнать больше о приюте.\n" +
+                "2. Я уже обращался(-лась) к Вам и хочу получить информацию о животном, которое ранее было у меня.\n" +
+                "3. Я хочу отправить отчет о животном, которое я взял(-а) в этом приюте ранее.";
+//        telegramBot.execute(new SendMessage(chatId, message));
+    }
+
     //Бот приветствует пользователя.
-    public String welcomeFirst() {
-        return "Что Вам подсказать:\n" +
+    public void sendFirstTimeMessage(Long chatId) {
+        String message = "Что Вам подсказать:\n" +
                 "1. Рассказать о приюте\n" +
                 "2. Выдать расписание работы приюта и адрес, схему проезда\n" +
                 "3. Выдать общие рекомендации о технике безопасности на территории приюта\n" +
                 "4. Оставить контактные данные, чтобы мы связались с Вами\n" +
                 "5. Позвать оператора";
+        telegramBot.execute(new SendMessage(chatId, message));
     }
 
     //Бот может рассказать о приюте.
@@ -56,7 +70,7 @@ public class TelegramBotService {
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setNumberUser(numberUser);
-        userRepository.save(newUser);
+//        userRepository.save(newUser);
         return firstName + " " + lastName + ", Ваш номер телефона " + numberUser + " записан";
     }
 
@@ -68,8 +82,8 @@ public class TelegramBotService {
 
     //КОНСУЛЬТАЦИЯ С ПОТЕНЦИАЛЬНЫМ ХОЗЯИНОМ
     //Бот приветствует пользователя.
-    public String welcomeSecond() {
-        return "Что Вам подсказать:\n" +
+    public void sendRulesAndDocsMessage(Long chatId) {
+        String message = "Что Вам подсказать:\n" +
                 "1. Правила знакомства с собакой до того, как можно забрать ее из приюта\n" +
                 "2. Список документов, необходимый, чтобы забрать питомца\n" +
                 "3. Список рекомендаций по транспортировке животного\n" +
@@ -81,6 +95,7 @@ public class TelegramBotService {
                 "9. Список причин, почему могут отказать и не дать забрать собаку из приюта\n" +
                 "10. Изменить контактные данные\n" +
                 "11. Позвать оператора";
+        telegramBot.execute(new SendMessage(chatId, message));
     }
 
     //Бот может выдать правила знакомства с собакой до того, как можно забрать ее из приюта.
@@ -137,15 +152,15 @@ public class TelegramBotService {
     }
 
     //ВЕДЕНИЕ ПИТОМЦА
-    public String getReport(String text, MultipartFile foto) {
-        if (text != null && foto != null) {
+    public String getReport(String text, MultipartFile photo) {
+        if (text != null && photo != null) {
             //загрузить фото и текст в базу animals, а также установить сегодняшнюю дату отчетности
             return "Отчет принят";
         }
         if (text == null) {
             return "Загрузите текст!";
         }
-        if (foto == null) {
+        if (photo == null) {
             return "Загрузите фото!";
         }
         return "";
@@ -165,6 +180,9 @@ public class TelegramBotService {
 
     public void probationPeriodNotPassed(long idAnimal) {
 //уведомляем, что испыт.срок не пройден и, необходимо обратиться лично кадминистрации за дельнейшей инструкцией
+    }
+
+    public void sendMessage(Long chatId, String s) {
     }
 }
 
