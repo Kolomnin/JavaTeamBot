@@ -23,13 +23,13 @@ public class TelegramBotService {
     private static final String NAME_OF_SCHELTER = "The Best Shelter";
 
     private final TelegramBot telegramBot;
-    public String sendWelcomeMessage(Long chatId) {
-        return "Добрый день! Приветствуем Вас в приюте для животных \"" + NAME_OF_SCHELTER + "\".\n" +
+    public void sendWelcomeMessage(Long chatId) {
+        String message =  "Добрый день! Приветствуем Вас в приюте для животных \"" + NAME_OF_SCHELTER + "\".\n" +
                 "Выберите пожалуйста, что Вас интересует:\n" +
                 "1. Я впервые здесь и хочу узнать больше о приюте.\n" +
                 "2. Я уже обращался(-лась) к Вам и хочу получить информацию о животном, которое ранее было у меня.\n" +
                 "3. Я хочу отправить отчет о животном, которое я взял(-а) в этом приюте ранее.";
-//        telegramBot.execute(new SendMessage(chatId, message));
+        telegramBot.execute(new SendMessage(chatId, message));
     }
 
     //Бот приветствует пользователя.

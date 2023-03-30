@@ -5,6 +5,7 @@ import com.example.javateambot.service.TelegramBotService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
-public class TelegramBotListener {
+public class TelegramBotListener implements UpdatesListener {
     private static final String NAME_OF_SCHELTER = "The Best Shelter";
-    private static final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
-
-    private static final Pattern pattern = Pattern.compile("([\\d\\\\.:\\s]{16})(\\s)([А-яA-z\\s\\d,.!?:]+)");
-
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+//    private static final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
+//
+//    private static final Pattern pattern = Pattern.compile("([\\d\\\\.:\\s]{16})(\\s)([А-яA-z\\s\\d,.!?:]+)");
+//
+//    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     @Autowired
     private final TelegramBot telegramBot;
     private final TelegramBotService telegramBotService;
@@ -32,13 +33,15 @@ public class TelegramBotListener {
         this.telegramBotService = telegramBotService;
     }
 
+
+    @PostConstruct
     public void init() {
-        telegramBot.setUpdatesListener((UpdatesListener) this);
+        telegramBot.setUpdatesListener(this);
     }
 
     public int process(List<Update> updates) {
         updates.forEach(update -> {
-            logger.info("Processing update: {}", update);
+//            logger.info("Processing update: {}", update);
             try {
                 Long chatId = update.message().chat().id();
                 String text = update.message().text();
@@ -50,9 +53,7 @@ public class TelegramBotListener {
                     // 1. впервые в нашем приюте
                     case "1":
                         telegramBotService.sendFirstTimeMessage(chatId);
-                        if (text.equals("1")) {
-                            telegramBotService.descriptionOfShelter();
-                        }
+                        telegramBotService.descriptionOfShelter();
                         break;
                     // 2. ранее обращались к нам
                     case "2":
@@ -67,7 +68,7 @@ public class TelegramBotListener {
                 }
 
             } catch (TelegramApiException e) {
-                logger.error("При обновлении произошла ошибка: {}", e.getMessage());
+//                logger.error("При обновлении произошла ошибка: {}", e.getMessage());
             }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
