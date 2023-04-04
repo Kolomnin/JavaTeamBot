@@ -131,14 +131,22 @@ public class TelegramBotListener implements UpdatesListener {
                         case "список причин для отказа" ->
                                 telegramBot.execute(new SendMessage(chatId, " тут должен быть список причин, почему могут отказать и не дать забрать собаку из приюта."));
 
-                        case "3" -> telegramBot.execute(new SendMessage(chatId, "что-то делаем3"));
+                        case "3" -> telegramBotService.sendReport(chatId);
+                        case "Форма ежедневного отчёта" -> {
+                            telegramBot.execute(new SendMessage(chatId, "Форма ежедневного отчёта:\n1. Фото животного\n2. Рацион животного\n" +
+                                    "3. Общее самочувствие и привыкание к новому месту \n4. Изменение в поведении"));
+                            telegramBotService.sendReport(chatId);
+                        }
+                        case "принимаем отчет" ->
+                                telegramBot.execute(new SendMessage(chatId, "Вышлите фото животного"));
+
                         case "позвать волонтера" -> telegramBot.execute(new SendMessage(chatId, "Зовем волонтера"));
                         case "записать данные" -> {
                             telegramBot.execute(new SendMessage(chatId, "Введите номер телефона и вопрос в формате: 89001122333 Ваш вопрос."));
                             Matcher matcher = TELEPHONE_MESSAGE.matcher(data);
                             if (matcher.find()) {  //find запускает matcher
                                 try {
-                                    int telephone = Integer.parseInt(matcher.group(1)); // получаем телефон
+                                    Integer telephone = Integer.valueOf(matcher.group(1)); // получаем телефон
                                     String name = matcher.group(3); // получаем имя
                                     String messageText = matcher.group(5); // получаем текст сообщения
                                     userContactService.addUserContact(chatId,name,telephone/*messageText */); // создаем и пишем контакт в базу

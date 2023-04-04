@@ -54,6 +54,20 @@ public class TelegramBotService {
         message.replyMarkup(keyboard);
         telegramBot.execute(message);
     }
+    public void sendReport(Long chatId){  // кнопки этапа 3, кейсы между 2 и 3
+        SendMessage message = new SendMessage(chatId, "Приветствует в нашем приюте");
+
+        InlineKeyboardButton button1 = new InlineKeyboardButton("Форма ежедневного отчёта");
+        button1.callbackData("Форма ежедневного отчёта");
+        InlineKeyboardButton button2 = new InlineKeyboardButton("Прислать ежедневный отчёт");
+        button2.callbackData("принимаем отчет");
+        InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
+        keyboard.addRow(button1);
+        keyboard.addRow(button2);
+        keyboard.addRow(helpVolunteers());
+        message.replyMarkup(keyboard);
+        telegramBot.execute(message);
+    }
 
     public void firstMenu(Long chatId){ // меню начальное, кейсы 1/2/3
         SendMessage helloMessage = new SendMessage(chatId, "Привет,  тут должна быть информация о боте. Выберите интересующий пункт из меню: ");
