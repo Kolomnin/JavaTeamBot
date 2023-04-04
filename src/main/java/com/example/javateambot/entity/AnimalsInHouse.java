@@ -5,16 +5,16 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 /**
- * Класс является сущностью объекта Animals,
+ * Класс является сущностью объекта AnimalsInHouse,
  * Это сущность животного ,которое будет храниться в базе данных
  */
 @Entity
-@Table(name = "animals")
-public class Animal {
+@Table(name = "animalsInHouse")
+public class AnimalsInHouse {
 
     /**
-     * Id животного в хранится
-     * базе данных
+     * Id животного
+     * хранится в базе данных
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +26,7 @@ public class Animal {
     @Column(nullable = false)
     private String nameAnimal;
     /**
-     * Номер телефона владельца, (если владелец есть)
+     * Номер телефона владельца
      * хранится в базе данных
      */
     @Column(nullable = false)
