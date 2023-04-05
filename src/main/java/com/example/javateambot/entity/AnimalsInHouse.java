@@ -1,7 +1,6 @@
 package com.example.javateambot.entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.time.LocalDate;
 
 /**

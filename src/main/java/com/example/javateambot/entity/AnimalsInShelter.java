@@ -1,6 +1,7 @@
 package com.example.javateambot.entity;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 /**
  * Класс является сущностью объекта AnimalsShelter,

@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("animalsInShelter")
 public class AnimalsInShelterControllers {
+
+    @GetMapping("greeting")
+    public String greeting() {
+        return "hello";
+    }
+
+
     private final AnimalsInShelterService animalsInShelterService;
 
     public AnimalsInShelterControllers(AnimalsInShelterService animalsInShelterService) {

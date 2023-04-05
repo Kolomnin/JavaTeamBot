@@ -8,7 +8,7 @@ import com.pengrad.telegrambot.model.CallbackQuery;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
 import com.pengrad.telegrambot.request.SendMessage;
-import jakarta.annotation.PostConstruct;
+//import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,10 +85,10 @@ public class TelegramBotListener implements UpdatesListener {
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
-    @PostConstruct
-    public void init() {
-        telegramBot.setUpdatesListener(this);
-    }
+//    @PostConstruct
+//    public void init() {
+//        telegramBot.setUpdatesListener(this);
+//    }
     private static final Pattern TELEPHONE_MESSAGE = Pattern.compile(
             "(\\d{11})(\\s)([А-яA-z)]+)(\\s)([А-яA-z)\\s\\d]+)"); // парсим сообщение на группы по круглым скобкам
     @Override

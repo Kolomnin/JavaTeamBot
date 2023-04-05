@@ -1,6 +1,8 @@
 package com.example.javateambot.entity;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
+
 /**
  * Класс является сущностью объекта User,
  * Это сущность человека который взял из приюта питомца
