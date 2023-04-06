@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.annotation.PostConstruct;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -85,10 +86,10 @@ public class TelegramBotListener implements UpdatesListener {
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
-//    @PostConstruct
-//    public void init() {
-//        telegramBot.setUpdatesListener(this);
-//    }
+    @PostConstruct
+    public void init() {
+        telegramBot.setUpdatesListener(this);
+    }
     private static final Pattern TELEPHONE_MESSAGE = Pattern.compile(
             "(\\d{11})(\\s)([А-яA-z)]+)(\\s)([А-яA-z)\\s\\d]+)"); // парсим сообщение на группы по круглым скобкам
     @Override
