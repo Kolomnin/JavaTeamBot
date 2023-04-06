@@ -1,7 +1,6 @@
 package com.example.javateambot.service;
 
 import com.example.javateambot.entity.User;
-//import com.example.javateambot.repository.UserRepository;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Service;
@@ -278,5 +277,6 @@ public class TelegramService {
     }
 
 }
+
 
 
