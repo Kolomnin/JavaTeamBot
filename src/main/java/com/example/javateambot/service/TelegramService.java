@@ -1,6 +1,6 @@
 package com.example.javateambot.service;
 
-import com.example.javateambot.entity.User;
+import com.example.javateambot.entity.Users;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Service;
@@ -88,7 +88,7 @@ public class TelegramService {
      * @return записанные контактные данные для связи
      */
     public String recordingContactData(String firstName, String lastName, String numberUser) {
-        User newUser = new User();
+        Users newUser = new Users();
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setNumberUser(numberUser);

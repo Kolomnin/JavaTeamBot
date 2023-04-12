@@ -31,7 +31,7 @@ public class AnimalsInShelterControllers {
     @Operation(summary = "Добавление нового животного в приют",
 
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Животное которое добавляем в приют",
+                    description = "Животное, которое добавляем в приют",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
 //                    schema = @Schema (implementation = AnimalsInShelter.class)

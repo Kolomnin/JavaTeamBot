@@ -50,7 +50,7 @@ public class AnimalsInShelterService {
 
     /**
      * Метод, который ищет животное в базе приюта по ID
-     * @return всех животных из базы приюта
+     * @return найденное животное с искомым id
      */
     public AnimalsInShelter findAnimalInShelterById(long id) {
         return animalsInShelterRepository.findById(id);
@@ -58,7 +58,7 @@ public class AnimalsInShelterService {
 
     /**
      * Метод, который ищет животное в базе приюта по имени
-     * @return всех животных из базы приюта
+     * @return найденное животное с искомым именем
      */
     public AnimalsInShelter findAnimalInShelterByName(String name) {
         return animalsInShelterRepository.findByNameAnimal(name);

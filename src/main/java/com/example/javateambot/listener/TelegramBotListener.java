@@ -1,6 +1,6 @@
 package com.example.javateambot.listener;
 
-import com.example.javateambot.service.UserContactService;
+import com.example.javateambot.service.UsersContactService;
 import com.example.javateambot.service.TelegramBotService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -82,7 +82,7 @@ public class TelegramBotListener implements UpdatesListener {
     private TelegramBotService telegramBotService;
 
 
-    private UserContactService userContactService;
+    private UsersContactService userContactService;
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
