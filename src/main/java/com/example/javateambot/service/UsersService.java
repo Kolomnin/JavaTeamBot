@@ -2,9 +2,11 @@ package com.example.javateambot.service;
 
 import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.UsersRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
 public class UsersService {
     private final UsersRepository usersRepository;
 

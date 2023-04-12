@@ -1,23 +1,28 @@
 package com.example.javateambot.controllers;
 
-import com.example.javateambot.entity.AnimalsInShelter;
-
 import com.example.javateambot.entity.Users;
 import com.example.javateambot.service.UsersService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/users")
 public class UsersController {
+
+
+    @Autowired
     private final UsersService usersService;
 
     public UsersController(UsersService usersService) {
         this.usersService = usersService;
     }
+
 
     @Operation(summary = "Добавление нового владельца",
 
