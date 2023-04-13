@@ -1,6 +1,9 @@
 package com.example.javateambot.listener;
 
-import com.example.javateambot.service.UsersContactService;
+
+import com.example.javateambot.service.TelegramService;
+import com.example.javateambot.service.UserContactService;
+
 import com.example.javateambot.service.TelegramBotService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -15,65 +18,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import javax.annotation.PostConstruct;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//@Service
-//public class TelegramBotListener implements UpdatesListener {
-//    private static final String NAME_OF_SHELTER = "The Best Shelter";
-//    private static final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
-//
-//    private static final Pattern pattern = Pattern.compile("([\\d\\\\.:\\s]{16})(\\s)([А-яA-z\\s\\d,.!?:]+)");
-//
-//    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-//
-//    private final TelegramBot telegramBot;
-//    private final TelegramBotService telegramBotService;
-//
-//    public TelegramBotListener(TelegramBot telegramBot, TelegramBotService telegramBotService) {
-//        this.telegramBot = telegramBot;
-//        this.telegramBotService = telegramBotService;
-//    }
-//
-//    @PostConstruct
-//    public void init() {
-//        telegramBot.setUpdatesListener(this);
-//    }
-//
-//    public int process(List<Update> updates) {
-//        updates.forEach(update -> {
-//            logger.info("Processing update: {}", update);
-//            try {
-//                Long chatId = update.message().chat().id();
-//                String text = update.message().text();
-//
-//                if ("/start".equalsIgnoreCase(text)) {
-//                    telegramBotService.sendWelcomeMessage(chatId);
-//                } else if ("1".equalsIgnoreCase(text)) {
-//                    telegramBotService.sendFirstTimeMessage(chatId);
-//                    switch (text) {
-//                        case "1" :
-//                            telegramBotService.descriptionOfShelter(chatId);
-//                            break;
-//                        case "2" :
-//
-//                    }
-//
-//                }
-//            } catch (TelegramApiException e) {
-//                logger.error("При обновлении произошла ошибка", e);
-//            }
-//        });
-//        return UpdatesListener.CONFIRMED_UPDATES_ALL;
-//    }
-//}
 
 @Service
 public class TelegramBotListener implements UpdatesListener {
+
 
     @Autowired
     private TelegramBot telegramBot;
@@ -84,14 +38,42 @@ public class TelegramBotListener implements UpdatesListener {
 
     private UsersContactService userContactService;
 
+
+    public static final String INFO_ABOUT_SHELTER = "Информация о приюте";
+    public static final String WORK_SCHEDULE = "Расписание работы";
+    public static final String SAFETY_RECOMMENDATIONS = "Рекомендации по ТБ";
+    public static final String RULES_FOR_DATING = "Правила знакомства";
+    public static final String LIST_OF_DOCUMENTS = "Список документов";
+    public static final String RECOMMENDATIONS_FOR_TRANSPORTATION = "транспортировка животного";
+    public static final String HOME_IMPROVEMENT_FOR_PUPPY = "дома для щенка";
+    public static final String HOME_IMPROVEMENT_FOR_ADULT_DOG = "дома для собаки";
+    public static final String HOME_IMPROVEMENT_FOR_DOG_WITH_DISABILITIES = "дома для собаки с ограничениями";
+    public static final String TIPS_FROM_DOG_HANDLER = "советы кинолога";
+    public static final String INFO_ABOUT_DOG_HANDLER = "список кинологов";
+    public static final String REASONS_FOR_REFUSAL = "список причин для отказа";
+
+    private final TelegramBot telegramBot;
+    private final TelegramBotService telegramBotService;
+    private final TelegramService telegramService;
+    private UserContactService userContactService;
+
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
+    @Autowired
+    public TelegramBotListener(TelegramBot telegramBot, TelegramBotService telegramBotService,
+                               TelegramService telegramService) {
+        this.telegramBot = telegramBot;
+        this.telegramBotService = telegramBotService;
+        this.telegramService = telegramService;
+    }
 
     @PostConstruct
     public void init() {
         telegramBot.setUpdatesListener(this);
     }
+
     private static final Pattern TELEPHONE_MESSAGE = Pattern.compile(
             "(\\d{11})(\\s)([А-яA-z)]+)(\\s)([А-яA-z)\\s\\d]+)"); // парсим сообщение на группы по круглым скобкам
+
     @Override
     public int process(List<Update> updates) {
         try {
@@ -102,40 +84,45 @@ public class TelegramBotListener implements UpdatesListener {
                     Long chatId = update.callbackQuery().message().chat().id();
                     CallbackQuery callbackQuery = update.callbackQuery();
                     String data = callbackQuery.data();
+
+
                     switch (data) {
 
                         case "1" -> telegramBotService.shelterInfo(chatId);
-                        case "инфа о приюте" ->
-                                telegramBot.execute(new SendMessage(chatId, "тут должна быть информация о приюте."));
-                        case "расписание работы" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должно быть расписание работы приюта и адрес, схему проезда."));
-                        case "рекомендации о ТБ" ->
-                                telegramBot.execute(new SendMessage(chatId, "тут должны быть общие рекомендации о технике безопасности на территории приюта."));
+                        case INFO_ABOUT_SHELTER ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.descriptionOfShelter()));
+                        case WORK_SCHEDULE ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.infoAboutShelter()));
+                        case SAFETY_RECOMMENDATIONS ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.safetyRecommendations()));
 
                         case "2" -> telegramBotService.takeDogFromShelter(chatId);
-                        case "Правила знакомства" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должны быть правила знакомства с собакой до того, как можно забрать ее из приюта."));
-                        case "Список документов" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должен быть список документов, необходимых для того, чтобы взять собаку из приюта."));
-                        case "транспортировка животного" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должно быть список рекомендаций по транспортировке животного."));
-                        case "дома для щенка" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должно быть список рекомендаций по обустройству дома для щенка."));
-                        case "дома для собаки" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должно быть список рекомендаций по обустройству дома для взрослой собаки."));
-                        case "дома для собаки с ограничениями" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должен быть список рекомендаций по обустройству дома для собаки с ограниченными возможностями (зрение, передвижение)."));
-                        case "советы кинолога" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должны быть советы кинолога по первичному общению с собакой"));
-                        case "список кинологов" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должны быть рекомендации по проверенным кинологам для дальнейшего обращения к ним."));
-                        case "список причин для отказа" ->
-                                telegramBot.execute(new SendMessage(chatId, " тут должен быть список причин, почему могут отказать и не дать забрать собаку из приюта."));
+                        case RULES_FOR_DATING ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.rulesForDating()));
+                        case LIST_OF_DOCUMENTS ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.listOfDocuments()));
+                        case RECOMMENDATIONS_FOR_TRANSPORTATION ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.recommendationsForTransportation()));
+                        case HOME_IMPROVEMENT_FOR_PUPPY ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.homeImprovementForPuppy()));
+                        case HOME_IMPROVEMENT_FOR_ADULT_DOG ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.homeImprovementForAdultDog()));
+                        case HOME_IMPROVEMENT_FOR_DOG_WITH_DISABILITIES ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.homeImprovementForDogWithDisabilities()));
+                        case TIPS_FROM_DOG_HANDLER ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.TipsFromDogHandler()));
+                        case INFO_ABOUT_DOG_HANDLER ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.InfoAboutDogHandler()));
+                        case REASONS_FOR_REFUSAL ->
+                                telegramBot.execute(new SendMessage(chatId, telegramService.ReasonsForRefusal()));
 
                         case "3" -> telegramBotService.sendReport(chatId);
                         case "Форма ежедневного отчёта" -> {
-                            telegramBot.execute(new SendMessage(chatId, "Форма ежедневного отчёта:\n1. Фото животного\n2. Рацион животного\n" +
-                                    "3. Общее самочувствие и привыкание к новому месту \n4. Изменение в поведении"));
+                            telegramBot.execute(new SendMessage(chatId, "Форма ежедневного отчёта:" +
+                                    "\n1. Фото животного" +
+                                    "\n2. Рацион животного" +
+                                    "\n3. Общее самочувствие и привыкание к новому месту " +
+                                    "\n4. Изменение в поведении"));
                             telegramBotService.sendReport(chatId);
                         }
                         case "принимаем отчет" ->
@@ -150,7 +137,7 @@ public class TelegramBotListener implements UpdatesListener {
                                     Integer telephone = Integer.valueOf(matcher.group(1)); // получаем телефон
                                     String name = matcher.group(3); // получаем имя
                                     String messageText = matcher.group(5); // получаем текст сообщения
-                                    userContactService.addUserContact(chatId,name,telephone/*messageText */); // создаем и пишем контакт в базу
+                                    userContactService.addUserContact(chatId, name, telephone/*messageText */); // создаем и пишем контакт в базу
                                     SendMessage message = new SendMessage(chatId, "Данные записаны, В ближайшее время мы с Вами свяжемся");
                                     telegramBot.execute(message);
                                 } catch (DateTimeParseException e) {
@@ -178,6 +165,7 @@ public class TelegramBotListener implements UpdatesListener {
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
+
 }
 
 

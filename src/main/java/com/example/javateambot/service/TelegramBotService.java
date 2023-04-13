@@ -91,12 +91,12 @@ public class TelegramBotService {
 
         SendMessage message = new SendMessage(chatId, "Приветствует в нашем приюте");
 
-        InlineKeyboardButton button1 = new InlineKeyboardButton("инфа о приюте");
-        button1.callbackData("инфа о приюте");
-        InlineKeyboardButton button2 = new InlineKeyboardButton("расписание работы");
-        button2.callbackData("расписание работы");
-        InlineKeyboardButton button3 = new InlineKeyboardButton("рекомендации о ТБ");
-        button3.callbackData("рекомендации о ТБ");
+        InlineKeyboardButton button1 = new InlineKeyboardButton("Информация о приюте");
+        button1.callbackData("Информация о приюте");
+        InlineKeyboardButton button2 = new InlineKeyboardButton("Расписание работы");
+        button2.callbackData("Расписание работы");
+        InlineKeyboardButton button3 = new InlineKeyboardButton("Рекомендации по ТБ");
+        button3.callbackData("Рекомендации по ТБ");
         InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
         keyboard.addRow(button1);
         keyboard.addRow(button2);
