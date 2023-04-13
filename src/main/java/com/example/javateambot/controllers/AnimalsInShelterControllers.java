@@ -22,6 +22,23 @@ public class AnimalsInShelterControllers {
         this.animalsInShelterService = animalsInShelterService;
     }
 
+
+    @Operation(summary = "Добавление нового животного в приют",
+
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Животное, которое добавляем в приют",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON_VALUE)
+//                    schema = @Schema (implementation = AnimalsInShelter.class)
+            ),
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Животное успешно добавлено")
+            }
+
+    )
+
+
     @PostMapping
     public AnimalsInShelter addAnimalsInShelter(@RequestBody AnimalsInShelter animal) {
         return animalsInShelterService.addAnimalInShelter(animal);

@@ -15,16 +15,20 @@ public class AnimalsInHouse {
      * Id животного
      * хранится в базе данных
      */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long adoption;
+
+    @Column(nullable = false)
     private long idAnimal;
 
     /**
-     * Номер телефона владельца
+     * Id владельца
      * хранится в базе данных
      */
     @Column(nullable = false)
-    private String numberForOwner;
+    private long idUser;
 
     /**
      * Дата конца испытательного срока у хозяина,
@@ -77,17 +81,17 @@ public class AnimalsInHouse {
     }
 
     /**
-     * Метод позволяет получить номер телефона владельца
+     * Метод позволяет получить ID владельца
      */
-    public String getNumberForOwner() {
-        return numberForOwner;
+    public long getIdUser() {
+        return idUser;
     }
 
     /**
-     * Метод позволяет установить номер телефона владельца
+     * Метод позволяет установить ID владельца
      */
-    public void setNumberForOwner(String numberForOwner) {
-        this.numberForOwner = numberForOwner;
+    public void setIdUser(long idUser) {
+        this.idUser = idUser;
     }
 
     /**

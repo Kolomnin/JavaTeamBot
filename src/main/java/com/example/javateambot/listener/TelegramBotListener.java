@@ -1,7 +1,9 @@
 package com.example.javateambot.listener;
 
+
 import com.example.javateambot.service.TelegramService;
 import com.example.javateambot.service.UserContactService;
+
 import com.example.javateambot.service.TelegramBotService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
@@ -26,6 +28,17 @@ import java.util.regex.Pattern;
 @Service
 public class TelegramBotListener implements UpdatesListener {
 
+
+    @Autowired
+    private TelegramBot telegramBot;
+
+    @Autowired
+    private TelegramBotService telegramBotService;
+
+
+    private UsersContactService userContactService;
+
+
     public static final String INFO_ABOUT_SHELTER = "Информация о приюте";
     public static final String WORK_SCHEDULE = "Расписание работы";
     public static final String SAFETY_RECOMMENDATIONS = "Рекомендации по ТБ";
@@ -43,6 +56,7 @@ public class TelegramBotListener implements UpdatesListener {
     private final TelegramBotService telegramBotService;
     private final TelegramService telegramService;
     private UserContactService userContactService;
+
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
     @Autowired
     public TelegramBotListener(TelegramBot telegramBot, TelegramBotService telegramBotService,
