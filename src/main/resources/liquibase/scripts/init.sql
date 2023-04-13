@@ -20,14 +20,19 @@ CREATE TABLE users
 
 --changeset mmayakina:3
 CREATE TABLE animalsInHouse
-(
-    idAnimal                INT PRIMARY KEY,
+(   adoption               INT PRIMARY KEY,
+    idAnimal                INT NOT NULL,
     idUser                  INT NOT NULL,
     lastDateProbationPeriod DATE NOT NULL,
     lastFoto                TEXT,
     lastTextReport          TEXT,
     lastReportDate          DATE
 );
+
+-- --changeset sergeyPanin:3
+-- ALTER TABLE animalsInHouse
+--     ADD COLUMN adoption LONG INT PRIMARY KEY;
+
 
 
 

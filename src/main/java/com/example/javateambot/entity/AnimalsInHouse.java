@@ -15,7 +15,11 @@ public class AnimalsInHouse {
      * Id животного
      * хранится в базе данных
      */
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long adoption;
+
     @Column(nullable = false)
     private long idAnimal;
 
