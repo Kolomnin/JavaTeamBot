@@ -2,6 +2,10 @@ package com.example.javateambot.controllers;
 
 import com.example.javateambot.entity.AnimalsInShelter;
 import com.example.javateambot.service.AnimalsInShelterService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

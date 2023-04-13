@@ -2,9 +2,10 @@ package com.example.javateambot.listener;
 
 
 import com.example.javateambot.service.TelegramService;
-import com.example.javateambot.service.UserContactService;
+
 
 import com.example.javateambot.service.TelegramBotService;
+import com.example.javateambot.service.UsersContactService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.CallbackQuery;
@@ -52,10 +53,9 @@ public class TelegramBotListener implements UpdatesListener {
     public static final String INFO_ABOUT_DOG_HANDLER = "список кинологов";
     public static final String REASONS_FOR_REFUSAL = "список причин для отказа";
 
-    private final TelegramBot telegramBot;
-    private final TelegramBotService telegramBotService;
+
     private final TelegramService telegramService;
-    private UserContactService userContactService;
+
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
     @Autowired
