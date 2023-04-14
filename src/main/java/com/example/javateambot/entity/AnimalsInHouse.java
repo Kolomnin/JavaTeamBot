@@ -45,26 +45,13 @@ public class AnimalsInHouse {
     @Column(nullable = false)
     private LocalDate lastReportDate;
 
-    /**
-     * Путь к файлу,изображению
-     */
-    private String filePath;
-
-    /**
-     * Размер файла
-     */
-    private long fileSize;
-
-    /**
-     * Тип файла
-     */
-    private String mediaType;
 
     /**
      * Текст отчета о состоянии питомца, который отправляется ежедневно
      */
     @Column(nullable = false)
     private String lastText;
+
 
     /**
      * Метод позволяет получить Id животного
@@ -122,47 +109,6 @@ public class AnimalsInHouse {
         this.lastReportDate = lastReportDate;
     }
 
-    /**
-     * Метод позволяет получить путь до файла
-     */
-    public String getFilePath() {
-        return filePath;
-    }
-
-    /**
-     * Метод позволяет установить путь до файла
-     */
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    /**
-     * Метод позволяет получить размер  файла
-     */
-    public long getFileSize() {
-        return fileSize;
-    }
-
-    /**
-     * Метод позволяет установить размер  файла
-     */
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
-    }
-
-    /**
-     * Метод позволяет получить тип  файла
-     */
-    public String getMediaType() {
-        return mediaType;
-    }
-
-    /**
-     * Метод позволяет установить тип  файла
-     */
-    public void setMediaType(String mediaType) {
-        this.mediaType = mediaType;
-    }
 
     /**
      * Метод позволяет получить текст отчета

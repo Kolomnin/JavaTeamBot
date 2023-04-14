@@ -1,6 +1,7 @@
 package com.example.javateambot.listener;
 
 
+import com.example.javateambot.service.PhotoService;
 import com.example.javateambot.service.TelegramService;
 
 
@@ -36,9 +37,9 @@ public class TelegramBotListener implements UpdatesListener {
     @Autowired
     private TelegramBotService telegramBotService;
 
-
     private UsersContactService userContactService;
 
+    private PhotoService photoService;
 
     public static final String INFO_ABOUT_SHELTER = "Информация о приюте";
     public static final String WORK_SCHEDULE = "Расписание работы";
@@ -58,12 +59,14 @@ public class TelegramBotListener implements UpdatesListener {
 
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
+
     @Autowired
     public TelegramBotListener(TelegramBot telegramBot, TelegramBotService telegramBotService,
-                               TelegramService telegramService) {
+                               TelegramService telegramService, PhotoService photoService) {
         this.telegramBot = telegramBot;
         this.telegramBotService = telegramBotService;
         this.telegramService = telegramService;
+        this.photoService = photoService;
     }
 
     @PostConstruct
@@ -155,8 +158,12 @@ public class TelegramBotListener implements UpdatesListener {
                 User user = update.message().from();
                 Long chatId = user.id();
 
-                if (update.message().text().equals("/start")) {  // этап 0
+                if ("/start".equals(update.message().text())) {  // этап 0
                     telegramBotService.firstMenu(chatId);
+                }
+
+                if (update.message().photo() != null) {
+                    photoService.uploadPhoto(update.message());
                 }
 
             });
