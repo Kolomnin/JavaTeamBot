@@ -4,8 +4,12 @@ import com.example.javateambot.entity.AppPhoto;
 import com.example.javateambot.repository.PhotoRepository;
 import com.example.javateambot.telegramExeption.UploadFileException;
 import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.model.File;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.PhotoSize;
+import com.pengrad.telegrambot.request.GetFile;
+import com.pengrad.telegrambot.response.GetChatResponse;
+import com.pengrad.telegrambot.response.GetFileResponse;
 import okhttp3.internal.http2.Http2Stream;
 import org.apache.catalina.connector.InputBuffer;
 import org.json.JSONObject;
@@ -22,12 +26,6 @@ import java.net.URL;
 
 @Service
 public class PhotoService {
-    @Value("${telegram.bot.token}")
-    private String token;
-    @Value("${service.file_info.uri}")
-    private String fileInfoUri;
-    @Value("${service.file_storage.uri}")
-    private String fileStorageUri;
 
     private TelegramBot telegramBot;
     private PhotoRepository photoRepository;
@@ -40,26 +38,21 @@ public class PhotoService {
 
     public void uploadPhoto(Message message) {
         PhotoSize telegramPhoto = message.photo()[0];
-        ResponseEntity<String> response = getFilePath(telegramPhoto.fileId());
-        if (response.getStatusCode() == HttpStatus.OK) {
-            JSONObject jsonObject = new JSONObject(response.getBody());
-            String filePath = String.valueOf(jsonObject
-                    .getJSONObject("result")
-                    .getString("file_path"));
-            byte[] fileInByte = downloadFile(filePath);
-            AppPhoto appPhoto = new AppPhoto();
-            appPhoto.setFileSize(telegramPhoto.fileSize());
-            appPhoto.setFileAsArrayOfBytes(fileInByte);
-            photoRepository.save(appPhoto);
-        }
+        GetFile request = new GetFile(telegramPhoto.fileId());
+        GetFileResponse getFileResponse = telegramBot.execute(request);
+        File file = getFileResponse.file();
+        byte[] fileInByte = downloadFile(telegramBot.getFullFilePath(file));
+        AppPhoto appPhoto = new AppPhoto();
+        appPhoto.setFileSize(telegramPhoto.fileSize());
+        appPhoto.setFileAsArrayOfBytes(fileInByte);
+        photoRepository.save(appPhoto);
     }
 
     private byte[] downloadFile(String filePath) {
-        String fullUri = fileStorageUri.replace("{token}", token)
-                .replace("{filePath}", filePath);
+        System.out.println(filePath);
         URL urlObj = null;
         try {
-            urlObj = new URL(fullUri);
+            urlObj = new URL(filePath);
         } catch (MalformedURLException e) {
             throw new UploadFileException(e);
         }
@@ -70,20 +63,5 @@ public class PhotoService {
             throw new UploadFileException(urlObj.toExternalForm(), e);
         }
     }
-
-    private ResponseEntity<String> getFilePath(String fileId) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> request = new HttpEntity<>(headers);
-
-        return restTemplate.exchange(
-                fileInfoUri,
-                HttpMethod.GET,
-                request,
-                String.class,
-                token, fileId
-        );
-    }
-
 
 }
