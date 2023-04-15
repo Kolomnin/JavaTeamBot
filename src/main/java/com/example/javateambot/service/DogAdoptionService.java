@@ -24,25 +24,12 @@ public class DogAdoptionService {
     @Autowired
     AnimalsInShelterRepository animalsInShelterRepository;
 
+    @Autowired
     UsersRepository usersRepository;
 
-
+    @Autowired
     AnimalsInHouseRepository animalsInHouseRepository;
 
-//    public AnimalsInHouse adoptionDog(Long userID,Long animalId) {
-//
-//
-//            animalsInHouse.setIdUser(userID);
-//            animalsInHouse.setIdAnimal(animalId);
-//
-//
-//        return    animalsInHouseRepository.save(animalsInHouse);
-//
-//
-//
-//
-//
-//    }
 
 // работает с этим кодом но в нем не красиво доавляется в свагере
 
@@ -57,6 +44,19 @@ public class DogAdoptionService {
 
         return animalsInHouseRepository.save(animalsInHouse);
     }
+
+    public void saveReport(String report, String numberUser) {
+
+        Long idUser = usersRepository.findByNumberUser(numberUser).getIdUser();
+        animalsInHouseRepository.findByIdUser(idUser).setLastText(report);
+
+    }
+
+//    public Boolean checkNumberOwner(String number) {
+//        if (usersRepository.findByNumberUser2(number)) {
+//            return true ;
+//        } else return false;
+//    }
 
 
 

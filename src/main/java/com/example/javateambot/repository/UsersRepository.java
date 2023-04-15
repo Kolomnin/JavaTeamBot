@@ -10,5 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsersRepository extends JpaRepository<Users,Long> {
     Users findById(long id);
+
+    Users findByNumberUser(String numberUser);
+
+//    Boolean findByNumberUseraOrderBy (String number);
 }
 

@@ -8,7 +8,7 @@ import java.time.LocalDate;
  * Это сущность животного ,которое будет храниться в базе данных
  */
 @Entity
-@Table(name = "animalsInHouse")
+@Table(name = "animals_in_house")
 public class AnimalsInHouse {
 
     /**

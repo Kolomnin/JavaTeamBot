@@ -1,12 +1,9 @@
 package com.example.javateambot.listener;
 
 
-import com.example.javateambot.service.PhotoService;
-import com.example.javateambot.service.TelegramService;
+import com.example.javateambot.service.*;
 
 
-import com.example.javateambot.service.TelegramBotService;
-import com.example.javateambot.service.UsersContactService;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.CallbackQuery;
@@ -40,6 +37,9 @@ public class TelegramBotListener implements UpdatesListener {
     private UsersContactService userContactService;
 
     private PhotoService photoService;
+
+    @Autowired
+    private DogAdoptionService dogAdoptionService;
 
     public static final String INFO_ABOUT_SHELTER = "Информация о приюте";
     public static final String WORK_SCHEDULE = "Расписание работы";
@@ -128,10 +128,14 @@ public class TelegramBotListener implements UpdatesListener {
                                     "\n4. Изменение в поведении"));
                             telegramBotService.sendReport(chatId);
                         }
+                        case "аудентификация" ->
+                                telegramBot.execute(new SendMessage(chatId, "Введите номер телефона для подтверждения личности"));
+
                         case "принимаем отчет" ->
                                 telegramBot.execute(new SendMessage(chatId, "Вышлите фото животного"));
 
                         case "позвать волонтера" -> telegramBot.execute(new SendMessage(chatId, "Зовем волонтера"));
+
                         case "записать данные" -> {
                             telegramBot.execute(new SendMessage(chatId, "Введите номер телефона и вопрос в формате: 89001122333 Ваш вопрос."));
                             Matcher matcher = TELEPHONE_MESSAGE.matcher(data);
@@ -158,12 +162,42 @@ public class TelegramBotListener implements UpdatesListener {
                 User user = update.message().from();
                 Long chatId = user.id();
 
+//                    * Обработка сообщения от пользователя и вызов основного меню
+//                 */
                 if ("/start".equals(update.message().text())) {  // этап 0
                     telegramBotService.firstMenu(chatId);
+
+
                 }
+//                /
+//
+                /**
+                 * Проверяем сообщение пользователя на соответствие и сохраняем в БД,
+                 * или выдаем информацию о несоответствии шаблону для сохранения.
+                 */
+                else if (update.message().text() != null) {
+
+                    Matcher matcher = TELEPHONE_MESSAGE.matcher(update.message().text());
+                    if (matcher.find()) {  //find запускает matche
+                        telegramBot.execute(new SendMessage(chatId, "успешно"));
+
+//                        adoptiveParentService.saveInfoDataBase(matcher, chatId);
+                    }
+                } else if (checkUrl(update.message().text())) {
+                    telegramBot.execute(new SendMessage(chatId, "Вы найдены, теперь отправьте фото"));
+
+                }
+
 
                 if (update.message().photo() != null) {
                     photoService.uploadPhoto(update.message());
+                    telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе и состоянии питомца"));
+
+//                        dogAdoptionService.saveReport(update.message().text().to);
+                        telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
+
+
+
                 }
 
             });
@@ -171,6 +205,11 @@ public class TelegramBotListener implements UpdatesListener {
             e.printStackTrace();
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
+    }
+
+    public static boolean checkUrl(String s) {
+        String regex = "^\\+?[0-9\\-\\s]*$";
+        return s != null && s.matches(regex);
     }
 
 }

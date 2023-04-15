@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Это сущность животного ,которое будет храниться в базе данных
  */
 @Entity
-@Table(name = "animalsInShelter")
+@Table(name = "animals_in_shelter")
 public class AnimalsInShelter {
 
     /**
