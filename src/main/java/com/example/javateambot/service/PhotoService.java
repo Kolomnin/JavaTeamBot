@@ -42,7 +42,6 @@ public class PhotoService {
         appPhoto.setFileId(telegramPhoto.fileId());
         photoRepository.save(appPhoto);
     }
-
     // private byte[] downloadFile(String filePath) {
         //     System.out.println(filePath);
         //     URL urlObj = null;
