@@ -10,41 +10,14 @@ public class AppPhoto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fileId;
 
-    /**
-     * Размер файла
-     */
-    private Long fileSize;
-
-
-    public void setFileSize(Long fileSize) {
-        this.fileSize = fileSize;
+    public String getFileId() {
+        return fileId;
     }
 
-
-
-    private byte[] fileAsArrayOfBytes;
-
-    public byte[] getFileAsArrayOfBytes() {
-        return fileAsArrayOfBytes;
-    }
-
-    public void setFileAsArrayOfBytes(byte[] fileAsArrayOfBytes) {
-        this.fileAsArrayOfBytes = fileAsArrayOfBytes;
-    }
-
-    /**
-     * Метод позволяет получить размер  файла
-     */
-    public long getFileSize() {
-        return fileSize;
-    }
-
-    /**
-     * Метод позволяет установить размер  файла
-     */
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
     }
 
 }

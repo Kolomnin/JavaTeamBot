@@ -38,30 +38,25 @@ public class PhotoService {
 
     public void uploadPhoto(Message message) {
         PhotoSize telegramPhoto = message.photo()[0];
-        GetFile request = new GetFile(telegramPhoto.fileId());
-        GetFileResponse getFileResponse = telegramBot.execute(request);
-        File file = getFileResponse.file();
-        byte[] fileInByte = downloadFile(telegramBot.getFullFilePath(file));
         AppPhoto appPhoto = new AppPhoto();
-        appPhoto.setFileSize(telegramPhoto.fileSize());
-        appPhoto.setFileAsArrayOfBytes(fileInByte);
+        appPhoto.setFileId(telegramPhoto.fileId());
         photoRepository.save(appPhoto);
     }
 
-    private byte[] downloadFile(String filePath) {
-        System.out.println(filePath);
-        URL urlObj = null;
-        try {
-            urlObj = new URL(filePath);
-        } catch (MalformedURLException e) {
-            throw new UploadFileException(e);
-        }
-
-        try (InputStream is = urlObj.openStream()) {
-            return is.readAllBytes();
-        } catch (IOException e) {
-            throw new UploadFileException(urlObj.toExternalForm(), e);
-        }
-    }
+    // private byte[] downloadFile(String filePath) {
+        //     System.out.println(filePath);
+        //     URL urlObj = null;
+        //     try {
+            //         urlObj = new URL(filePath);
+            //     } catch (MalformedURLException e) {
+            //         throw new UploadFileException(e);
+            //     }
+        //
+        //     try (InputStream is = urlObj.openStream()) {
+            //         return is.readAllBytes();
+            //     } catch (IOException e) {
+            //         throw new UploadFileException(urlObj.toExternalForm(), e);
+            //     }
+        // }
 
 }
