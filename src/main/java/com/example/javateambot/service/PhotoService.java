@@ -20,10 +20,15 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
+/**
+ * сервис работы с фотографиями отчета
+ *
+ * @author Северин
+ */
 @Service
 public class PhotoService {
 
@@ -36,26 +41,45 @@ public class PhotoService {
         this.photoRepository = photoRepository;
     }
 
+    /**
+     * Сохранение фотографии в базе данных
+     * Используетcя методы репозитория{@link photoRepository.save(appPhoto);}
+     *
+     * @param message
+     */
     public void uploadPhoto(Message message) {
-        PhotoSize telegramPhoto = message.photo()[0];
+        PhotoSize telegramPhoto = message.photo()[1]; //от элемента массива зависит размер фотографии
+
+        GetFile request = new GetFile(telegramPhoto.fileId());
+        GetFileResponse getFileResponse = telegramBot.execute(request);
+        File file = getFileResponse.file();
+        String fullPath = telegramBot.getFullFilePath(file);
+
         AppPhoto appPhoto = new AppPhoto();
         appPhoto.setFileId(telegramPhoto.fileId());
+        appPhoto.setData(downloadFile(fullPath));
         photoRepository.save(appPhoto);
     }
-    // private byte[] downloadFile(String filePath) {
-        //     System.out.println(filePath);
-        //     URL urlObj = null;
-        //     try {
-            //         urlObj = new URL(filePath);
-            //     } catch (MalformedURLException e) {
-            //         throw new UploadFileException(e);
-            //     }
-        //
-        //     try (InputStream is = urlObj.openStream()) {
-            //         return is.readAllBytes();
-            //     } catch (IOException e) {
-            //         throw new UploadFileException(urlObj.toExternalForm(), e);
-            //     }
-        // }
+
+    /**
+     * метод загружет файл в байтовом представлении
+     *
+     * @param filePath
+     * @return
+     */
+    private byte[] downloadFile(String filePath) {
+        URL urlObj = null;
+        try {
+            urlObj = new URL(filePath);
+        } catch (MalformedURLException e) {
+            throw new UploadFileException(e);
+        }
+
+        try (InputStream is = urlObj.openStream()) {
+            return is.readAllBytes();
+        } catch (IOException e) {
+            throw new UploadFileException(urlObj.toExternalForm(), e);
+        }
+    }
 
 }

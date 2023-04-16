@@ -20,6 +20,10 @@ public class AnimalsInHouse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long adoption;
 
+    /**
+     * Id животного
+     * хранится в базе данных
+     */
     @Column(nullable = false)
     private long idAnimal;
 
@@ -51,7 +55,6 @@ public class AnimalsInHouse {
      */
     @Column(nullable = false)
     private String lastText;
-
 
     /**
      * Метод позволяет получить Id животного
