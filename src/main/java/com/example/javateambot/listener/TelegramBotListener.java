@@ -1,6 +1,8 @@
 package com.example.javateambot.listener;
 
 
+import com.example.javateambot.repository.AnimalsInHouseRepository;
+import com.example.javateambot.repository.UsersRepository;
 import com.example.javateambot.service.*;
 
 
@@ -11,6 +13,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
 import com.pengrad.telegrambot.request.SendMessage;
 //import jakarta.annotation.PostConstruct;
+import liquibase.pro.packaged.E;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -30,9 +34,14 @@ public class TelegramBotListener implements UpdatesListener {
 
     @Autowired
     private TelegramBot telegramBot;
+    @Autowired
+    UsersRepository usersRepository;
 
     @Autowired
     private TelegramBotService telegramBotService;
+    @Autowired
+    AnimalsInHouseRepository animalsInHouseRepository;
+
 
     private UsersContactService userContactService;
 
@@ -87,6 +96,13 @@ public class TelegramBotListener implements UpdatesListener {
                     Long chatId = update.callbackQuery().message().chat().id();
                     CallbackQuery callbackQuery = update.callbackQuery();
                     String data = callbackQuery.data();
+                    try{
+                        System.out.println(update.message().text());
+
+                    } catch (Exception e ){
+                        System.out.println("Ошибка");
+                    }
+
 
 
                     switch (data) {
@@ -190,11 +206,18 @@ public class TelegramBotListener implements UpdatesListener {
 
 
                 if (update.message().photo() != null) {
+                    String report = update.message().caption();
                     photoService.uploadPhoto(update.message());
-                    telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе и состоянии питомца"));
+//                    telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе и состоянии питомца"));
 
-//                        dogAdoptionService.saveReport(update.message().text().to);
-                        telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
+
+
+//                        dogAdoptionService.editAnimalInShelter(animalsInHouseRepository.findByIdUser(Long.parseLong("222"))
+//                        ,report);
+
+                    dogAdoptionService.saveReport(report, animalsInHouseRepository.findByIdUser(Long.parseLong("1")), "222");
+                    telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
+
 
 
 
