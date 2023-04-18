@@ -13,6 +13,8 @@ public interface UsersRepository extends JpaRepository<Users,Long> {
 
     Users findByNumberUser(String numberUser);
 
+    Users findByChatId (Long chatId);
+
 //    Boolean findByNumberUseraOrderBy (String number);
 }
 

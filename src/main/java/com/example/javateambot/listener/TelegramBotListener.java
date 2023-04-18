@@ -155,9 +155,10 @@ public class TelegramBotListener implements UpdatesListener {
 
                         case "записать данные" -> {
                             telegramBot.execute(new SendMessage(chatId, "Необходимо ввести три поля: имя, фамилию и номер телефона. В формате:\n" +
-                                    "1. Иван\n" +
-                                    "2. Иванов\n" +
-                                    "3. 79290463013."));
+                                    "Иван\n" +
+                                    "Петров\n" +
+                                    "79290463013\n" +
+                                    "Или Напишите данные в одну строчку через один пробел"));
 
 
 //                            Matcher matcher = TELEPHONE_MESSAGE.matcher(data);
@@ -221,16 +222,18 @@ public class TelegramBotListener implements UpdatesListener {
 //                        dogAdoptionService.editAnimalInShelter(animalsInHouseRepository.findByIdUser(Long.parseLong("222"))
 //                        ,report);
 
-                    dogAdoptionService.saveReport(report, animalsInHouseRepository.findByIdUser(Long.parseLong("1")), "222");
+                    dogAdoptionService.saveReport(report, animalsInHouseRepository.findByIdUser(Long.parseLong("1")), "79290463013");
                     telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
 
                 }
 
                 String messageText = update.message().text();
-                String[] fields = messageText.split("\n");
+                String[] fields = messageText.split(" ");
+                String[] fields1 = messageText.split("\n");
+                Users user1 = new Users();
+                if (fields.length == 3 ) {
 
-                if (fields.length == 3) {
-                    Users user1 =new Users();
+
                     String firstName = fields[0].trim();
                     user1.setFirstName(firstName);
                     String lastName = fields[1].trim();
@@ -239,7 +242,19 @@ public class TelegramBotListener implements UpdatesListener {
                     user1.setNumberUser(phoneNumber);
                     user1.setChatId(chatId);
                     usersRepository.save(user1);
+                    telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
 
+                } else if (fields1.length == 3 ){
+
+                    String firstName = fields1[0].trim();
+                    user1.setFirstName(firstName);
+                    String lastName = fields1[1].trim();
+                    user1.setLastName(lastName);
+                    String phoneNumber = fields1[2].trim();
+                    user1.setNumberUser(phoneNumber);
+                    user1.setChatId(chatId);
+                    usersRepository.save(user1);
+                    telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
 
                 }
 
