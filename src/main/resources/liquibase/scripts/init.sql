@@ -16,6 +16,7 @@ CREATE TABLE users
     firstName  TEXT NOT NULL,
     lastName   TEXT NOT NULL,
     numberUser int  NOT NULL
+    chatId     int  NOT NULL
 );
 
 --changeset mmayakina:3

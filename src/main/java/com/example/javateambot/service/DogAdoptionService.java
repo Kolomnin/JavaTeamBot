@@ -45,12 +45,37 @@ public class DogAdoptionService {
         return animalsInHouseRepository.save(animalsInHouse);
     }
 
-    public void saveReport(String report, String numberUser) {
+//    public void saveReport(String report, String numberUser) {
+//
+//        Long idUser = usersRepository.findByNumberUser(numberUser).getIdUser();
+//        animalsInHouseRepository.findByIdUser(idUser).setLastText(report);
+//
+//    }
+    public void editAnimalInShelter(AnimalsInHouse animal,String report) {
+        animal =         animalsInHouseRepository.findByIdUser(getId("222"));
 
-        Long idUser = usersRepository.findByNumberUser(numberUser).getIdUser();
-        animalsInHouseRepository.findByIdUser(idUser).setLastText(report);
+        animal.setLastText(report);
+        animalsInHouseRepository.save(animal);
+    }
+    public Long getId(String number) {
+        Long idUser = usersRepository.findByNumberUser(number).getIdUser();
+
+        return idUser;
+    }
+
+    public void saveReport(String report, AnimalsInHouse animalsInHouse,String numberUser) {
+
+        animalsInHouse.setLastText(report);
+        animalsInHouseRepository.save(animalsInHouse);
+//
 
     }
+
+//    public Boolean checkNumberOwner(String number) {
+//        if (usersRepository.findByNumberUser2(number)) {
+//            return true ;
+//        } else return false;
+//    }
 
 //    public Boolean checkNumberOwner(String number) {
 //        if (usersRepository.findByNumberUser2(number)) {

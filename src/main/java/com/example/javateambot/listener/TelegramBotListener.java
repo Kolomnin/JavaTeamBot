@@ -1,6 +1,9 @@
 package com.example.javateambot.listener;
 
 
+import com.example.javateambot.entity.Users;
+import com.example.javateambot.repository.AnimalsInHouseRepository;
+import com.example.javateambot.repository.UsersRepository;
 import com.example.javateambot.service.*;
 
 
@@ -11,6 +14,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.User;
 import com.pengrad.telegrambot.request.SendMessage;
 //import jakarta.annotation.PostConstruct;
+import liquibase.pro.packaged.E;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -30,9 +35,14 @@ public class TelegramBotListener implements UpdatesListener {
 
     @Autowired
     private TelegramBot telegramBot;
+    @Autowired
+    UsersRepository usersRepository;
 
     @Autowired
     private TelegramBotService telegramBotService;
+    @Autowired
+    AnimalsInHouseRepository animalsInHouseRepository;
+
 
     private UsersContactService userContactService;
 
@@ -87,6 +97,13 @@ public class TelegramBotListener implements UpdatesListener {
                     Long chatId = update.callbackQuery().message().chat().id();
                     CallbackQuery callbackQuery = update.callbackQuery();
                     String data = callbackQuery.data();
+                    try{
+                        System.out.println(update.message().text());
+
+                    } catch (Exception e ){
+                        System.out.println("Ошибка");
+                    }
+
 
 
                     switch (data) {
@@ -137,25 +154,31 @@ public class TelegramBotListener implements UpdatesListener {
                         case "позвать волонтера" -> telegramBot.execute(new SendMessage(chatId, "Зовем волонтера"));
 
                         case "записать данные" -> {
-                            telegramBot.execute(new SendMessage(chatId, "Введите номер телефона и вопрос в формате: 89001122333 Ваш вопрос."));
-                            Matcher matcher = TELEPHONE_MESSAGE.matcher(data);
-                            if (matcher.find()) {  //find запускает matcher
-                                try {
-                                    Integer telephone = Integer.valueOf(matcher.group(1)); // получаем телефон
-                                    String name = matcher.group(3); // получаем имя
-                                    String messageText = matcher.group(5); // получаем текст сообщения
-                                    userContactService.addUserContact(chatId, name, telephone/*messageText */); // создаем и пишем контакт в базу
-                                    SendMessage message = new SendMessage(chatId, "Данные записаны, В ближайшее время мы с Вами свяжемся");
-                                    telegramBot.execute(message);
-                                } catch (DateTimeParseException e) {
-                                    SendMessage messageEx = new SendMessage(chatId, "Некорректный формат номера телефона или сообщения");
-                                    telegramBot.execute(messageEx);
-                                }
-                            }
+                            telegramBot.execute(new SendMessage(chatId, "Необходимо ввести три поля: имя, фамилию и номер телефона. В формате:\n" +
+                                    "Иван\n" +
+                                    "Петров\n" +
+                                    "79290463013\n" +
+                                    "Или Напишите данные в одну строчку через один пробел"));
+
+
+//                            Matcher matcher = TELEPHONE_MESSAGE.matcher(data);
+//                            if (matcher.find()) {  //find запускает matcher
+//                                try {
+//                                    Integer telephone = Integer.valueOf(matcher.group(1)); // получаем телефон
+//                                    String name = matcher.group(3); // получаем имя
+//                                    String messageText = matcher.group(5); // получаем текст сообщения
+//                                    userContactService.addUserContact(chatId, name, telephone/*messageText */); // создаем и пишем контакт в базу
+//                                    SendMessage message = new SendMessage(chatId, "Данные записаны, В ближайшее время мы с Вами свяжемся");
+//                                    telegramBot.execute(message);
+//                                } catch (DateTimeParseException e) {
+//                                    SendMessage messageEx = new SendMessage(chatId, "Некорректный формат номера телефона или сообщения");
+//                                    telegramBot.execute(messageEx);
+//                                }
+//                            }
                         }
 
                     }
-                    return;
+//                    return;
                 }
 
 
@@ -190,15 +213,51 @@ public class TelegramBotListener implements UpdatesListener {
 
 
                 if (update.message().photo() != null) {
+                    String report = update.message().caption();
                     photoService.uploadPhoto(update.message());
-                    telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе и состоянии питомца"));
-
-//                        dogAdoptionService.saveReport(update.message().text().to);
-                        telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
+//                    telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе и состоянии питомца"));
 
 
+
+//                        dogAdoptionService.editAnimalInShelter(animalsInHouseRepository.findByIdUser(Long.parseLong("222"))
+//                        ,report);
+
+                    dogAdoptionService.saveReport(report, animalsInHouseRepository.findByIdUser(Long.parseLong("1")), "79290463013");
+                    telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
 
                 }
+
+                String messageText = update.message().text();
+                String[] fields = messageText.split(" ");
+                String[] fields1 = messageText.split("\n");
+                Users user1 = new Users();
+                if (fields.length == 3 ) {
+
+
+                    String firstName = fields[0].trim();
+                    user1.setFirstName(firstName);
+                    String lastName = fields[1].trim();
+                    user1.setLastName(lastName);
+                    String phoneNumber = fields[2].trim();
+                    user1.setNumberUser(phoneNumber);
+                    user1.setChatId(chatId);
+                    usersRepository.save(user1);
+                    telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
+
+                } else if (fields1.length == 3 ){
+
+                    String firstName = fields1[0].trim();
+                    user1.setFirstName(firstName);
+                    String lastName = fields1[1].trim();
+                    user1.setLastName(lastName);
+                    String phoneNumber = fields1[2].trim();
+                    user1.setNumberUser(phoneNumber);
+                    user1.setChatId(chatId);
+                    usersRepository.save(user1);
+                    telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
+
+                }
+
 
             });
         } catch (Exception e) {
