@@ -32,6 +32,9 @@ public class Users {
     @Column(nullable = false)
     private String numberUser;
 
+    @Column(nullable = false)
+    private Long chatId;
+
 
     /**
      * Метод для получения Id  владельца
@@ -87,5 +90,13 @@ public class Users {
      */
     public void setNumberUser(String numberUser) {
         this.numberUser = numberUser;
+    }
+
+    public Long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Long chatId) {
+        this.chatId = chatId;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.javateambot.listener;
 
 
+import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.AnimalsInHouseRepository;
 import com.example.javateambot.repository.UsersRepository;
 import com.example.javateambot.service.*;
@@ -153,25 +154,30 @@ public class TelegramBotListener implements UpdatesListener {
                         case "позвать волонтера" -> telegramBot.execute(new SendMessage(chatId, "Зовем волонтера"));
 
                         case "записать данные" -> {
-                            telegramBot.execute(new SendMessage(chatId, "Введите номер телефона и вопрос в формате: 89001122333 Ваш вопрос."));
-                            Matcher matcher = TELEPHONE_MESSAGE.matcher(data);
-                            if (matcher.find()) {  //find запускает matcher
-                                try {
-                                    Integer telephone = Integer.valueOf(matcher.group(1)); // получаем телефон
-                                    String name = matcher.group(3); // получаем имя
-                                    String messageText = matcher.group(5); // получаем текст сообщения
-                                    userContactService.addUserContact(chatId, name, telephone/*messageText */); // создаем и пишем контакт в базу
-                                    SendMessage message = new SendMessage(chatId, "Данные записаны, В ближайшее время мы с Вами свяжемся");
-                                    telegramBot.execute(message);
-                                } catch (DateTimeParseException e) {
-                                    SendMessage messageEx = new SendMessage(chatId, "Некорректный формат номера телефона или сообщения");
-                                    telegramBot.execute(messageEx);
-                                }
-                            }
+                            telegramBot.execute(new SendMessage(chatId, "Необходимо ввести три поля: имя, фамилию и номер телефона. В формате:\n" +
+                                    "1. Иван\n" +
+                                    "2. Иванов\n" +
+                                    "3. 79290463013."));
+
+
+//                            Matcher matcher = TELEPHONE_MESSAGE.matcher(data);
+//                            if (matcher.find()) {  //find запускает matcher
+//                                try {
+//                                    Integer telephone = Integer.valueOf(matcher.group(1)); // получаем телефон
+//                                    String name = matcher.group(3); // получаем имя
+//                                    String messageText = matcher.group(5); // получаем текст сообщения
+//                                    userContactService.addUserContact(chatId, name, telephone/*messageText */); // создаем и пишем контакт в базу
+//                                    SendMessage message = new SendMessage(chatId, "Данные записаны, В ближайшее время мы с Вами свяжемся");
+//                                    telegramBot.execute(message);
+//                                } catch (DateTimeParseException e) {
+//                                    SendMessage messageEx = new SendMessage(chatId, "Некорректный формат номера телефона или сообщения");
+//                                    telegramBot.execute(messageEx);
+//                                }
+//                            }
                         }
 
                     }
-                    return;
+//                    return;
                 }
 
 
@@ -218,10 +224,25 @@ public class TelegramBotListener implements UpdatesListener {
                     dogAdoptionService.saveReport(report, animalsInHouseRepository.findByIdUser(Long.parseLong("1")), "222");
                     telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
 
+                }
 
+                String messageText = update.message().text();
+                String[] fields = messageText.split("\n");
+
+                if (fields.length == 3) {
+                    Users user1 =new Users();
+                    String firstName = fields[0].trim();
+                    user1.setFirstName(firstName);
+                    String lastName = fields[1].trim();
+                    user1.setLastName(lastName);
+                    String phoneNumber = fields[2].trim();
+                    user1.setNumberUser(phoneNumber);
+                    user1.setChatId(chatId);
+                    usersRepository.save(user1);
 
 
                 }
+
 
             });
         } catch (Exception e) {
