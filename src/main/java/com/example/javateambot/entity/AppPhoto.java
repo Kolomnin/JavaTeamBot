@@ -26,6 +26,7 @@ public class AppPhoto {
     @Column(nullable = false)
     private byte[] data;
 
+
     @Column(nullable = false)
     private String extension;
 

@@ -17,6 +17,7 @@ public class ContactInformation {
         return chatId;
     }
 
+
     public void setChatId(String chatId) {
         this.chatId = chatId;
     }

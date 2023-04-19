@@ -66,5 +66,6 @@ public class PhotoService {
             }
         }
         photoRepository.save(photo);
+
     }
 }
