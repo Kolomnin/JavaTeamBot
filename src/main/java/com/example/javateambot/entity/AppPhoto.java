@@ -20,29 +20,21 @@ public class AppPhoto {
     private Long id;
 
     /**
-     * fileId фотографии
-     * хранится в базе данных
-     */
-    private String fileId;
-
-    /**
      * data фотографии
      * хранится в базе данных
      */
+    @Column(nullable = false)
     private byte[] data;
 
-    /**
-     * Метод позволяет получить fileId фотографии
-     */
-    public String getFileId() {
-        return fileId;
+    @Column(nullable = false)
+    private String extension;
+
+    public String getExtension() {
+        return extension;
     }
 
-    /**
-     * Метод позволяет установить байтовое представление фотографии
-     */
-    public void setFileId(String fileId) {
-        this.fileId = fileId;
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     /**
