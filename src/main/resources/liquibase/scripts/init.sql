@@ -16,18 +16,32 @@ CREATE TABLE users
     firstName  TEXT NOT NULL,
     lastName   TEXT NOT NULL,
     numberUser int  NOT NULL
-    chatId     int  NOT NULL
+        chatId int NOT NULL
 );
 
 --changeset mmayakina:3
 CREATE TABLE animals_in_house
-(   adoption               INT PRIMARY KEY,
-    idAnimal                INT NOT NULL,
-    idUser                  INT NOT NULL,
+(
+    adoption                INT PRIMARY KEY,
+    idAnimal                INT  NOT NULL,
+    idUser                  INT  NOT NULL,
     lastDateProbationPeriod DATE NOT NULL,
     lastFoto                TEXT,
     lastTextReport          TEXT,
     lastReportDate          DATE
+);
+
+CREATE TABLE report
+(
+    idReport         INT PRIMARY KEY,
+    ration           TEXT,
+    GeneralWellBeing TEXT,
+    animalBehavior   TEXT,
+    lastTextReport   TEXT,
+--  data
+--  extension
+--     lastDateProbationPeriod DATE NOT NULL,
+--     lastReportDate          DATE
 );
 
 -- --changeset sergeyPanin:3

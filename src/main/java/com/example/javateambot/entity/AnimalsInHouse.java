@@ -2,6 +2,7 @@ package com.example.javateambot.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
 
 /**
  * Класс является сущностью объекта AnimalsInHouse,
@@ -40,6 +41,9 @@ public class AnimalsInHouse {
      */
     @Column(nullable = false)
     private LocalDate lastDateProbationPeriod;
+
+//    @OneToMany(mappedBy = "animals_in_house")
+//    private Collection<Report> report;
 
     /**
      * Дата когда был отправлен последний отчет о состоянии животного,
