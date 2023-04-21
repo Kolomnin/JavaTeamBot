@@ -1,12 +1,9 @@
 package com.example.javateambot.listener;
 
 
+import com.example.javateambot.entity.ContactInformation;
 import com.example.javateambot.entity.Report;
-import com.example.javateambot.entity.Users;
-import com.example.javateambot.repository.AnimalsInHouseRepository;
-import com.example.javateambot.repository.PhotoRepository;
-import com.example.javateambot.repository.ReportRepository;
-import com.example.javateambot.repository.UsersRepository;
+import com.example.javateambot.repository.*;
 import com.example.javateambot.service.*;
 
 
@@ -43,9 +40,18 @@ public class TelegramBotListener implements UpdatesListener {
     @Autowired
     AnimalsInHouseRepository animalsInHouseRepository;
 
+    @Autowired
+    ContactInformationRepository contactInformationRepository;
+
 
     @Autowired
     ReportRepository reportRepository;
+
+
+
+
+
+
 
 
     private UsersContactService userContactService;
@@ -218,6 +224,7 @@ public class TelegramBotListener implements UpdatesListener {
                          * усыновителей тогда принимаем от него фотографию и создаем обьект отчета, присваиваем ему фото
                          * затем сохраняем в бд
                          */
+
                         Report report = new Report();
                         if (update.message().photo() != null) { //
                             //&& dogAdoptionService.checkChatId(chatId) вставить в if
@@ -248,76 +255,52 @@ public class TelegramBotListener implements UpdatesListener {
 
                         }
                         /**
-                         * Тут обрабатвается отчетов, когда нам владелец присылает отчет.
+                         * Тут обрабатвается команда записать данные, когда любой пользователь оставляет контактные данные в боте.
                          */
-                String messageText = update.message().text();
-                String[] fields = messageText.split(" ");
-                String[] fields1 = messageText.split("\n");
-                Users user1 = new Users();
-                if (fields.length == 3) {
 
 
-                    String firstName = fields[0].trim();
-                    user1.setFirstName(firstName);
-                    String lastName = fields[1].trim();
-                    user1.setLastName(lastName);
-                    String phoneNumber = fields[2].trim();
-                    user1.setNumberUser(phoneNumber);
-                    user1.setChatId(chatId);
-                    usersRepository.save(user1);
-                    telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
-
-                } else if (fields1.length == 3) {
-
-                    String firstName = fields1[0].trim();
-                    user1.setFirstName(firstName);
-                    String lastName = fields1[1].trim();
-                    user1.setLastName(lastName);
-                    String phoneNumber = fields1[2].trim();
-                    user1.setNumberUser(phoneNumber);
-                    user1.setChatId(chatId);
-                    usersRepository.save(user1);
-                    telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
-
-                }
-
-                /**
-                 * Это обработчик отчетов, когда нам владелец присылает отчет.
-                 */
-                        String reportText = update.message().text();
-                        String[] fieldsForReport = reportText.split("\\.");
-                        System.out.println(fieldsForReport.length);
-                        String[] fieldsForReport1 = reportText.split("\n");
-                        if (fieldsForReport.length == 4) {
+                        telegramBotService.saveContactData(update.message().text(),chatId);
 
 
-                            String ration = fieldsForReport[0].trim();
-                            report.setRation(ration);
-                            String animalBehavior = fieldsForReport[1].trim();
-                            report.setAnimalBehavior(animalBehavior);
-                            String GeneralWellBeing = fieldsForReport[2].trim();
-                            report.setGeneralWellBeing(GeneralWellBeing);
-                            String newHabits = fieldsForReport[3].trim();
-                            report.setNewHabits(newHabits);
-//                            report.setAppPhoto(photoService.);
-                            reportRepository.save(report);
-                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
+                        /**
+                         * Это обработчик отчетов, когда нам владелец присылает отчет.
+                         */
 
-                        } else if (fieldsForReport1.length == 4) {
+                        telegramBotService.saveReport(update.message().text(),chatId);
 
-                            String ration = fieldsForReport1[0].trim();
-                            report.setRation(ration);
-                            String animalBehavior = fieldsForReport1[1].trim();
-                            report.setAnimalBehavior(animalBehavior);
-                            String GeneralWellBeing = fieldsForReport1[2].trim();
-                            report.setGeneralWellBeing(GeneralWellBeing);
-                            String newHabits = fieldsForReport1[3].trim();
-                            report.setNewHabits(newHabits);
-                            reportRepository.save(report);
-                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
-
-
-                        }
+//                        String reportText = update.message().text();
+//                        String[] fieldsForReport = reportText.split("\\.");
+//                        System.out.println(fieldsForReport.length);
+//                        String[] fieldsForReport1 = reportText.split("\n");
+//                        if (fieldsForReport.length == 4) {
+//
+//
+//                            String ration = fieldsForReport[0].trim();
+//                            report.setRation(ration);
+//                            String animalBehavior = fieldsForReport[1].trim();
+//                            report.setAnimalBehavior(animalBehavior);
+//                            String GeneralWellBeing = fieldsForReport[2].trim();
+//                            report.setGeneralWellBeing(GeneralWellBeing);
+//                            String newHabits = fieldsForReport[3].trim();
+//                            report.setNewHabits(newHabits);
+////                            report.setAppPhoto(photoService.);
+//                            reportRepository.save(report);
+//                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
+//
+//                        } else if (fieldsForReport1.length == 4) {
+//
+//                            String ration = fieldsForReport1[0].trim();
+//                            report.setRation(ration);
+//                            String animalBehavior = fieldsForReport1[1].trim();
+//                            report.setAnimalBehavior(animalBehavior);
+//                            String GeneralWellBeing = fieldsForReport1[2].trim();
+//                            report.setGeneralWellBeing(GeneralWellBeing);
+//                            String newHabits = fieldsForReport1[3].trim();
+//                            report.setNewHabits(newHabits);
+//                            reportRepository.save(report);
+//                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
+//
+//                        }
                     }
             );
         } catch (Exception e) {

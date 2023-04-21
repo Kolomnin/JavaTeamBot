@@ -2,7 +2,6 @@ package com.example.javateambot.controllers;
 
 
 import com.example.javateambot.entity.AnimalsInHouse;
-import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.AnimalsInHouseRepository;
 import com.example.javateambot.service.DogAdoptionService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,29 +1,29 @@
 package com.example.javateambot.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "contact_information")
 public class ContactInformation {
 
+
+
     @Id
-    @Column(name = "chatId", nullable = false)
-    private String chatId;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private long id;
 
-    public String getChatId() {
-        return chatId;
-    }
+    @Column(nullable = false)
+    private Long chatId;
 
-    public void setChatId(String chatId) {
-        this.chatId = chatId;
-    }
-
+    @Column(nullable = false)
     private String phoneNumber;
 
-    private String name, surname;
+    @Column(nullable = false)
+    private String firstname;
+
+    @Column(nullable = false)
+
+    private String LastName;
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -33,19 +33,28 @@ public class ContactInformation {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return LastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.LastName = lastName;
+    }
+
+    public Long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Long chatId) {
+        this.chatId = chatId;
     }
 }
+
