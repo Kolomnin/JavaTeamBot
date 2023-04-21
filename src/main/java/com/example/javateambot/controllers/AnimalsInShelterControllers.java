@@ -42,7 +42,6 @@ public class AnimalsInShelterControllers {
 
     )
 
-
     @PostMapping
     public AnimalsInShelter addAnimalsInShelter(@RequestBody AnimalsInShelter animal) {
         return animalsInShelterService.addAnimalInShelter(animal);
