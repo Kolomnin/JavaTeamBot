@@ -44,6 +44,11 @@ public class PhotoService {
         this.photoRepository = photoRepository;
     }
 
+
+    public AppPhoto findPhotoLastId(long chatId) {
+        return photoRepository.findAppPhotoByChatId(chatId);
+    }
+
     /**
      * Сохранение фотографии в базе данных
      * Используетcя методы репозитория{@link}
@@ -65,6 +70,7 @@ public class PhotoService {
                 e.printStackTrace();
             }
         }
+        photo.setChatId(message.chat().id());
         photoRepository.save(photo);
     }
 }

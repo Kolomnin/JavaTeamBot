@@ -38,9 +38,9 @@ public class Report {
     @OneToOne
     private AppPhoto appPhoto;
 
-//    @ManyToOne
-//    @JoinColumn(name = "adoption_id")
-//    private AnimalsInHouse animalsInHouse;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+   private AnimalsInHouse animalsInHouse;
 
 
     public long getIdReport() {
