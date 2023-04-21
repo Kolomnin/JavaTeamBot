@@ -23,12 +23,16 @@ public class TelegramBotService {
     @Autowired
     ReportRepository reportRepository;
 
-    public InlineKeyboardButton saveInfo(){  // метод записи данных
+    @Autowired
+    private PhotoService photoService;
+
+    public InlineKeyboardButton saveInfo() {  // метод записи данных
         InlineKeyboardButton button = new InlineKeyboardButton("записать данные");
         button.callbackData("записать данные");
         return button;
     }
-    public void takeDogFromShelter(Long chatId){  // кнопки этапа 2, кейсы между 2 и 3
+
+    public void takeDogFromShelter(Long chatId) {  // кнопки этапа 2, кейсы между 2 и 3
         SendMessage message = new SendMessage(chatId, "Приветствует в нашем приюте");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Правила знакомства с собакой до того, как можно забрать ее из приюта.");
@@ -64,7 +68,8 @@ public class TelegramBotService {
         message.replyMarkup(keyboard);
         telegramBot.execute(message);
     }
-    public void sendReport(Long chatId){  // кнопки этапа 3, кейсы между 2 и 3
+
+    public void sendReport(Long chatId) {  // кнопки этапа 3, кейсы между 2 и 3
         SendMessage message = new SendMessage(chatId, "Приветствует в нашем приюте");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Форма ежедневного отчёта");
@@ -79,7 +84,7 @@ public class TelegramBotService {
         telegramBot.execute(message);
     }
 
-    public void firstMenu(Long chatId){ // меню начальное, кейсы 1/2/3
+    public void firstMenu(Long chatId) { // меню начальное, кейсы 1/2/3
         SendMessage helloMessage = new SendMessage(chatId, "Привет,  тут должна быть информация о боте. Выберите интересующий пункт из меню: ");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Узнать информацию о приюте!");
@@ -117,13 +122,13 @@ public class TelegramBotService {
         telegramBot.execute(message);
     }
 
-    public InlineKeyboardButton helpVolunteers(){ // метод позвать волонтера
+    public InlineKeyboardButton helpVolunteers() { // метод позвать волонтера
         InlineKeyboardButton button = new InlineKeyboardButton("Позвать волонтера");
         button.callbackData("позвать волонтера");
         return button;
     }
 
-    public void saveContactData (String message,Long chatId){
+    public void saveContactData(String message, Long chatId) {
 
         ContactInformation contactInformation = new ContactInformation();
         String messageText = message;
@@ -157,41 +162,41 @@ public class TelegramBotService {
         }
     }
 
-        public void saveReport (String reportMessage,Long chatId) {
-            Report report = new Report();
-            String reportText = reportMessage;
-            String[] fieldsForReport = reportText.split("\\.");
-            System.out.println(fieldsForReport.length);
-            String[] fieldsForReport1 = reportText.split("\n");
-            if (fieldsForReport.length == 4) {
+    public void saveReport(String reportMessage, Long chatId) {
+        Report report = new Report();
+        String reportText = reportMessage;
+        String[] fieldsForReport = reportText.split("\\.");
+        System.out.println(fieldsForReport.length);
+        String[] fieldsForReport1 = reportText.split("\n");
+        if (fieldsForReport.length == 4) {
 
 
-                String ration = fieldsForReport[0].trim();
-                report.setRation(ration);
-                String animalBehavior = fieldsForReport[1].trim();
-                report.setAnimalBehavior(animalBehavior);
-                String GeneralWellBeing = fieldsForReport[2].trim();
-                report.setGeneralWellBeing(GeneralWellBeing);
-                String newHabits = fieldsForReport[3].trim();
-                report.setNewHabits(newHabits);
-//                            report.setAppPhoto(photoService.);
-                reportRepository.save(report);
-                telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
+            String ration = fieldsForReport[0].trim();
+            report.setRation(ration);
+            String animalBehavior = fieldsForReport[1].trim();
+            report.setAnimalBehavior(animalBehavior);
+            String GeneralWellBeing = fieldsForReport[2].trim();
+            report.setGeneralWellBeing(GeneralWellBeing);
+            String newHabits = fieldsForReport[3].trim();
+            report.setNewHabits(newHabits);
+            report.setAppPhoto(photoService.findPhotoLastId(chatId));
+            reportRepository.save(report);
+            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
 
-            } else if (fieldsForReport1.length == 4) {
+        } else if (fieldsForReport1.length == 4) {
 
-                String ration = fieldsForReport1[0].trim();
-                report.setRation(ration);
-                String animalBehavior = fieldsForReport1[1].trim();
-                report.setAnimalBehavior(animalBehavior);
-                String GeneralWellBeing = fieldsForReport1[2].trim();
-                report.setGeneralWellBeing(GeneralWellBeing);
-                String newHabits = fieldsForReport1[3].trim();
-                report.setNewHabits(newHabits);
-                reportRepository.save(report);
-                telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
+            String ration = fieldsForReport1[0].trim();
+            report.setRation(ration);
+            String animalBehavior = fieldsForReport1[1].trim();
+            report.setAnimalBehavior(animalBehavior);
+            String GeneralWellBeing = fieldsForReport1[2].trim();
+            report.setGeneralWellBeing(GeneralWellBeing);
+            String newHabits = fieldsForReport1[3].trim();
+            report.setNewHabits(newHabits);
+            reportRepository.save(report);
+            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
 
-            }
         }
+    }
 }
 
