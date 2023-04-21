@@ -71,11 +71,11 @@ public class DogAdoptionService {
 
     }
 
-//    public Boolean checkNumberOwner(String number) {
-//        if (usersRepository.findByNumberUser2(number)) {
-//            return true ;
-//        } else return false;
-//    }
+    public Boolean checkChatId(Long chatId) {
+        if (usersRepository.findByChatId(chatId).getChatId()!= 0) {
+            return true ;
+        } else return false;
+    }
 
 //    public Boolean checkNumberOwner(String number) {
 //        if (usersRepository.findByNumberUser2(number)) {
