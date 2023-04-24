@@ -25,7 +25,9 @@ class UsersRepositoryTest {
     @InjectMocks
     private UsersService usersService;
 
+
     private final UsersRepository repository = mock(UsersRepository.class);
+
 
     @Test
     public void testAddUser() {

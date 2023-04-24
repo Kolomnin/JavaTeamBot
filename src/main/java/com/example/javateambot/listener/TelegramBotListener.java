@@ -1,7 +1,6 @@
 package com.example.javateambot.listener;
 
 
-import com.example.javateambot.entity.ContactInformation;
 import com.example.javateambot.entity.Report;
 import com.example.javateambot.repository.*;
 import com.example.javateambot.service.*;
@@ -47,7 +46,8 @@ public class TelegramBotListener implements UpdatesListener {
     @Autowired
     ReportRepository reportRepository;
 
-
+    @Autowired
+    SaveReportAndContactData saveReportAndContactData;
 
 
 
@@ -226,10 +226,11 @@ public class TelegramBotListener implements UpdatesListener {
                          */
 
                         Report report = new Report();
-                        if (update.message().photo() != null) { //
-                            //&& dogAdoptionService.checkChatId(chatId) вставить в if
+                        if (update.message().photo() != null && dogAdoptionService.checkChatId(chatId)) { //
+//                            && dogAdoptionService.checkChatId(chatId) вставить в if
                             // дописать проверку на наличие в базе данных усновителя этого чат id
                             //String report = update.message().caption(); тут находится описание отчета от владельца,когда отправляешь фото в описании фотографии
+
                             photoService.uploadPhoto(update.message());
                             telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе, состоянии поведения питомца," +
                                     "общем самочувствии, привыканию к новому месту, новые обретенные привычки.\n" +
@@ -247,11 +248,6 @@ public class TelegramBotListener implements UpdatesListener {
                             telegramBot.execute(new SendMessage(chatId, "После заполнения каждого критерия ставьте точку если пишите в одноу строчку или с начинайте с новой строки как в образце"));
 
 
-//                        dogAdoptionService.editAnimalInShelter(animalsInHouseRepository.findByIdUser(Long.parseLong("222"))
-//                        ,report);
-
-                            //dogAdoptionService.saveReport(report, animalsInHouseRepository.findByIdUser(Long.parseLong("1")), "79290463013");
-//                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
 
                         }
                         /**
@@ -259,48 +255,14 @@ public class TelegramBotListener implements UpdatesListener {
                          */
 
 
-                        telegramBotService.saveContactData(update.message().text(),chatId);
+                        saveReportAndContactData.saveContactData(update.message().text(),chatId);
 
 
                         /**
                          * Это обработчик отчетов, когда нам владелец присылает отчет.
                          */
+                        saveReportAndContactData.saveReport(update.message().text(),chatId);
 
-                        telegramBotService.saveReport(update.message().text(),chatId);
-
-//                        String reportText = update.message().text();
-//                        String[] fieldsForReport = reportText.split("\\.");
-//                        System.out.println(fieldsForReport.length);
-//                        String[] fieldsForReport1 = reportText.split("\n");
-//                        if (fieldsForReport.length == 4) {
-//
-//
-//                            String ration = fieldsForReport[0].trim();
-//                            report.setRation(ration);
-//                            String animalBehavior = fieldsForReport[1].trim();
-//                            report.setAnimalBehavior(animalBehavior);
-//                            String GeneralWellBeing = fieldsForReport[2].trim();
-//                            report.setGeneralWellBeing(GeneralWellBeing);
-//                            String newHabits = fieldsForReport[3].trim();
-//                            report.setNewHabits(newHabits);
-////                            report.setAppPhoto(photoService.);
-//                            reportRepository.save(report);
-//                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
-//
-//                        } else if (fieldsForReport1.length == 4) {
-//
-//                            String ration = fieldsForReport1[0].trim();
-//                            report.setRation(ration);
-//                            String animalBehavior = fieldsForReport1[1].trim();
-//                            report.setAnimalBehavior(animalBehavior);
-//                            String GeneralWellBeing = fieldsForReport1[2].trim();
-//                            report.setGeneralWellBeing(GeneralWellBeing);
-//                            String newHabits = fieldsForReport1[3].trim();
-//                            report.setNewHabits(newHabits);
-//                            reportRepository.save(report);
-//                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
-//
-//                        }
                     }
             );
         } catch (Exception e) {
