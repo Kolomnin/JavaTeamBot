@@ -87,6 +87,8 @@ public class TelegramBotListener implements UpdatesListener {
     private static final Pattern TELEPHONE_MESSAGE = Pattern.compile(
             "(\\d{11})(\\s)([А-яA-z)]+)(\\s)([А-яA-z)\\s\\d]+)"); // парсим сообщение на группы по круглым скобкам
 
+    Long chatId;
+
     @Override
     public int process(List<Update> updates) {
         try {
@@ -94,7 +96,7 @@ public class TelegramBotListener implements UpdatesListener {
                         logger.info("Processing update: {}", update);
 
                         if (update.callbackQuery() != null) {  // обработка этапа 0
-                            Long chatId = update.callbackQuery().message().chat().id();
+                            chatId = update.callbackQuery().message().chat().id();
                             CallbackQuery callbackQuery = update.callbackQuery();
                             String data = callbackQuery.data();
                             try {
@@ -163,8 +165,8 @@ public class TelegramBotListener implements UpdatesListener {
                         }
 
 
-                        User user = update.message().from();
-                        Long chatId = user.id();
+      //                  User user = update.message().from();
+                        chatId = update.message().chat().id();
 
                         if ("/start".equals(update.message().text())) {  // этап 0
                             telegramBotService.firstMenu(chatId);

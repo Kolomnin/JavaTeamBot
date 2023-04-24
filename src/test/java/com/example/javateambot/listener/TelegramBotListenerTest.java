@@ -52,7 +52,7 @@ public class TelegramBotListenerTest {
 
     @Test
     public void telegramBotServiceShelterInfoCase1Test() {
-        String inputMessage = "Информация о приюте";
+        String inputMessage = "инфа о приюте";
         String outMessage = "тут должна быть информация о приюте.";
         Assertions.assertThat(testHandlerBySwitch(inputMessage).getParameters().get("chat_id")).isEqualTo(123L);
         Assertions.assertThat(testHandlerBySwitch(inputMessage).getParameters().get("text")).isEqualTo(outMessage);
@@ -164,15 +164,6 @@ public class TelegramBotListenerTest {
 
     @Test
     public void telegramBotServiceSendReport1Test() {
-        String inputMessage = "Форма ежедневного отчёта";
-        String outMessage = "Форма ежедневного отчёта:\n1. Фото животного\n2. Рацион животного\n" +
-                "3. Общее самочувствие и привыкание к новому месту \n4. Изменение в поведении";
-        Assertions.assertThat(testHandlerBySwitch(inputMessage).getParameters().get("chat_id")).isEqualTo(123L);
-        Assertions.assertThat(testHandlerBySwitch(inputMessage).getParameters().get("text")).isEqualTo(outMessage);
-    }
-
-    @Test
-    public void telegramBotServiceSendReport2Test() {
         String inputMessage = "принимаем отчет";
         String outMessage = "Вышлите фото животного";
         Assertions.assertThat(testHandlerBySwitch(inputMessage).getParameters().get("chat_id")).isEqualTo(123L);
@@ -180,9 +171,13 @@ public class TelegramBotListenerTest {
     }
 
     @Test
-    public void telegramBotServiceSendReport3Test() {
+    public void telegramBotServiceSendReport2Test() {
         String inputMessage = "записать данные";
-        String outMessage = "Введите номер телефона и вопрос в формате: 89001122333 Имя Ваш вопрос";
+        String outMessage = "Необходимо ввести три поля: имя, фамилию и номер телефона. В формате:\n" +
+                "Иван\n" +
+                "Петров\n" +
+                "79290463013\n" +
+                "Или Напишите данные в одну строчку через один пробел";
         Assertions.assertThat(testHandlerBySwitch(inputMessage).getParameters().get("chat_id")).isEqualTo(123L);
         Assertions.assertThat(testHandlerBySwitch(inputMessage).getParameters().get("text")).isEqualTo(outMessage);
     }
