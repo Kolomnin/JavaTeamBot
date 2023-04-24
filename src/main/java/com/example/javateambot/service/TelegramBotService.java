@@ -122,9 +122,27 @@ public class TelegramBotService {
         telegramBot.execute(message);
     }
 
+    /**
+     * Метод показывает пользователю кнопу "Позвать волонтера" в чате бота, использует {@link InlineKeyboardButton}
+     *
+     * @return возвращает созданную кнопку
+     */
+
     public InlineKeyboardButton helpVolunteers() { // метод позвать волонтера
         InlineKeyboardButton button = new InlineKeyboardButton("Позвать волонтера");
         button.callbackData("позвать волонтера");
+        return button;
+    }
+
+    /**
+     * Метод показывает пользователю кнопу "Главное меню" для возврата в основное меню в чате бота,
+     * использует {@link InlineKeyboardButton}
+     *
+     * @return возвращает созданную кнопку
+     */
+    public InlineKeyboardButton mainMenu() { // // возврат в главное меню
+        InlineKeyboardButton button = new InlineKeyboardButton("Главное меню");
+        button.callbackData("Главное меню");
         return button;
     }
 

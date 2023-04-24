@@ -1,7 +1,6 @@
 package com.example.javateambot.listener;
 
 
-import com.example.javateambot.entity.ContactInformation;
 import com.example.javateambot.entity.Report;
 import com.example.javateambot.repository.*;
 import com.example.javateambot.service.*;
@@ -29,30 +28,23 @@ import java.util.regex.Pattern;
 @Service
 public class TelegramBotListener implements UpdatesListener {
 
-
     @Autowired
     private TelegramBot telegramBot;
+
     @Autowired
     UsersRepository usersRepository;
 
     @Autowired
     private TelegramBotService telegramBotService;
+
     @Autowired
     AnimalsInHouseRepository animalsInHouseRepository;
 
     @Autowired
     ContactInformationRepository contactInformationRepository;
 
-
     @Autowired
     ReportRepository reportRepository;
-
-
-
-
-
-
-
 
     private UsersContactService userContactService;
 
@@ -74,15 +66,13 @@ public class TelegramBotListener implements UpdatesListener {
     public static final String INFO_ABOUT_DOG_HANDLER = "список кинологов";
     public static final String REASONS_FOR_REFUSAL = "список причин для отказа";
 
-
     private final TelegramService telegramService;
-
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
     @Autowired
     public TelegramBotListener(TelegramBot telegramBot, TelegramBotService telegramBotService,
-                               TelegramService telegramService, PhotoService photoService) {
+                               TelegramService telegramService) {
         this.telegramBot = telegramBot;
         this.telegramBotService = telegramBotService;
         this.telegramService = telegramService;
@@ -97,6 +87,8 @@ public class TelegramBotListener implements UpdatesListener {
     private static final Pattern TELEPHONE_MESSAGE = Pattern.compile(
             "(\\d{11})(\\s)([А-яA-z)]+)(\\s)([А-яA-z)\\s\\d]+)"); // парсим сообщение на группы по круглым скобкам
 
+    Long chatId;
+
     @Override
     public int process(List<Update> updates) {
         try {
@@ -104,7 +96,7 @@ public class TelegramBotListener implements UpdatesListener {
                         logger.info("Processing update: {}", update);
 
                         if (update.callbackQuery() != null) {  // обработка этапа 0
-                            Long chatId = update.callbackQuery().message().chat().id();
+                            chatId = update.callbackQuery().message().chat().id();
                             CallbackQuery callbackQuery = update.callbackQuery();
                             String data = callbackQuery.data();
                             try {
@@ -113,7 +105,6 @@ public class TelegramBotListener implements UpdatesListener {
                             } catch (Exception e) {
                                 System.out.println("Ошибка");
                             }
-
 
                             switch (data) {
 
@@ -169,40 +160,19 @@ public class TelegramBotListener implements UpdatesListener {
                                             "79290463013\n" +
                                             "Или Напишите данные в одну строчку через один пробел"));
 
-
-//                            Matcher matcher = TELEPHONE_MESSAGE.matcher(data);
-//                            if (matcher.find()) {  //find запускает matcher
-//                                try {
-//                                    Integer telephone = Integer.valueOf(matcher.group(1)); // получаем телефон
-//                                    String name = matcher.group(3); // получаем имя
-//                                    String messageText = matcher.group(5); // получаем текст сообщения
-//                                    userContactService.addUserContact(chatId, name, telephone/*messageText */); // создаем и пишем контакт в базу
-//                                    SendMessage message = new SendMessage(chatId, "Данные записаны, В ближайшее время мы с Вами свяжемся");
-//                                    telegramBot.execute(message);
-//                                } catch (DateTimeParseException e) {
-//                                    SendMessage messageEx = new SendMessage(chatId, "Некорректный формат номера телефона или сообщения");
-//                                    telegramBot.execute(messageEx);
-//                                }
-//                            }
                                 }
-
                             }
-//                    return;
                         }
 
 
-                        User user = update.message().from();
-                        Long chatId = user.id();
+      //                  User user = update.message().from();
+                        chatId = update.message().chat().id();
 
-//                    * Обработка сообщения от пользователя и вызов основного меню
-//                 */
                         if ("/start".equals(update.message().text())) {  // этап 0
                             telegramBotService.firstMenu(chatId);
 
-
                         }
-//                /
-//
+
                         /**
                          * Проверяем сообщение пользователя на соответствие и сохраняем в БД,
                          * или выдаем информацию о несоответствии шаблону для сохранения.
@@ -213,7 +183,6 @@ public class TelegramBotListener implements UpdatesListener {
                             if (matcher.find()) {  //find запускает matche
                                 telegramBot.execute(new SendMessage(chatId, "успешно"));
 
-//                        adoptiveParentService.saveInfoDataBase(matcher, chatId);
                             }
                         } else if (checkUrl(update.message().text())) {
                             telegramBot.execute(new SendMessage(chatId, "Вы найдены, теперь отправьте фото"));
@@ -227,9 +196,7 @@ public class TelegramBotListener implements UpdatesListener {
 
                         Report report = new Report();
                         if (update.message().photo() != null) { //
-                            //&& dogAdoptionService.checkChatId(chatId) вставить в if
-                            // дописать проверку на наличие в базе данных усновителя этого чат id
-                            //String report = update.message().caption(); тут находится описание отчета от владельца,когда отправляешь фото в описании фотографии
+
                             photoService.uploadPhoto(update.message());
                             telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе, состоянии поведения питомца," +
                                     "общем самочувствии, привыканию к новому месту, новые обретенные привычки.\n" +
@@ -246,21 +213,14 @@ public class TelegramBotListener implements UpdatesListener {
                                     "Новых привычек не обнаружено\n"));
                             telegramBot.execute(new SendMessage(chatId, "После заполнения каждого критерия ставьте точку если пишите в одноу строчку или с начинайте с новой строки как в образце"));
 
-
-//                        dogAdoptionService.editAnimalInShelter(animalsInHouseRepository.findByIdUser(Long.parseLong("222"))
-//                        ,report);
-
-                            //dogAdoptionService.saveReport(report, animalsInHouseRepository.findByIdUser(Long.parseLong("1")), "79290463013");
-//                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
+                           telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
 
                         }
                         /**
                          * Тут обрабатвается команда записать данные, когда любой пользователь оставляет контактные данные в боте.
                          */
 
-
                         telegramBotService.saveContactData(update.message().text(),chatId);
-
 
                         /**
                          * Это обработчик отчетов, когда нам владелец присылает отчет.
@@ -268,39 +228,6 @@ public class TelegramBotListener implements UpdatesListener {
 
                         telegramBotService.saveReport(update.message().text(),chatId);
 
-//                        String reportText = update.message().text();
-//                        String[] fieldsForReport = reportText.split("\\.");
-//                        System.out.println(fieldsForReport.length);
-//                        String[] fieldsForReport1 = reportText.split("\n");
-//                        if (fieldsForReport.length == 4) {
-//
-//
-//                            String ration = fieldsForReport[0].trim();
-//                            report.setRation(ration);
-//                            String animalBehavior = fieldsForReport[1].trim();
-//                            report.setAnimalBehavior(animalBehavior);
-//                            String GeneralWellBeing = fieldsForReport[2].trim();
-//                            report.setGeneralWellBeing(GeneralWellBeing);
-//                            String newHabits = fieldsForReport[3].trim();
-//                            report.setNewHabits(newHabits);
-////                            report.setAppPhoto(photoService.);
-//                            reportRepository.save(report);
-//                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
-//
-//                        } else if (fieldsForReport1.length == 4) {
-//
-//                            String ration = fieldsForReport1[0].trim();
-//                            report.setRation(ration);
-//                            String animalBehavior = fieldsForReport1[1].trim();
-//                            report.setAnimalBehavior(animalBehavior);
-//                            String GeneralWellBeing = fieldsForReport1[2].trim();
-//                            report.setGeneralWellBeing(GeneralWellBeing);
-//                            String newHabits = fieldsForReport1[3].trim();
-//                            report.setNewHabits(newHabits);
-//                            reportRepository.save(report);
-//                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
-//
-//                        }
                     }
             );
         } catch (Exception e) {
