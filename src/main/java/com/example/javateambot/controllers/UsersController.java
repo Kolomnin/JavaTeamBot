@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 public class UsersController {
-
-
     @Autowired
     private final UsersService usersService;
 
@@ -23,19 +21,12 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-
     @Operation(summary = "Добавление нового владельца",
-
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Новый владелец",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE)
-            ),
-            responses = {
-                    @ApiResponse(responseCode = "200",
-                            description = "Владелец успешно добавлено")
-            }
-
+                    description = "Новый владелец", content = @Content(
+                    mediaType = MediaType.APPLICATION_JSON_VALUE)),
+            responses = {@ApiResponse(responseCode = "200",
+                    description = "Владелец успешно добавлено")}
     )
     @PostMapping
     public Users addUser(@RequestBody Users user) {
@@ -43,12 +34,9 @@ public class UsersController {
     }
 
     @Operation(summary = "Изменение параметров владельца",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Новый владелец",
-                    content = @Content(
-                            mediaType = MediaType.APPLICATION_JSON_VALUE)
-            )
-    )
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Новый владелец",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+            ))
     @PutMapping
     public ResponseEntity<Users> editUser(@RequestBody Users user) {
         Users foundUser = usersService.editUser(user);
@@ -59,20 +47,13 @@ public class UsersController {
     }
 
     @Operation(summary = "Удаление владельца по id",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Владелец успешно удален",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE)
-
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
+            responses = {@ApiResponse(
+                    responseCode = "200", description = "Владелец успешно удален",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+            ),
+                    @ApiResponse(responseCode = "404",
                             description = "Если владелец не найден"
-
-                    )
-            }
+                    )}
     )
     @DeleteMapping("{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
@@ -81,20 +62,13 @@ public class UsersController {
     }
 
     @Operation(summary = "Поиск владельца по id",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Найденный владелец",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE)
-
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
+            responses = {@ApiResponse(
+                    responseCode = "200", description = "Найденный владелец",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+            ),
+                    @ApiResponse(responseCode = "404",
                             description = "Если владелец не найден"
-
-                    )
-            }
+                    )}
     )
     @GetMapping
     public ResponseEntity findUser(@RequestParam(required = false) Long id) {
@@ -103,5 +77,4 @@ public class UsersController {
         }
         return ResponseEntity.ok(usersService.getAllUsers());
     }
-
 }
