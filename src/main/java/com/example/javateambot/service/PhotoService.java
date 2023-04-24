@@ -13,7 +13,6 @@ import com.pengrad.telegrambot.response.GetFileResponse;
 import liquibase.util.StringUtil;
 import okhttp3.internal.http2.Http2Stream;
 import org.apache.catalina.connector.InputBuffer;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;

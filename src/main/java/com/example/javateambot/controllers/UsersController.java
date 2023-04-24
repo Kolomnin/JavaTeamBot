@@ -30,7 +30,6 @@ public class UsersController {
                     description = "Новый владелец",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
-//                    schema = @Schema (implementation = Users.class)
             ),
             responses = {
                     @ApiResponse(responseCode = "200",
@@ -48,7 +47,6 @@ public class UsersController {
                     description = "Новый владелец",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE)
-//                    schema = @Schema (implementation = Users.class)
             )
     )
     @PutMapping
@@ -77,8 +75,7 @@ public class UsersController {
             }
     )
     @DeleteMapping("{id}")
-    public ResponseEntity deleteUser(@Parameter(description = "id владельца", example = "1")
-                                                @PathVariable Long id) {
+    public ResponseEntity deleteUser(@PathVariable Long id) {
         usersService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
@@ -100,7 +97,7 @@ public class UsersController {
             }
     )
     @GetMapping
-    public ResponseEntity findUser(@Parameter(description = "id владельца", example = "1") @RequestParam(required = false) Long id) {
+    public ResponseEntity findUser(@RequestParam(required = false) Long id) {
         if (id != null) {
             return ResponseEntity.ok(usersService.findUsersById(id));
         }
