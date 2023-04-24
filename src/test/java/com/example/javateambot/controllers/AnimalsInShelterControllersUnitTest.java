@@ -1,9 +1,7 @@
 package com.example.javateambot.controllers;
 
 import com.example.javateambot.entity.AnimalsInShelter;
-import com.example.javateambot.entity.Users;
 import com.example.javateambot.service.AnimalsInShelterService;
-import com.example.javateambot.service.UsersService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -55,7 +54,7 @@ class AnimalsInShelterControllersUnitTest {
                                     .content(objectMapper.writeValueAsString(animal))
                                     .contentType(MediaType.APPLICATION_JSON)
                     )
-                    .andExpect(status().isCreated())
+                    .andExpect(status().isOk())
                     .andExpect(content().json(objectMapper.writeValueAsString(animal)));
 
         }
@@ -80,8 +79,8 @@ class AnimalsInShelterControllersUnitTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idUser").value(1))
-                .andExpect(jsonPath("$.firstName").value("Шарик"));
+                .andExpect(jsonPath("$.idAnimal").value(1))
+                .andExpect(jsonPath("$.nameAnimal").value("Шарик"));
     }
 
 
@@ -92,14 +91,16 @@ class AnimalsInShelterControllersUnitTest {
         animal.setNameAnimal("Бобик");
         animal.setAge(3);
 
-       // Mockito.when(animalsInShelterService.deleteAnimalInShelter(Mockito.any())).thenReturn();
+        Mockito.doNothing().when(animalsInShelterService).deleteAnimalInShelter(animal.getIdAnimal());
 
         mockMvc.perform(
-                        delete("/animalsInShelter")
+                        delete("/animalsInShelter/{id}",1)
                                 .content(objectMapper.writeValueAsString(animal))
                                 .contentType(MediaType.APPLICATION_JSON)
+
                 )
                 .andExpect(status().isOk());
+        Mockito.verify(animalsInShelterService, times(1)).deleteAnimalInShelter(animal.getIdAnimal());
     }
 
     @Test
@@ -112,8 +113,8 @@ class AnimalsInShelterControllersUnitTest {
         List<AnimalsInShelter> animals = new LinkedList<>();
         animals.add(animal);
 
-        Mockito.when(animalsInShelterService.findAnimalInShelterById(Mockito.any())).thenReturn(animal);
-        Mockito.when(animalsInShelterService.findAnimalInShelterByName(Mockito.any())).thenReturn(animal);
+        Mockito.when(animalsInShelterService.findAnimalInShelterById(Mockito.anyInt())).thenReturn(animal);
+        Mockito.when(animalsInShelterService.findAnimalInShelterByName(Mockito.anyString())).thenReturn(animal);
         Mockito.when(animalsInShelterService.getAllAnimalsInShelter()).thenReturn(animals);
 
         mockMvc.perform(

@@ -1,10 +1,13 @@
 package com.example.javateambot.controllers;
 
+import com.example.javateambot.entity.AnimalsInShelter;
 import com.example.javateambot.entity.Users;
 import com.example.javateambot.service.UsersService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,20 +18,23 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ExtendWith(MockitoExtension.class)
 class UsersControllerUnitTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    //Этот класс преобразовывает объект в JSON-строку. Он нужен, так как мы тестируем REST API, MockMvc самостоятельно это преобразование не делает.
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Test
+    void contextLoads(){}
 
     @MockBean
     private UsersService usersService;
@@ -49,7 +55,7 @@ class UsersControllerUnitTest {
                                 .content(objectMapper.writeValueAsString(user))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(user)));
     }
 
@@ -91,14 +97,16 @@ class UsersControllerUnitTest {
         user.setNumberUser("89371234567");
         user.setChatId(454643L);
 
-        //Mockito.when(usersService.deleteUser(Mockito.any())).thenReturn();
+        Mockito.doNothing().when(usersService).deleteUser(user.getIdUser());
 
         mockMvc.perform(
-                        delete("/users")
+                        delete("/users/{id}",1)
                                 .content(objectMapper.writeValueAsString(user))
                                 .contentType(MediaType.APPLICATION_JSON)
+
                 )
                 .andExpect(status().isOk());
+        Mockito.verify(usersService, times(1)).deleteUser(user.getIdUser());
     }
 
     @Test
@@ -113,7 +121,7 @@ class UsersControllerUnitTest {
         List<Users> users = new LinkedList<>();
         users.add(user);
 
-        Mockito.when(usersService.findUsersById(Mockito.any())).thenReturn(user);
+        Mockito.when(usersService.findUsersById(Mockito.anyInt())).thenReturn(user);
         Mockito.when(usersService.getAllUsers()).thenReturn(users);
 
         mockMvc.perform(
