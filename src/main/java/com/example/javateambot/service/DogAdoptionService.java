@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Service
 public class DogAdoptionService {
@@ -46,22 +45,44 @@ public class DogAdoptionService {
         return animalsInHouseRepository.save(animalsInHouse);
     }
 
-//    public void editAnimalInShelter(AnimalsInHouse animal,String report) {
-//        animal =         animalsInHouseRepository.findByIdUser(getId("222"));
+//    public void saveReport(String report, String numberUser) {
 //
-//        animal.setLastText(report);
-//        animalsInHouseRepository.save(animal);
-//    }
-//    public Long getId(String number) {
-//        Long idUser = usersRepository.findByNumberUser(number).getIdUser();
+//        Long idUser = usersRepository.findByNumberUser(numberUser).getIdUser();
+//        animalsInHouseRepository.findByIdUser(idUser).setLastText(report);
 //
-//        return idUser;
 //    }
+    public void editAnimalInShelter(AnimalsInHouse animal,String report) {
+        animal =         animalsInHouseRepository.findByIdUser(getId("222"));
+
+        animal.setLastText(report);
+        animalsInHouseRepository.save(animal);
+    }
+    public Long getId(String number) {
+        Long idUser = usersRepository.findByNumberUser(number).getIdUser();
+
+        return idUser;
+    }
+
+    public void saveReport(String report, AnimalsInHouse animalsInHouse,String numberUser) {
+
+        animalsInHouse.setLastText(report);
+        animalsInHouseRepository.save(animalsInHouse);
+//
+
+    }
 
     public Boolean checkChatId(Long chatId) {
-        if (Objects.equals(usersRepository.findByChatId(chatId).getChatId(), chatId)) {
+        if (usersRepository.findByChatId(chatId).getChatId()!= 0) {
             return true ;
         } else return false;
     }
+
+//    public Boolean checkNumberOwner(String number) {
+//        if (usersRepository.findByNumberUser2(number)) {
+//            return true ;
+//        } else return false;
+//    }
+
+
 
 }
