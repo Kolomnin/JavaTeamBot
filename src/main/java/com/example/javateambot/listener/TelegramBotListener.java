@@ -46,6 +46,16 @@ public class TelegramBotListener implements UpdatesListener {
     @Autowired
     ReportRepository reportRepository;
 
+
+    @Autowired
+    SaveReportAndContactData saveReportAndContactData;
+
+
+
+
+
+
+
     private UsersContactService userContactService;
 
     private PhotoService photoService;
@@ -195,7 +205,14 @@ public class TelegramBotListener implements UpdatesListener {
                          */
 
                         Report report = new Report();
+
+                        if (update.message().photo() != null && dogAdoptionService.checkChatId(chatId)) { //
+                          && dogAdoptionService.checkChatId(chatId) вставить в if
+                            // дописать проверку на наличие в базе данных усновителя этого чат id
+                            //String report = update.message().caption(); тут находится описание отчета от владельца,когда отправляешь фото в описании фотографии
+
                         if (update.message().photo() != null) { //
+
 
                             photoService.uploadPhoto(update.message());
                             telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе, состоянии поведения питомца," +
@@ -213,20 +230,33 @@ public class TelegramBotListener implements UpdatesListener {
                                     "Новых привычек не обнаружено\n"));
                             telegramBot.execute(new SendMessage(chatId, "После заполнения каждого критерия ставьте точку если пишите в одноу строчку или с начинайте с новой строки как в образце"));
 
+
+
+
                            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
+
 
                         }
                         /**
                          * Тут обрабатвается команда записать данные, когда любой пользователь оставляет контактные данные в боте.
                          */
 
+
+
+                        saveReportAndContactData.saveContactData(update.message().text(),chatId);
+
                         telegramBotService.saveContactData(update.message().text(),chatId);
+
 
                         /**
                          * Это обработчик отчетов, когда нам владелец присылает отчет.
                          */
+                        saveReportAndContactData.saveReport(update.message().text(),chatId);
+
+
 
                         telegramBotService.saveReport(update.message().text(),chatId);
+
 
                     }
             );

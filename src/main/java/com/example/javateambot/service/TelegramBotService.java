@@ -134,6 +134,7 @@ public class TelegramBotService {
         return button;
     }
 
+
     /**
      * Метод показывает пользователю кнопу "Главное меню" для возврата в основное меню в чате бота,
      * использует {@link InlineKeyboardButton}
@@ -180,41 +181,7 @@ public class TelegramBotService {
         }
     }
 
-    public void saveReport(String reportMessage, Long chatId) {
-        Report report = new Report();
-        String reportText = reportMessage;
-        String[] fieldsForReport = reportText.split("\\.");
-        System.out.println(fieldsForReport.length);
-        String[] fieldsForReport1 = reportText.split("\n");
-        if (fieldsForReport.length == 4) {
 
 
-            String ration = fieldsForReport[0].trim();
-            report.setRation(ration);
-            String animalBehavior = fieldsForReport[1].trim();
-            report.setAnimalBehavior(animalBehavior);
-            String GeneralWellBeing = fieldsForReport[2].trim();
-            report.setGeneralWellBeing(GeneralWellBeing);
-            String newHabits = fieldsForReport[3].trim();
-            report.setNewHabits(newHabits);
-            report.setAppPhoto(photoService.findPhotoLastId(chatId));
-            reportRepository.save(report);
-            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
-
-        } else if (fieldsForReport1.length == 4) {
-
-            String ration = fieldsForReport1[0].trim();
-            report.setRation(ration);
-            String animalBehavior = fieldsForReport1[1].trim();
-            report.setAnimalBehavior(animalBehavior);
-            String GeneralWellBeing = fieldsForReport1[2].trim();
-            report.setGeneralWellBeing(GeneralWellBeing);
-            String newHabits = fieldsForReport1[3].trim();
-            report.setNewHabits(newHabits);
-            reportRepository.save(report);
-            telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
-
-        }
-    }
 }
 

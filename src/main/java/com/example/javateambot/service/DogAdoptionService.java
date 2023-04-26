@@ -1,7 +1,7 @@
 package com.example.javateambot.service;
 
 import com.example.javateambot.entity.AnimalsInHouse;
-import com.example.javateambot.entity.AnimalsInShelter;
+import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.AnimalsInHouseRepository;
 import com.example.javateambot.repository.AnimalsInShelterRepository;
 import com.example.javateambot.repository.UsersRepository;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Service
 public class DogAdoptionService {
@@ -45,44 +46,25 @@ public class DogAdoptionService {
         return animalsInHouseRepository.save(animalsInHouse);
     }
 
-//    public void saveReport(String report, String numberUser) {
+//    public void editAnimalInShelter(AnimalsInHouse animal,String report) {
+//        animal =         animalsInHouseRepository.findByIdUser(getId("222"));
 //
-//        Long idUser = usersRepository.findByNumberUser(numberUser).getIdUser();
-//        animalsInHouseRepository.findByIdUser(idUser).setLastText(report);
-//
+//        animal.setLastText(report);
+//        animalsInHouseRepository.save(animal);
 //    }
-    public void editAnimalInShelter(AnimalsInHouse animal,String report) {
-        animal =         animalsInHouseRepository.findByIdUser(getId("222"));
-
-        animal.setLastText(report);
-        animalsInHouseRepository.save(animal);
-    }
-    public Long getId(String number) {
-        Long idUser = usersRepository.findByNumberUser(number).getIdUser();
-
-        return idUser;
-    }
-
-    public void saveReport(String report, AnimalsInHouse animalsInHouse,String numberUser) {
-
-        animalsInHouse.setLastText(report);
-        animalsInHouseRepository.save(animalsInHouse);
+//    public Long getId(String number) {
+//        Long idUser = usersRepository.findByNumberUser(number).getIdUser();
 //
-
-    }
+//        return idUser;
+//    }
 
     public Boolean checkChatId(Long chatId) {
-        if (usersRepository.findByChatId(chatId).getChatId()!= 0) {
+        if (Objects.equals(usersRepository.findByChatId(chatId).getChatId(), chatId)) {
             return true ;
         } else return false;
     }
 
-//    public Boolean checkNumberOwner(String number) {
-//        if (usersRepository.findByNumberUser2(number)) {
-//            return true ;
-//        } else return false;
-//    }
-
-
-
+    public Users findUserByChatId(long chatId) {
+        return usersRepository.findByChatId(chatId);
+    }
 }
