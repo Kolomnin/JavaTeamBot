@@ -40,7 +40,7 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-   private AnimalsInHouse animalsInHouse;
+   private Users user;
 
 
     public long getIdReport() {
@@ -89,6 +89,10 @@ public class Report {
 
     public void setAppPhoto(AppPhoto appPhoto) {
         this.appPhoto = appPhoto;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     //    @Column(nullable = false)

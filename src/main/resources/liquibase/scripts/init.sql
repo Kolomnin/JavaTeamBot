@@ -45,7 +45,7 @@ CREATE TABLE report
 );
 
 -- --changeset sergeyPanin:3
--- ALTER TABLE animalsInHouse
+-- ALTER TABLE user
 --     ADD COLUMN adoption LONG INT PRIMARY KEY;
 
 

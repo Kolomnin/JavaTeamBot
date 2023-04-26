@@ -3,6 +3,7 @@ package com.example.javateambot.service;
 import com.example.javateambot.entity.ContactInformation;
 import com.example.javateambot.entity.Report;
 import com.example.javateambot.repository.ContactInformationRepository;
+import com.example.javateambot.repository.PhotoRepository;
 import com.example.javateambot.repository.ReportRepository;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -22,7 +23,16 @@ public class SaveReportAndContactData {
     PhotoService photoService;
 
     @Autowired
+    PhotoRepository photoRepository;
+
+    @Autowired
     ContactInformationRepository contactInformationRepository;
+
+//    @Autowired
+//    UsersRepository usersRepository;
+
+    @Autowired DogAdoptionService dogAdoptionService;
+
 
     public void saveReport(String reportMessage, Long chatId) {
         Report report = new Report();
@@ -42,6 +52,8 @@ public class SaveReportAndContactData {
             String newHabits = fieldsForReport[3].trim();
             report.setNewHabits(newHabits);
             report.setAppPhoto(photoService.findPhotoLastId(chatId));
+            report.setUser(dogAdoptionService.findUserByChatId(chatId));
+
             reportRepository.save(report);
             telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
 
@@ -55,6 +67,8 @@ public class SaveReportAndContactData {
             report.setGeneralWellBeing(GeneralWellBeing);
             String newHabits = fieldsForReport1[3].trim();
             report.setNewHabits(newHabits);
+            report.setAppPhoto(photoService.findPhotoLastId(chatId));
+            report.setUser(dogAdoptionService.findUserByChatId(chatId));
             reportRepository.save(report);
             telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
 

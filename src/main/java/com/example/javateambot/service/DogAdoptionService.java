@@ -1,7 +1,7 @@
 package com.example.javateambot.service;
 
 import com.example.javateambot.entity.AnimalsInHouse;
-import com.example.javateambot.entity.AnimalsInShelter;
+import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.AnimalsInHouseRepository;
 import com.example.javateambot.repository.AnimalsInShelterRepository;
 import com.example.javateambot.repository.UsersRepository;
@@ -64,4 +64,7 @@ public class DogAdoptionService {
         } else return false;
     }
 
+    public Users findUserByChatId(long chatId) {
+        return usersRepository.findByChatId(chatId);
+    }
 }
