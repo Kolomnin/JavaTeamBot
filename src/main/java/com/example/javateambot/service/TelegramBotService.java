@@ -122,10 +122,63 @@ public class TelegramBotService {
         telegramBot.execute(message);
     }
 
+    /**
+     * Метод показывает пользователю кнопу "Позвать волонтера" в чате бота, использует {@link InlineKeyboardButton}
+     *
+     * @return возвращает созданную кнопку
+     */
+
     public InlineKeyboardButton helpVolunteers() { // метод позвать волонтера
         InlineKeyboardButton button = new InlineKeyboardButton("Позвать волонтера");
         button.callbackData("позвать волонтера");
         return button;
+    }
+
+
+    /**
+     * Метод показывает пользователю кнопу "Главное меню" для возврата в основное меню в чате бота,
+     * использует {@link InlineKeyboardButton}
+     *
+     * @return возвращает созданную кнопку
+     */
+    public InlineKeyboardButton mainMenu() { // // возврат в главное меню
+        InlineKeyboardButton button = new InlineKeyboardButton("Главное меню");
+        button.callbackData("Главное меню");
+        return button;
+    }
+
+    public void saveContactData(String message, Long chatId) {
+
+        ContactInformation contactInformation = new ContactInformation();
+        String messageText = message;
+        String[] fields = messageText.split(" ");
+        String[] fields1 = messageText.split("\n");
+
+        if (fields.length == 3) {
+
+            String firstName = fields[0].trim();
+            contactInformation.setFirstname(firstName);
+            String lastName = fields[1].trim();
+            contactInformation.setLastName(lastName);
+            String phoneNumber = fields[2].trim();
+            contactInformation.setPhoneNumber(phoneNumber);
+            contactInformation.setChatId(chatId);
+            contactInformationRepository.save(contactInformation);
+            telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
+
+        } else if (fields1.length == 3) {
+
+            String firstName = fields1[0].trim();
+            contactInformation.setFirstname(firstName);
+            String lastName = fields1[1].trim();
+            contactInformation.setLastName(lastName);
+            String phoneNumber = fields1[2].trim();
+            contactInformation.setPhoneNumber(phoneNumber);
+            contactInformation.setChatId(chatId);
+            contactInformationRepository.save(contactInformation);
+            telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
+
+        }
     }
 
 
