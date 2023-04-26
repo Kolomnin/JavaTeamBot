@@ -51,11 +51,6 @@ public class TelegramBotListener implements UpdatesListener {
     SaveReportAndContactData saveReportAndContactData;
 
 
-
-
-
-
-
     private UsersContactService userContactService;
 
     private PhotoService photoService;
@@ -82,7 +77,7 @@ public class TelegramBotListener implements UpdatesListener {
 
     @Autowired
     public TelegramBotListener(TelegramBot telegramBot, TelegramBotService telegramBotService,
-                               TelegramService telegramService) {
+                               TelegramService telegramService, PhotoService photoService) {
         this.telegramBot = telegramBot;
         this.telegramBotService = telegramBotService;
         this.telegramService = telegramService;
@@ -173,9 +168,7 @@ public class TelegramBotListener implements UpdatesListener {
                                 }
                             }
                         }
-
-
-      //                  User user = update.message().from();
+                        //                  User user = update.message().from();
                         chatId = update.message().chat().id();
 
                         if ("/start".equals(update.message().text())) {  // этап 0
@@ -187,33 +180,26 @@ public class TelegramBotListener implements UpdatesListener {
                          * Проверяем сообщение пользователя на соответствие и сохраняем в БД,
                          * или выдаем информацию о несоответствии шаблону для сохранения.
                          */
-                        else if (update.message().text() != null) {
-
-                            Matcher matcher = TELEPHONE_MESSAGE.matcher(update.message().text());
-                            if (matcher.find()) {  //find запускает matche
-                                telegramBot.execute(new SendMessage(chatId, "успешно"));
-
-                            }
-                        } else if (checkUrl(update.message().text())) {
-                            telegramBot.execute(new SendMessage(chatId, "Вы найдены, теперь отправьте фото"));
-
-                        }
+//                else if (update.message().text() != null) {
+//
+//                    Matcher matcher = TELEPHONE_MESSAGE.matcher(update.message().text());
+//                    if (matcher.find()) {  //find запускает matche
+//                        telegramBot.execute(new SendMessage(chatId, "успешно"));
+//
+//                    }
+//                } else if (checkUrl(update.message().text())) {
+//                    telegramBot.execute(new SendMessage(chatId, "Вы найдены, теперь отправьте фото"));
+//
+//                }
                         /**
                          * Тут обрабатывается прием фото для отчета если в update есть фото и chatId есть в нашей базе
                          * усыновителей тогда принимаем от него фотографию и создаем обьект отчета, присваиваем ему фото
                          * затем сохраняем в бд
                          */
-
                         Report report = new Report();
 
                         if (update.message().photo() != null && dogAdoptionService.checkChatId(chatId)) { //
-                          && dogAdoptionService.checkChatId(chatId) вставить в if
-                            // дописать проверку на наличие в базе данных усновителя этого чат id
-                            //String report = update.message().caption(); тут находится описание отчета от владельца,когда отправляешь фото в описании фотографии
-
-                        if (update.message().photo() != null) { //
-
-
+//
                             photoService.uploadPhoto(update.message());
                             telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе, состоянии поведения питомца," +
                                     "общем самочувствии, привыканию к новому месту, новые обретенные привычки.\n" +
@@ -230,37 +216,23 @@ public class TelegramBotListener implements UpdatesListener {
                                     "Новых привычек не обнаружено\n"));
                             telegramBot.execute(new SendMessage(chatId, "После заполнения каждого критерия ставьте точку если пишите в одноу строчку или с начинайте с новой строки как в образце"));
 
-
-
-
-                           telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
-
-
                         }
+//                        telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
+
                         /**
                          * Тут обрабатвается команда записать данные, когда любой пользователь оставляет контактные данные в боте.
                          */
 
-
-
-                        saveReportAndContactData.saveContactData(update.message().text(),chatId);
-
-                        telegramBotService.saveContactData(update.message().text(),chatId);
-
+                        saveReportAndContactData.saveContactData(update.message().text(), chatId);
 
                         /**
                          * Это обработчик отчетов, когда нам владелец присылает отчет.
                          */
-                        saveReportAndContactData.saveReport(update.message().text(),chatId);
-
-
-
-                        telegramBotService.saveReport(update.message().text(),chatId);
-
+                        saveReportAndContactData.saveReport(update.message().text(), chatId);
 
                     }
             );
-        } catch (Exception e) {
+        } catch(Exception e){
             e.printStackTrace();
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
@@ -272,6 +244,8 @@ public class TelegramBotListener implements UpdatesListener {
     }
 
 }
+
+
 
 
 
