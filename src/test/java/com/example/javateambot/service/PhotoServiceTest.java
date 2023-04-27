@@ -24,7 +24,7 @@ class PhotoServiceTest {
         out = new PhotoService(telegramBot, photoRepository);
         AppPhoto appPhoto = new AppPhoto();
         appPhoto.setChatId(1L);
-        when(photoRepository.findAppPhotoByChatId(1)).thenReturn(appPhoto);
+        when(photoRepository.findLastReport1(1)).thenReturn(appPhoto);
         assertEquals(appPhoto, out.findPhotoLastId(1));
     }
 }

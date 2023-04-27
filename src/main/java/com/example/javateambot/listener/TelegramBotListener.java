@@ -51,6 +51,11 @@ public class TelegramBotListener implements UpdatesListener {
     SaveReportAndContactData saveReportAndContactData;
 
 
+
+
+
+
+
     private UsersContactService userContactService;
 
     private PhotoService photoService;
@@ -180,22 +185,23 @@ public class TelegramBotListener implements UpdatesListener {
                          * Проверяем сообщение пользователя на соответствие и сохраняем в БД,
                          * или выдаем информацию о несоответствии шаблону для сохранения.
                          */
-//                else if (update.message().text() != null) {
-//
-//                    Matcher matcher = TELEPHONE_MESSAGE.matcher(update.message().text());
-//                    if (matcher.find()) {  //find запускает matche
-//                        telegramBot.execute(new SendMessage(chatId, "успешно"));
-//
-//                    }
-//                } else if (checkUrl(update.message().text())) {
-//                    telegramBot.execute(new SendMessage(chatId, "Вы найдены, теперь отправьте фото"));
-//
-//                }
+                        else if (update.message().text() != null) {
+
+                            Matcher matcher = TELEPHONE_MESSAGE.matcher(update.message().text());
+                            if (matcher.find()) {  //find запускает matche
+                                telegramBot.execute(new SendMessage(chatId, "успешно"));
+
+                            }
+                        } else if (checkUrl(update.message().text())) {
+                            telegramBot.execute(new SendMessage(chatId, "Вы найдены, теперь отправьте фото"));
+
+                        }
                         /**
                          * Тут обрабатывается прием фото для отчета если в update есть фото и chatId есть в нашей базе
                          * усыновителей тогда принимаем от него фотографию и создаем обьект отчета, присваиваем ему фото
                          * затем сохраняем в бд
                          */
+
                         Report report = new Report();
 
                         if (update.message().photo() != null && dogAdoptionService.checkChatId(chatId)) { //

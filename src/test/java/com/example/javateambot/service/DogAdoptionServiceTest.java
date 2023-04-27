@@ -69,11 +69,27 @@ class DogAdoptionServiceTest {
     public void testAdoptionDog2WithNonexistentAnimal() {
         // Arrange
         Long userID = 1L;
-        Long animalId = 100L; // non-existent animal ID
+        Long animalId = 1L; // non-existent animal ID
         AnimalsInHouse animalsInHouse = new AnimalsInHouse();
-        animalsInHouse.setName("Buddy");
-        animalsInHouse.setAge(2);
-        animalsInHouse.setSpecies("Dog");
+        animalsInHouse.setIdUser(userID);
+        animalsInHouse.setIdAnimal(1);
+
+        // Act
+        AnimalsInHouse savedAnimalsInHouse = adoptionDog2(userID, animalId, animalsInHouse);
+
+        // Assert
+        assertNotNull(savedAnimalsInHouse);
+        assertEquals(animalsInHouse,savedAnimalsInHouse);
+    }
+
+    @Test
+    public void testAdoptionDog2WithNonexistentUser() {
+        // Arrange
+        Long userID = 1L; // non-existent user ID
+        Long animalId = 2L;
+        AnimalsInHouse animalsInHouse = new AnimalsInHouse();
+        animalsInHouse.setIdAnimal(animalId);
+        animalsInHouse.setIdUser(userID);
 
         // Act
         AnimalsInHouse savedAnimalsInHouse = adoptionDog2(userID, animalId, animalsInHouse);
@@ -81,23 +97,6 @@ class DogAdoptionServiceTest {
         // Assert
         assertNull(savedAnimalsInHouse);
     }
-//
-//    @Test
-//    public void testAdoptionDog2WithNonexistentUser() {
-//        // Arrange
-//        Long userID = 100L; // non-existent user ID
-//        Long animalId = 2L;
-//        AnimalsInHouse animalsInHouse = new AnimalsInHouse();
-//        animalsInHouse.setName("Buddy");
-//        animalsInHouse.setAge(2);
-//        animalsInHouse.setSpecies("Dog");
-//
-//        // Act
-//        AnimalsInHouse savedAnimalsInHouse = adoptionDog2(userID, animalId, animalsInHouse);
-//
-//        // Assert
-//        assertNull(savedAnimalsInHouse);
-//    }
 //
 //    @Test
 //    public void testAdoptionDog2WithExistingData() {
