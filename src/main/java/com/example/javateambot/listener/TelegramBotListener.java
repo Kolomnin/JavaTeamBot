@@ -117,6 +117,7 @@ public class TelegramBotListener implements UpdatesListener {
                                         telegramBot.execute(new SendMessage(chatId, telegramDogService.safetyRecommendations()));
 
                                 case "2" -> telegramBotService.takeDogFromShelter(chatId);
+                                case "2.1" -> telegramBotService.takeCatFromShelter(chatId);
                                 case RULES_FOR_DATING ->
                                         telegramBot.execute(new SendMessage(chatId, telegramDogService.rulesForDating()));
                                 case LIST_OF_DOCUMENTS ->
