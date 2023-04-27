@@ -113,21 +113,19 @@ class AnimalsInShelterControllersTest {
         List<AnimalsInShelter> animals = new LinkedList<>();
         animals.add(animal);
 
-        Mockito.when(animalsInShelterService.findAnimalInShelterById(Mockito.anyInt())).thenReturn(animal);
+        Mockito.when(animalsInShelterService.findAnimalInShelterById(Mockito.anyLong())).thenReturn(animal);
         Mockito.when(animalsInShelterService.findAnimalInShelterByName(Mockito.anyString())).thenReturn(animal);
         Mockito.when(animalsInShelterService.getAllAnimalsInShelter()).thenReturn(animals);
 
         mockMvc.perform(
-                        get("/animalsInShelter")
-                                .content(objectMapper.writeValueAsString(1))
+                        get("/animalsInShelter?id={id}",1)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(animal)));
 
         mockMvc.perform(
-                        get("/animalsInShelter")
-                                .content(objectMapper.writeValueAsString("Бобик"))
+                        get("/animalsInShelter?name=Бобик")
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
