@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class DogAdoptionController {
 
 
-    AnimalsInHouseRepository animalsInHouseRepository;
-
+    private DogAdoptionService dogAdoptionService;
     @Autowired
-    DogAdoptionService dogAdoptionService;
-
+    public DogAdoptionController(DogAdoptionService dogAdoptionService) {
+        this.dogAdoptionService = dogAdoptionService;
+    }
 
     @Operation(summary = "Присваивание владельцу животного, в которое вносится id животного (из бд) и владельца (из бд)",
 

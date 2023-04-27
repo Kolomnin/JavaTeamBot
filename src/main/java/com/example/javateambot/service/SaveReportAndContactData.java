@@ -10,6 +10,8 @@ import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class SaveReportAndContactData {
 
@@ -53,6 +55,7 @@ public class SaveReportAndContactData {
             report.setNewHabits(newHabits);
             report.setAppPhoto(photoService.findPhotoLastId(chatId));
             report.setUser(dogAdoptionService.findUserByChatId(chatId));
+            report.setDate(LocalDate.now());
 
             reportRepository.save(report);
             telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
@@ -69,6 +72,7 @@ public class SaveReportAndContactData {
             report.setNewHabits(newHabits);
             report.setAppPhoto(photoService.findPhotoLastId(chatId));
             report.setUser(dogAdoptionService.findUserByChatId(chatId));
+            report.setDate(LocalDate.now());
             reportRepository.save(report);
             telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));
 

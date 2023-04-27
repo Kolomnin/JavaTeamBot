@@ -25,6 +25,7 @@ public class AnimalsInHouse {
      * Id животного
      * хранится в базе данных
      */
+
     @Column(nullable = false)
     private long idAnimal;
 
@@ -53,12 +54,6 @@ public class AnimalsInHouse {
     @Column(nullable = false)
     private LocalDate lastReportDate;
 
-
-    /**
-     * Текст отчета о состоянии питомца, который отправляется ежедневно
-     */
-    @Column(nullable = false)
-    private String lastText;
 
     /**
      * Метод позволяет получить Id животного
@@ -116,19 +111,5 @@ public class AnimalsInHouse {
         this.lastReportDate = lastReportDate;
     }
 
-
-    /**
-     * Метод позволяет получить текст отчета
-     */
-    public String getLastText() {
-        return lastText;
-    }
-
-    /**
-     * Метод позволяет установить текст отчета
-     */
-    public void setLastText(String lastText) {
-        this.lastText = lastText;
-    }
 
 }

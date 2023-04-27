@@ -51,11 +51,6 @@ public class TelegramBotListener implements UpdatesListener {
     SaveReportAndContactData saveReportAndContactData;
 
 
-
-
-
-
-
     private UsersContactService userContactService;
 
     private PhotoService photoService;
@@ -94,8 +89,8 @@ public class TelegramBotListener implements UpdatesListener {
         telegramBot.setUpdatesListener(this);
     }
 
-    private static final Pattern TELEPHONE_MESSAGE = Pattern.compile(
-            "(\\d{11})(\\s)([А-яA-z)]+)(\\s)([А-яA-z)\\s\\d]+)"); // парсим сообщение на группы по круглым скобкам
+//    private static final Pattern TELEPHONE_MESSAGE = Pattern.compile(
+//            "(\\d{11})(\\s)([А-яA-z)]+)(\\s)([А-яA-z)\\s\\d]+)"); // парсим сообщение на группы по круглым скобкам
 
     Long chatId;
 
@@ -173,7 +168,6 @@ public class TelegramBotListener implements UpdatesListener {
                                 }
                             }
                         }
-                        //                  User user = update.message().from();
                         chatId = update.message().chat().id();
 
                         if ("/start".equals(update.message().text())) {  // этап 0
@@ -185,24 +179,24 @@ public class TelegramBotListener implements UpdatesListener {
                          * Проверяем сообщение пользователя на соответствие и сохраняем в БД,
                          * или выдаем информацию о несоответствии шаблону для сохранения.
                          */
-                        else if (update.message().text() != null) {
-
-                            Matcher matcher = TELEPHONE_MESSAGE.matcher(update.message().text());
-                            if (matcher.find()) {  //find запускает matche
-                                telegramBot.execute(new SendMessage(chatId, "успешно"));
-
-                            }
-                        } else if (checkUrl(update.message().text())) {
-                            telegramBot.execute(new SendMessage(chatId, "Вы найдены, теперь отправьте фото"));
-
-                        }
+//                        else if (update.message().text() != null) {
+//
+//                            Matcher matcher = TELEPHONE_MESSAGE.matcher(update.message().text());
+//                            if (matcher.find()) {  //find запускает matche
+//                                telegramBot.execute(new SendMessage(chatId, "успешно"));
+//
+//                            }
+//                        } else if (checkUrl(update.message().text())) {
+//                            telegramBot.execute(new SendMessage(chatId, "Вы найдены, теперь отправьте фото"));
+//
+//                        }
                         /**
                          * Тут обрабатывается прием фото для отчета если в update есть фото и chatId есть в нашей базе
                          * усыновителей тогда принимаем от него фотографию и создаем обьект отчета, присваиваем ему фото
                          * затем сохраняем в бд
                          */
 
-                        Report report = new Report();
+//                        Report report = new Report();
 
                         if (update.message().photo() != null && dogAdoptionService.checkChatId(chatId)) { //
 //
@@ -223,7 +217,6 @@ public class TelegramBotListener implements UpdatesListener {
                             telegramBot.execute(new SendMessage(chatId, "После заполнения каждого критерия ставьте точку если пишите в одноу строчку или с начинайте с новой строки как в образце"));
 
                         }
-//                        telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен"));
 
                         /**
                          * Тут обрабатвается команда записать данные, когда любой пользователь оставляет контактные данные в боте.
@@ -244,10 +237,10 @@ public class TelegramBotListener implements UpdatesListener {
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
 
-    public static boolean checkUrl(String s) {
-        String regex = "^\\+?[0-9\\-\\s]*$";
-        return s != null && s.matches(regex);
-    }
+//    public static boolean checkUrl(String s) {
+//        String regex = "^\\+?[0-9\\-\\s]*$";
+//        return s != null && s.matches(regex);
+//    }
 
 }
 
