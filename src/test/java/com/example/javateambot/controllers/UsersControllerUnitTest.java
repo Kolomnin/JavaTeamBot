@@ -121,12 +121,11 @@ class UsersControllerUnitTest {
         List<Users> users = new LinkedList<>();
         users.add(user);
 
-        Mockito.when(usersService.findUsersById(Mockito.anyInt())).thenReturn(user);
+        Mockito.when(usersService.findUsersById(Mockito.anyLong())).thenReturn(user);
         Mockito.when(usersService.getAllUsers()).thenReturn(users);
 
         mockMvc.perform(
-                        get("/users")
-                                .content(objectMapper.writeValueAsString(1))
+                        get("/users?id=1")
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
