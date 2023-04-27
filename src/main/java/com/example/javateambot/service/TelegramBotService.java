@@ -33,7 +33,7 @@ public class TelegramBotService {
     }
 
     public void takeDogFromShelter(Long chatId) {  // кнопки этапа 2, кейсы между 2 и 3
-        SendMessage message = new SendMessage(chatId, "Приветствует в нашем приюте");
+        SendMessage message = new SendMessage(chatId, "Рекомендации");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Правила знакомства с собакой до того, как можно забрать ее из приюта.");
         button1.callbackData("Правила знакомства");
@@ -63,8 +63,8 @@ public class TelegramBotService {
         keyboard.addRow(button7);
         keyboard.addRow(button8);
         keyboard.addRow(button9);
-        keyboard.addRow(saveInfo());
-        keyboard.addRow(helpVolunteers());
+//        keyboard.addRow(saveInfo());
+//        keyboard.addRow(helpVolunteers());
         message.replyMarkup(keyboard);
         telegramBot.execute(message);
     }
@@ -95,9 +95,14 @@ public class TelegramBotService {
         button3.callbackData("3");
         InlineKeyboardButton button4 = new InlineKeyboardButton("Позвать волонтера");
         button4.callbackData("позвать волонтера");
+        InlineKeyboardButton button5 = new InlineKeyboardButton("Как взять кошку из приюта?");
+        button5.callbackData("5");
+        InlineKeyboardButton button6 = new InlineKeyboardButton("Записать данные");
+        button6.callbackData("6");
         InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
-        keyboard.addRow(button1, button2);
-        keyboard.addRow(button3, button4);
+        keyboard.addRow(button1,button3);
+        keyboard.addRow(button2,button5);
+        keyboard.addRow(button4,saveInfo());
         helloMessage.replyMarkup(keyboard);
         telegramBot.execute(helloMessage);
     }
@@ -116,8 +121,8 @@ public class TelegramBotService {
         keyboard.addRow(button1);
         keyboard.addRow(button2);
         keyboard.addRow(button3);
-        keyboard.addRow(saveInfo());
-        keyboard.addRow(helpVolunteers());
+//        keyboard.addRow(saveInfo());
+//        keyboard.addRow(helpVolunteers());
         message.replyMarkup(keyboard);
         telegramBot.execute(message);
     }
@@ -147,39 +152,39 @@ public class TelegramBotService {
         return button;
     }
 
-    public void saveContactData(String message, Long chatId) {
-
-        ContactInformation contactInformation = new ContactInformation();
-        String messageText = message;
-        String[] fields = messageText.split(" ");
-        String[] fields1 = messageText.split("\n");
-
-        if (fields.length == 3) {
-
-            String firstName = fields[0].trim();
-            contactInformation.setFirstname(firstName);
-            String lastName = fields[1].trim();
-            contactInformation.setLastName(lastName);
-            String phoneNumber = fields[2].trim();
-            contactInformation.setPhoneNumber(phoneNumber);
-            contactInformation.setChatId(chatId);
-            contactInformationRepository.save(contactInformation);
-            telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
-
-        } else if (fields1.length == 3) {
-
-            String firstName = fields1[0].trim();
-            contactInformation.setFirstname(firstName);
-            String lastName = fields1[1].trim();
-            contactInformation.setLastName(lastName);
-            String phoneNumber = fields1[2].trim();
-            contactInformation.setPhoneNumber(phoneNumber);
-            contactInformation.setChatId(chatId);
-            contactInformationRepository.save(contactInformation);
-            telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
-
-        }
-    }
+//    public void saveContactData(String message, Long chatId) {
+//
+//        ContactInformation contactInformation = new ContactInformation();
+//        String messageText = message;
+//        String[] fields = messageText.split(" ");
+//        String[] fields1 = messageText.split("\n");
+//
+//        if (fields.length == 3) {
+//
+//            String firstName = fields[0].trim();
+//            contactInformation.setFirstname(firstName);
+//            String lastName = fields[1].trim();
+//            contactInformation.setLastName(lastName);
+//            String phoneNumber = fields[2].trim();
+//            contactInformation.setPhoneNumber(phoneNumber);
+//            contactInformation.setChatId(chatId);
+//            contactInformationRepository.save(contactInformation);
+//            telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
+//
+//        } else if (fields1.length == 3) {
+//
+//            String firstName = fields1[0].trim();
+//            contactInformation.setFirstname(firstName);
+//            String lastName = fields1[1].trim();
+//            contactInformation.setLastName(lastName);
+//            String phoneNumber = fields1[2].trim();
+//            contactInformation.setPhoneNumber(phoneNumber);
+//            contactInformation.setChatId(chatId);
+//            contactInformationRepository.save(contactInformation);
+//            telegramBot.execute(new SendMessage(chatId, "Ваши данные сохранены"));
+//
+//        }
+//    }
 
 
 

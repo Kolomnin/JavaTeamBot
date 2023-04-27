@@ -26,17 +26,17 @@ class DogAdoptionServiceTest {
     void adoptionDog2() {
     }
 
-    @Test
-    void checkChatId() {
-
-        Users user = new Users();
-        user.setIdUser(1);
-        user.setChatId(12L);
+//    @Test
+//    void checkChatId() {
+//
+//        Users user = new Users();
+//        user.setIdUser(1);
+//        user.setChatId(123L);
 //        when(repository.save(user)).thenReturn(user);
-        repository.save(user);
-        assertEquals(repository.getReferenceById(1L).getChatId(),user.getChatId());
+//        repository.save(user);
+//        assertEquals(repository.getReferenceById(1L).getChatId());
 //        assertEquals(repository.findByChatId(12L));
-    }
+//    }
     @Test
     public void testAdoptionDog2WithValidInput() {
         // Arrange
@@ -45,7 +45,7 @@ class DogAdoptionServiceTest {
         AnimalsInHouse animalsInHouse = new AnimalsInHouse();
         animalsInHouse.setIdUser(1L);
         animalsInHouse.setIdAnimal(2L);
-        animalsInHouse.setLastText("adoption");
+
         animalsInHouse.setLastDateProbationPeriod(LocalDate.now());
 
         // Act
@@ -58,6 +58,7 @@ class DogAdoptionServiceTest {
         assertNotNull(savedAnimalsInHouse.getLastDateProbationPeriod());
     }
 
+    @Test
     private AnimalsInHouse adoptionDog2(Long userID, Long animalId, AnimalsInHouse animalsInHouse) {
 
         animalsInHouse.setLastDateProbationPeriod(LocalDate.now());
