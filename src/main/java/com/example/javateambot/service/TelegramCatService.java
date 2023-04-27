@@ -9,11 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 
 @Service
-public class TelegramService {
-//    private final UserRepository userRepository;
+public class TelegramCatService {
 
-    public TelegramService(TelegramBot telegramBot) {
-//        this.userRepository = userRepository;
+    public TelegramCatService(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
     }
 

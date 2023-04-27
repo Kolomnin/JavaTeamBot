@@ -1,6 +1,8 @@
 package com.example.javateambot.entity;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDate;
 
 
 @Entity
@@ -42,6 +44,9 @@ public class Report {
     @JoinColumn(name = "user_id")
    private Users user;
 
+
+    @Column(nullable = false)
+    private LocalDate date;
 
     public long getIdReport() {
         return idReport;
@@ -93,6 +98,14 @@ public class Report {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     //    @Column(nullable = false)
