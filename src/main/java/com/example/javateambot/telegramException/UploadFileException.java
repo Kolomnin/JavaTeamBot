@@ -1,4 +1,4 @@
-package com.example.javateambot.telegramExeption;
+package com.example.javateambot.telegramException;
 
 public class UploadFileException extends RuntimeException   {
         public UploadFileException(String message, Throwable cause){super(message, cause);}

@@ -1,6 +1,5 @@
 package com.example.javateambot.controllers;
 
-import com.example.javateambot.entity.AnimalsInShelter;
 import com.example.javateambot.entity.Users;
 import com.example.javateambot.service.UsersService;
 import com.fasterxml.jackson.databind.ObjectMapper;

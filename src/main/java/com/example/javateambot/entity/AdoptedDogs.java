@@ -2,18 +2,17 @@ package com.example.javateambot.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
 
 /**
- * Класс является сущностью объекта AnimalsInHouse,
+ * Класс является сущностью объекта AdoptedDogs,
  * Это сущность животного ,которое будет храниться в базе данных
  */
 @Entity
-@Table(name = "animals_in_house")
-public class AnimalsInHouse {
+@Table(name = "adopted_dogs")
+public class AdoptedDogs {
 
     /**
-     * Id животного
+     * Id собаки
      * хранится в базе данных
      */
 
@@ -22,19 +21,19 @@ public class AnimalsInHouse {
     private long adoption;
 
     /**
-     * Id животного
+     * Id собаки
      * хранится в базе данных
      */
 
-    @Column(nullable = false)
-    private long idAnimal;
+    @OneToOne
+    private DogsInShelter dogs;
 
     /**
      * Id владельца
      * хранится в базе данных
      */
-    @Column(nullable = false)
-    private long idUser;
+    @OneToOne
+    private Users users;
 
     /**
      * Дата конца испытательного срока у хозяина,
@@ -47,7 +46,7 @@ public class AnimalsInHouse {
 //    private Collection<Report> report;
 
     /**
-     * Дата когда был отправлен последний отчет о состоянии животного,
+     * Дата когда был отправлен последний отчет о состоянии собаки,
      * который находится у хозаина,
      * хранится в базе данных
      */
@@ -56,31 +55,31 @@ public class AnimalsInHouse {
 
 
     /**
-     * Метод позволяет получить Id животного
+     * Метод позволяет получить Id собаки
      */
-    public long getIdAnimal() {
-        return idAnimal;
+    public DogsInShelter getDogs() {
+        return dogs;
     }
 
     /**
-     * Метод позволяет установить Id животного
+     * Метод позволяет установить Id собаки
      */
-    public void setIdAnimal(long idAnimal) {
-        this.idAnimal = idAnimal;
+    public void setDogs(DogsInShelter dogs) {
+        this.dogs = dogs;
     }
 
     /**
      * Метод позволяет получить ID владельца
      */
-    public long getIdUser() {
-        return idUser;
+    public Users getUsers() {
+        return users;
     }
 
     /**
      * Метод позволяет установить ID владельца
      */
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     /**

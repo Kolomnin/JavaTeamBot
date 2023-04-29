@@ -1,7 +1,7 @@
 package com.example.javateambot.controllers;
 
-import com.example.javateambot.entity.AnimalsInShelter;
-import com.example.javateambot.service.AnimalsInShelterService;
+import com.example.javateambot.entity.DogsInShelter;
+import com.example.javateambot.service.DogsInShelterService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class AnimalsInShelterControllersTest {
+class DogsInShelterControllerTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -37,17 +37,17 @@ class AnimalsInShelterControllersTest {
     void contextLoads(){}
 
     @MockBean
-    private AnimalsInShelterService animalsInShelterService;
+    private DogsInShelterService dogsInShelterService;
 
 
         @Test
         void addAnimalInShelter() throws Exception{
-            AnimalsInShelter animal = new AnimalsInShelter();
-            animal.setIdAnimal(1);
-            animal.setNameAnimal("Бобик");
+            DogsInShelter animal = new DogsInShelter();
+            animal.setIdDog(1);
+            animal.setNameDog("Бобик");
             animal.setAge(3);
 
-            Mockito.when(animalsInShelterService.addAnimalInShelter(Mockito.any())).thenReturn(animal);
+            Mockito.when(dogsInShelterService.addDogInShelter(Mockito.any())).thenReturn(animal);
 
             mockMvc.perform(
                             post("/animalsInShelter")
@@ -61,17 +61,17 @@ class AnimalsInShelterControllersTest {
 
         @Test
         void editAnimalInShelter() throws Exception {
-            AnimalsInShelter animal = new AnimalsInShelter();
-            animal.setIdAnimal(1);
-            animal.setNameAnimal("Бобик");
+            DogsInShelter animal = new DogsInShelter();
+            animal.setIdDog(1);
+            animal.setNameDog("Бобик");
             animal.setAge(3);
 
-            AnimalsInShelter newAnimal = new AnimalsInShelter();
-            animal.setIdAnimal(1);
-            animal.setNameAnimal("Шарик");
+            DogsInShelter newAnimal = new DogsInShelter();
+            animal.setIdDog(1);
+            animal.setNameDog("Шарик");
             animal.setAge(3);
 
-            Mockito.when(animalsInShelterService.editAnimalInShelter(Mockito.any())).thenReturn(animal);
+            Mockito.when(dogsInShelterService.editDogInShelter(Mockito.any())).thenReturn(animal);
 
         mockMvc.perform(
                         put("/animalsInShelter")
@@ -86,12 +86,12 @@ class AnimalsInShelterControllersTest {
 
     @Test
     void deleteAnimalInShelter() throws Exception{
-        AnimalsInShelter animal = new AnimalsInShelter();
-        animal.setIdAnimal(1);
-        animal.setNameAnimal("Бобик");
+        DogsInShelter animal = new DogsInShelter();
+        animal.setIdDog(1);
+        animal.setNameDog("Бобик");
         animal.setAge(3);
 
-        Mockito.doNothing().when(animalsInShelterService).deleteAnimalInShelter(animal.getIdAnimal());
+        Mockito.doNothing().when(dogsInShelterService).deleteDogInShelter(animal.getIdDog());
 
         mockMvc.perform(
                         delete("/animalsInShelter/{id}",1)
@@ -100,22 +100,22 @@ class AnimalsInShelterControllersTest {
 
                 )
                 .andExpect(status().isOk());
-        Mockito.verify(animalsInShelterService, times(1)).deleteAnimalInShelter(animal.getIdAnimal());
+        Mockito.verify(dogsInShelterService, times(1)).deleteDogInShelter(animal.getIdDog());
     }
 
     @Test
     void findAnimalsInShelter() throws Exception{
-        AnimalsInShelter animal = new AnimalsInShelter();
-        animal.setIdAnimal(1);
-        animal.setNameAnimal("Бобик");
+        DogsInShelter animal = new DogsInShelter();
+        animal.setIdDog(1);
+        animal.setNameDog("Бобик");
         animal.setAge(3);
 
-        List<AnimalsInShelter> animals = new LinkedList<>();
+        List<DogsInShelter> animals = new LinkedList<>();
         animals.add(animal);
 
-        Mockito.when(animalsInShelterService.findAnimalInShelterById(Mockito.anyLong())).thenReturn(animal);
-        Mockito.when(animalsInShelterService.findAnimalInShelterByName(Mockito.anyString())).thenReturn(animal);
-        Mockito.when(animalsInShelterService.getAllAnimalsInShelter()).thenReturn(animals);
+        Mockito.when(dogsInShelterService.findDogInShelterById(Mockito.anyLong())).thenReturn(animal);
+        Mockito.when(dogsInShelterService.findDogInShelterByName(Mockito.anyString())).thenReturn(animal);
+        Mockito.when(dogsInShelterService.getAllDogsInShelter()).thenReturn(animals);
 
         mockMvc.perform(
                         get("/animalsInShelter?id={id}",1)
