@@ -25,15 +25,15 @@ public class AdoptedDogs {
      * хранится в базе данных
      */
 
-    @Column(nullable = false)
-    private long idDog;
+    @OneToOne
+    private DogsInShelter dogs;
 
     /**
      * Id владельца
      * хранится в базе данных
      */
-    @Column(nullable = false)
-    private long idUser;
+    @OneToOne
+    private Users users;
 
     /**
      * Дата конца испытательного срока у хозяина,
@@ -57,29 +57,29 @@ public class AdoptedDogs {
     /**
      * Метод позволяет получить Id собаки
      */
-    public long getIdDog() {
-        return idDog;
+    public DogsInShelter getDogs() {
+        return dogs;
     }
 
     /**
      * Метод позволяет установить Id собаки
      */
-    public void setIdDog(long idDog) {
-        this.idDog = idDog;
+    public void setDogs(DogsInShelter dogs) {
+        this.dogs = dogs;
     }
 
     /**
      * Метод позволяет получить ID владельца
      */
-    public long getIdUser() {
-        return idUser;
+    public Users getUsers() {
+        return users;
     }
 
     /**
      * Метод позволяет установить ID владельца
      */
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     /**

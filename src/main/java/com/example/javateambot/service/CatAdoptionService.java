@@ -32,17 +32,14 @@ public class CatAdoptionService {
     }
 
 
-
-
-
-
 // работает с этим кодом, но в нем не красиво добавляется в свагере
 
     public AdoptedCats adoptionCat2(Long userID, Long catId, AdoptedCats adoptedCats) {
 
         if (catsInShelterRepository.findById(catId).isPresent()||usersRepository.findById(userID).isPresent()){
-            adoptedCats.setIdUser(userID);
-            adoptedCats.setIdCat(catId);
+
+            adoptedCats.setUsers(usersRepository.findById(userID).orElseThrow());
+            adoptedCats.setCats(catsInShelterRepository.findById(catId).orElseThrow());
             adoptedCats.setLastDateProbationPeriod(LocalDate.now().plusDays(30));
 
         }

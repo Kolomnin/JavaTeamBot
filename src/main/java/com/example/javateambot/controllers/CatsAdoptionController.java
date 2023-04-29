@@ -40,9 +40,9 @@ public class CatsAdoptionController {
             }
     )
     @PostMapping
-    public AdoptedCats addCatsInShelter2(@Parameter(description = "id кошки, которое присваиваем владельцу", example = "1")
+    public AdoptedCats addCatsInShelter2(@Parameter(description = "id владельца, которое присваиваем владельцу", example = "1")
                                         @RequestParam(required = false) Long userId,
-                                        @Parameter(description = "id владельца", example = "1")
+                                        @Parameter(description = "id кота", example = "1")
                                         @RequestParam(required = false) Long catId
             , @RequestBody AdoptedCats adoptedCats) {
         return catAdoptionService.adoptionCat2(userId, catId, adoptedCats);

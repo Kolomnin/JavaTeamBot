@@ -23,6 +23,7 @@ public class DogAdoptionService {
     private DogAdoptionRepository dogAdoptionRepository;
 
 
+    @Autowired
     public DogAdoptionService( DogsInShelterRepository dogsInShelterRepository, UsersRepository usersRepository, DogAdoptionRepository dogAdoptionRepository) {
         this.dogsInShelterRepository = dogsInShelterRepository;
         this.usersRepository = usersRepository;
@@ -36,8 +37,8 @@ public class DogAdoptionService {
     public AdoptedDogs adoptionDog2(Long userID, Long dogId, AdoptedDogs adoptedDogs) {
 
         if (dogsInShelterRepository.findById(dogId).isPresent()||usersRepository.findById(userID).isPresent()){
-            adoptedDogs.setIdUser(userID);
-            adoptedDogs.setIdDog(dogId);
+            adoptedDogs.setUsers(usersRepository.findById(userID).orElseThrow());
+            adoptedDogs.setDogs(dogsInShelterRepository.findById(dogId).orElseThrow());
             adoptedDogs.setLastDateProbationPeriod(LocalDate.now().plusDays(30));
 
         }
@@ -52,7 +53,7 @@ public class DogAdoptionService {
 //        animalsInHouseRepository.save(animal);
 //    }
 //    public Long getId(String number) {
-//        Long idUser = usersRepository.findByNumberUser(number).getIdUser();
+//        Long idUser = usersRepository.findByNumberUser(number).getUsers();
 //
 //        return idUser;
 //    }

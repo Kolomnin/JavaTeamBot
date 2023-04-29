@@ -37,9 +37,9 @@ public class DogsAdoptionController {
             }
     )
     @PostMapping
-    public AdoptedDogs addDogsInShelter2(@Parameter(description = "id собаки, которое присваиваем владельцу", example = "1")
+    public AdoptedDogs addDogsInShelter2(@Parameter(description = "id владельца, которое присваиваем владельцу", example = "1")
                                                @RequestParam(required = false) Long userId,
-                                            @Parameter(description = "id владельца", example = "1")
+                                            @Parameter(description = "id собаки", example = "1")
                                                @RequestParam(required = false) Long dogId
             , @RequestBody AdoptedDogs adoptedDogs) {
         return dogAdoptionService.adoptionDog2(userId, dogId, adoptedDogs);

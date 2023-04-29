@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CatAdoptionRepository extends JpaRepository<AdoptedCats, Long> {
-    AdoptedCats findByIdUser (long Id);
+
 }

@@ -53,7 +53,7 @@ public class DogsInShelterService {
      * @return найденная собака с искомым id
      */
     public DogsInShelter findDogInShelterById(long id) {
-        return dogsInShelterRepository.findById(id);
+        return dogsInShelterRepository.findById(id).orElseThrow();
     }
 
     /**

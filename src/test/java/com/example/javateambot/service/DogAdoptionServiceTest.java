@@ -26,7 +26,7 @@ class DogAdoptionServiceTest {
 //    void checkChatId() {
 //
 //        Users user = new Users();
-//        user.setIdUser(1);
+//        user.setUsers(1);
 //        user.setChatId(123L);
 //        when(repository.save(user)).thenReturn(user);
 //        repository.save(user);
@@ -39,7 +39,7 @@ class DogAdoptionServiceTest {
 //        Long userID = 1L;
 //        Long animalId = 2L;
 //        AdoptedDogs adoptedDogs = new AdoptedDogs();
-//        adoptedDogs.setIdUser(1L);
+//        adoptedDogs.setUsers(1L);
 //        adoptedDogs.setIdAnimal(2L);
 //
 //        adoptedDogs.setLastDateProbationPeriod(LocalDate.now());
@@ -49,7 +49,7 @@ class DogAdoptionServiceTest {
 //
 //        // Assert
 //        assertNotNull(savedAdoptedDogs);
-//        assertEquals(userID, savedAdoptedDogs.getIdUser());
+//        assertEquals(userID, savedAdoptedDogs.getUsers());
 //        assertEquals(animalId, savedAdoptedDogs.getIdAnimal());
 //        assertNotNull(savedAdoptedDogs.getLastDateProbationPeriod());
 //    }
@@ -58,7 +58,7 @@ class DogAdoptionServiceTest {
 //    private AdoptedDogs adoptionDog2(Long userID, Long animalId, AdoptedDogs adoptedDogs) {
 //
 //        adoptedDogs.setLastDateProbationPeriod(LocalDate.now());
-//        adoptedDogs.setIdUser(userID);
+//        adoptedDogs.setUsers(userID);
 //        adoptedDogs.setIdAnimal(animalId);
 //    return adoptedDogs; }
 //
@@ -68,7 +68,7 @@ class DogAdoptionServiceTest {
 //        Long userID = 1L;
 //        Long animalId = 1L; // non-existent animal ID
 //        AdoptedDogs adoptedDogs = new AdoptedDogs();
-//        adoptedDogs.setIdUser(userID);
+//        adoptedDogs.setUsers(userID);
 //        adoptedDogs.setIdAnimal(1);
 //
 //        // Act
@@ -86,7 +86,7 @@ class DogAdoptionServiceTest {
 //        Long animalId = 2L;
 //        AdoptedDogs adoptedDogs = new AdoptedDogs();
 //        adoptedDogs.setIdAnimal(animalId);
-//        adoptedDogs.setIdUser(userID);
+//        adoptedDogs.setUsers(userID);
 //
 //        // Act
 //        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
@@ -117,7 +117,7 @@ class DogAdoptionServiceTest {
 //
 //        // Assert
 //        assertNotNull(updatedAnimalsInHouse);
-//        assertEquals(userID, updatedAnimalsInHouse.getIdUser());
+//        assertEquals(userID, updatedAnimalsInHouse.getUsers());
 //        assertEquals(animalId, updatedAnimalsInHouse.getIdAnimal());
 //        assertNotEquals(originalDate, updatedAnimalsInHouse.getLastDateProbationPeriod());
 //    }

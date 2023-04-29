@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DogsInShelterRepository extends JpaRepository<DogsInShelter, Long> {
-    DogsInShelter findById(long id);
 
     DogsInShelter findByNameDog(String name);
 }
