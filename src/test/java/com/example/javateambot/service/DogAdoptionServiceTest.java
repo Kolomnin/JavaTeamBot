@@ -1,25 +1,21 @@
 package com.example.javateambot.service;
 
-import com.example.javateambot.entity.AnimalsInHouse;
-import com.example.javateambot.entity.Users;
+import com.example.javateambot.entity.AdoptedDogs;
 import com.example.javateambot.repository.UsersRepository;
-import org.apache.catalina.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class DogAdoptionServiceTest {
 
     private final UsersRepository repository = mock(UsersRepository.class);
 
     @MockBean
-    AnimalsInHouse animalsInHouse;
+    AdoptedDogs adoptedDogs;
 
 
     @Test
@@ -42,45 +38,45 @@ class DogAdoptionServiceTest {
         // Arrange
         Long userID = 1L;
         Long animalId = 2L;
-        AnimalsInHouse animalsInHouse = new AnimalsInHouse();
-        animalsInHouse.setIdUser(1L);
-        animalsInHouse.setIdAnimal(2L);
+        AdoptedDogs adoptedDogs = new AdoptedDogs();
+        adoptedDogs.setIdUser(1L);
+        adoptedDogs.setIdAnimal(2L);
 
-        animalsInHouse.setLastDateProbationPeriod(LocalDate.now());
+        adoptedDogs.setLastDateProbationPeriod(LocalDate.now());
 
         // Act
-        AnimalsInHouse savedAnimalsInHouse = adoptionDog2(userID, animalId, animalsInHouse);
+        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
 
         // Assert
-        assertNotNull(savedAnimalsInHouse);
-        assertEquals(userID, savedAnimalsInHouse.getIdUser());
-        assertEquals(animalId, savedAnimalsInHouse.getIdAnimal());
-        assertNotNull(savedAnimalsInHouse.getLastDateProbationPeriod());
+        assertNotNull(savedAdoptedDogs);
+        assertEquals(userID, savedAdoptedDogs.getIdUser());
+        assertEquals(animalId, savedAdoptedDogs.getIdAnimal());
+        assertNotNull(savedAdoptedDogs.getLastDateProbationPeriod());
     }
 
     @Test
-    private AnimalsInHouse adoptionDog2(Long userID, Long animalId, AnimalsInHouse animalsInHouse) {
+    private AdoptedDogs adoptionDog2(Long userID, Long animalId, AdoptedDogs adoptedDogs) {
 
-        animalsInHouse.setLastDateProbationPeriod(LocalDate.now());
-        animalsInHouse.setIdUser(userID);
-        animalsInHouse.setIdAnimal(animalId);
-    return animalsInHouse; }
+        adoptedDogs.setLastDateProbationPeriod(LocalDate.now());
+        adoptedDogs.setIdUser(userID);
+        adoptedDogs.setIdAnimal(animalId);
+    return adoptedDogs; }
 
     @Test
     public void testAdoptionDog2WithNonexistentAnimal() {
         // Arrange
         Long userID = 1L;
         Long animalId = 1L; // non-existent animal ID
-        AnimalsInHouse animalsInHouse = new AnimalsInHouse();
-        animalsInHouse.setIdUser(userID);
-        animalsInHouse.setIdAnimal(1);
+        AdoptedDogs adoptedDogs = new AdoptedDogs();
+        adoptedDogs.setIdUser(userID);
+        adoptedDogs.setIdAnimal(1);
 
         // Act
-        AnimalsInHouse savedAnimalsInHouse = adoptionDog2(userID, animalId, animalsInHouse);
+        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
 
         // Assert
-        assertNotNull(savedAnimalsInHouse);
-        assertEquals(animalsInHouse,savedAnimalsInHouse);
+        assertNotNull(savedAdoptedDogs);
+        assertEquals(adoptedDogs, savedAdoptedDogs);
     }
 
     @Test
@@ -88,15 +84,15 @@ class DogAdoptionServiceTest {
         // Arrange
         Long userID = 1L; // non-existent user ID
         Long animalId = 2L;
-        AnimalsInHouse animalsInHouse = new AnimalsInHouse();
-        animalsInHouse.setIdAnimal(animalId);
-        animalsInHouse.setIdUser(userID);
+        AdoptedDogs adoptedDogs = new AdoptedDogs();
+        adoptedDogs.setIdAnimal(animalId);
+        adoptedDogs.setIdUser(userID);
 
         // Act
-        AnimalsInHouse savedAnimalsInHouse = adoptionDog2(userID, animalId, animalsInHouse);
+        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
 
         // Assert
-        assertNull(savedAnimalsInHouse);
+        assertNull(savedAdoptedDogs);
     }
 //
 //    @Test

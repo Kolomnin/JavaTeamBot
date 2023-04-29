@@ -2,18 +2,17 @@ package com.example.javateambot.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
 
 /**
- * Класс является сущностью объекта AnimalsInHouse,
+ * Класс является сущностью объекта AdoptedCats,
  * Это сущность животного ,которое будет храниться в базе данных
  */
 @Entity
-@Table(name = "animals_in_house")
-public class AnimalsInHouse {
+@Table(name = "adopted_cats")
+public class AdoptedCats {
 
     /**
-     * Id животного
+     * Id кошки
      * хранится в базе данных
      */
 
@@ -22,12 +21,12 @@ public class AnimalsInHouse {
     private long adoption;
 
     /**
-     * Id животного
+     * Id кошки
      * хранится в базе данных
      */
 
     @Column(nullable = false)
-    private long idAnimal;
+    private long idCat;
 
     /**
      * Id владельца
@@ -47,7 +46,7 @@ public class AnimalsInHouse {
 //    private Collection<Report> report;
 
     /**
-     * Дата когда был отправлен последний отчет о состоянии животного,
+     * Дата когда был отправлен последний отчет о состоянии кошки,
      * который находится у хозаина,
      * хранится в базе данных
      */
@@ -56,17 +55,17 @@ public class AnimalsInHouse {
 
 
     /**
-     * Метод позволяет получить Id животного
+     * Метод позволяет получить Id кошки
      */
-    public long getIdAnimal() {
-        return idAnimal;
+    public long getIdCat() {
+        return idCat;
     }
 
     /**
-     * Метод позволяет установить Id животного
+     * Метод позволяет установить Id кошки
      */
-    public void setIdAnimal(long idAnimal) {
-        this.idAnimal = idAnimal;
+    public void setIdCat(long idCat) {
+        this.idCat = idCat;
     }
 
     /**
@@ -110,6 +109,5 @@ public class AnimalsInHouse {
     public void setLastReportDate(LocalDate lastReportDate) {
         this.lastReportDate = lastReportDate;
     }
-
 
 }

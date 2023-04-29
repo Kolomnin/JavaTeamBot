@@ -34,7 +34,7 @@ public class TelegramBotListener implements UpdatesListener {
     private TelegramBotService telegramBotService;
 
     @Autowired
-    private AnimalsInHouseRepository animalsInHouseRepository;
+    private DogAdoptionRepository dogAdoptionRepository;
 
     @Autowired
     private ContactInformationRepository contactInformationRepository;

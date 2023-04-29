@@ -1,4 +1,4 @@
-package com.example.javateambot.telegramExeption;
+package com.example.javateambot.telegramException;
 
 public class TelegramApiException extends RuntimeException {
     public TelegramApiException() {
