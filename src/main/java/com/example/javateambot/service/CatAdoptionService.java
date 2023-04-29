@@ -14,23 +14,26 @@ import java.util.Objects;
 @Service
 public class CatAdoptionService {
 
-    public CatAdoptionService(AdoptedCats adoptedCats, CatsInShelterRepository catsInShelterRepository, UsersRepository usersRepository, CatAdoptionRepository catAdoptionRepository) {
-        this.adoptedCats = adoptedCats;
+
+    private CatsInShelterRepository catsInShelterRepository;
+
+
+    private UsersRepository usersRepository;
+
+
+    private CatAdoptionRepository catAdoptionRepository;
+
+
+    @Autowired
+    public CatAdoptionService( CatsInShelterRepository catsInShelterRepository, UsersRepository usersRepository, CatAdoptionRepository catAdoptionRepository) {
         this.catsInShelterRepository = catsInShelterRepository;
         this.usersRepository = usersRepository;
         this.catAdoptionRepository = catAdoptionRepository;
     }
 
-    AdoptedCats adoptedCats;
 
-    @Autowired
-    CatsInShelterRepository catsInShelterRepository;
 
-    @Autowired
-    UsersRepository usersRepository;
 
-    @Autowired
-    CatAdoptionRepository catAdoptionRepository;
 
 
 // работает с этим кодом, но в нем не красиво добавляется в свагере

@@ -29,14 +29,14 @@ class DogsInShelterServiceTest {
     void addAnimalInShelter() {
         DogsInShelter dogsInShelter = new DogsInShelter();
         when(dogsInShelterRepository.save(dogsInShelter)).thenReturn(dogsInShelter);
-        assertEquals(dogsInShelter, out.addAnimalInShelter(dogsInShelter));
+        assertEquals(dogsInShelter, out.addDogInShelter(dogsInShelter));
     }
 
     @Test
     void editAnimalInShelter() {
         DogsInShelter dogsInShelter = new DogsInShelter();
         when(dogsInShelterRepository.save(dogsInShelter)).thenReturn(dogsInShelter);
-        assertEquals(dogsInShelter, out.editAnimalInShelter(dogsInShelter));
+        assertEquals(dogsInShelter, out.editDogInShelter(dogsInShelter));
     }
 
     @Test
@@ -49,10 +49,10 @@ class DogsInShelterServiceTest {
         exp.add(dogsInShelter2);
         exp.add(dogsInShelter3);
         when(dogsInShelterRepository.findAll()).thenReturn(exp);
-        out.addAnimalInShelter(dogsInShelter1);
-        out.addAnimalInShelter(dogsInShelter2);
-        out.addAnimalInShelter(dogsInShelter3);
-        assertEquals(exp, out.getAllAnimalsInShelter());
+        out.addDogInShelter(dogsInShelter1);
+        out.addDogInShelter(dogsInShelter2);
+        out.addDogInShelter(dogsInShelter3);
+        assertEquals(exp, out.getAllDogsInShelter());
     }
 
     @Test
@@ -62,7 +62,7 @@ class DogsInShelterServiceTest {
         DogsInShelter dogsInShelter3 = new DogsInShelter();
         when(dogsInShelterRepository.findById(1)).thenReturn(dogsInShelter2);
         DogsInShelter exp = dogsInShelter2;
-        assertEquals(exp, out.findAnimalInShelterById(1));
+        assertEquals(exp, out.findDogInShelterById(1));
     }
 
     @Test
@@ -70,11 +70,11 @@ class DogsInShelterServiceTest {
         DogsInShelter dogsInShelter1 = new DogsInShelter();
         DogsInShelter dogsInShelter2 = new DogsInShelter();
         DogsInShelter dogsInShelter3 = new DogsInShelter();
-        dogsInShelter1.setNameAnimal("Шарик");
-        dogsInShelter2.setNameAnimal("Мурзик");
-        dogsInShelter3.setNameAnimal("Коржик");
+        dogsInShelter1.setNameDog("Шарик");
+        dogsInShelter2.setNameDog("Мурзик");
+        dogsInShelter3.setNameDog("Коржик");
         DogsInShelter exp = dogsInShelter2;
-        when(dogsInShelterRepository.findByNameAnimal("Мурзик")).thenReturn(dogsInShelter2);
-        assertEquals(exp, out.findAnimalInShelterByName("Мурзик"));
+        when(dogsInShelterRepository.findByNameDog("Мурзик")).thenReturn(dogsInShelter2);
+        assertEquals(exp, out.findDogInShelterByName("Мурзик"));
     }
 }

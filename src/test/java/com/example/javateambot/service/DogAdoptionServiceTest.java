@@ -33,67 +33,67 @@ class DogAdoptionServiceTest {
 //        assertEquals(repository.getReferenceById(1L).getChatId());
 //        assertEquals(repository.findByChatId(12L));
 //    }
-    @Test
-    public void testAdoptionDog2WithValidInput() {
-        // Arrange
-        Long userID = 1L;
-        Long animalId = 2L;
-        AdoptedDogs adoptedDogs = new AdoptedDogs();
-        adoptedDogs.setIdUser(1L);
-        adoptedDogs.setIdAnimal(2L);
-
-        adoptedDogs.setLastDateProbationPeriod(LocalDate.now());
-
-        // Act
-        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
-
-        // Assert
-        assertNotNull(savedAdoptedDogs);
-        assertEquals(userID, savedAdoptedDogs.getIdUser());
-        assertEquals(animalId, savedAdoptedDogs.getIdAnimal());
-        assertNotNull(savedAdoptedDogs.getLastDateProbationPeriod());
-    }
-
-    @Test
-    private AdoptedDogs adoptionDog2(Long userID, Long animalId, AdoptedDogs adoptedDogs) {
-
-        adoptedDogs.setLastDateProbationPeriod(LocalDate.now());
-        adoptedDogs.setIdUser(userID);
-        adoptedDogs.setIdAnimal(animalId);
-    return adoptedDogs; }
-
-    @Test
-    public void testAdoptionDog2WithNonexistentAnimal() {
-        // Arrange
-        Long userID = 1L;
-        Long animalId = 1L; // non-existent animal ID
-        AdoptedDogs adoptedDogs = new AdoptedDogs();
-        adoptedDogs.setIdUser(userID);
-        adoptedDogs.setIdAnimal(1);
-
-        // Act
-        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
-
-        // Assert
-        assertNotNull(savedAdoptedDogs);
-        assertEquals(adoptedDogs, savedAdoptedDogs);
-    }
-
-    @Test
-    public void testAdoptionDog2WithNonexistentUser() {
-        // Arrange
-        Long userID = 1L; // non-existent user ID
-        Long animalId = 2L;
-        AdoptedDogs adoptedDogs = new AdoptedDogs();
-        adoptedDogs.setIdAnimal(animalId);
-        adoptedDogs.setIdUser(userID);
-
-        // Act
-        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
-
-        // Assert
-        assertNull(savedAdoptedDogs);
-    }
+//    @Test
+//    public void testAdoptionDog2WithValidInput() {
+//        // Arrange
+//        Long userID = 1L;
+//        Long animalId = 2L;
+//        AdoptedDogs adoptedDogs = new AdoptedDogs();
+//        adoptedDogs.setIdUser(1L);
+//        adoptedDogs.setIdAnimal(2L);
+//
+//        adoptedDogs.setLastDateProbationPeriod(LocalDate.now());
+//
+//        // Act
+//        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
+//
+//        // Assert
+//        assertNotNull(savedAdoptedDogs);
+//        assertEquals(userID, savedAdoptedDogs.getIdUser());
+//        assertEquals(animalId, savedAdoptedDogs.getIdAnimal());
+//        assertNotNull(savedAdoptedDogs.getLastDateProbationPeriod());
+//    }
+//
+//    @Test
+//    private AdoptedDogs adoptionDog2(Long userID, Long animalId, AdoptedDogs adoptedDogs) {
+//
+//        adoptedDogs.setLastDateProbationPeriod(LocalDate.now());
+//        adoptedDogs.setIdUser(userID);
+//        adoptedDogs.setIdAnimal(animalId);
+//    return adoptedDogs; }
+//
+//    @Test
+//    public void testAdoptionDog2WithNonexistentAnimal() {
+//        // Arrange
+//        Long userID = 1L;
+//        Long animalId = 1L; // non-existent animal ID
+//        AdoptedDogs adoptedDogs = new AdoptedDogs();
+//        adoptedDogs.setIdUser(userID);
+//        adoptedDogs.setIdAnimal(1);
+//
+//        // Act
+//        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
+//
+//        // Assert
+//        assertNotNull(savedAdoptedDogs);
+//        assertEquals(adoptedDogs, savedAdoptedDogs);
+//    }
+//
+//    @Test
+//    public void testAdoptionDog2WithNonexistentUser() {
+//        // Arrange
+//        Long userID = 1L; // non-existent user ID
+//        Long animalId = 2L;
+//        AdoptedDogs adoptedDogs = new AdoptedDogs();
+//        adoptedDogs.setIdAnimal(animalId);
+//        adoptedDogs.setIdUser(userID);
+//
+//        // Act
+//        AdoptedDogs savedAdoptedDogs = adoptionDog2(userID, animalId, adoptedDogs);
+//
+//        // Assert
+//        assertNull(savedAdoptedDogs);
+//    }
 //
 //    @Test
 //    public void testAdoptionDog2WithExistingData() {

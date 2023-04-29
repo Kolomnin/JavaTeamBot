@@ -43,11 +43,11 @@ class DogsInShelterControllerTest {
         @Test
         void addAnimalInShelter() throws Exception{
             DogsInShelter animal = new DogsInShelter();
-            animal.setIdAnimal(1);
-            animal.setNameAnimal("Бобик");
+            animal.setIdDog(1);
+            animal.setNameDog("Бобик");
             animal.setAge(3);
 
-            Mockito.when(dogsInShelterService.addAnimalInShelter(Mockito.any())).thenReturn(animal);
+            Mockito.when(dogsInShelterService.addDogInShelter(Mockito.any())).thenReturn(animal);
 
             mockMvc.perform(
                             post("/animalsInShelter")
@@ -62,16 +62,16 @@ class DogsInShelterControllerTest {
         @Test
         void editAnimalInShelter() throws Exception {
             DogsInShelter animal = new DogsInShelter();
-            animal.setIdAnimal(1);
-            animal.setNameAnimal("Бобик");
+            animal.setIdDog(1);
+            animal.setNameDog("Бобик");
             animal.setAge(3);
 
             DogsInShelter newAnimal = new DogsInShelter();
-            animal.setIdAnimal(1);
-            animal.setNameAnimal("Шарик");
+            animal.setIdDog(1);
+            animal.setNameDog("Шарик");
             animal.setAge(3);
 
-            Mockito.when(dogsInShelterService.editAnimalInShelter(Mockito.any())).thenReturn(animal);
+            Mockito.when(dogsInShelterService.editDogInShelter(Mockito.any())).thenReturn(animal);
 
         mockMvc.perform(
                         put("/animalsInShelter")
@@ -87,11 +87,11 @@ class DogsInShelterControllerTest {
     @Test
     void deleteAnimalInShelter() throws Exception{
         DogsInShelter animal = new DogsInShelter();
-        animal.setIdAnimal(1);
-        animal.setNameAnimal("Бобик");
+        animal.setIdDog(1);
+        animal.setNameDog("Бобик");
         animal.setAge(3);
 
-        Mockito.doNothing().when(dogsInShelterService).deleteAnimalInShelter(animal.getIdAnimal());
+        Mockito.doNothing().when(dogsInShelterService).deleteDogInShelter(animal.getIdDog());
 
         mockMvc.perform(
                         delete("/animalsInShelter/{id}",1)
@@ -100,22 +100,22 @@ class DogsInShelterControllerTest {
 
                 )
                 .andExpect(status().isOk());
-        Mockito.verify(dogsInShelterService, times(1)).deleteAnimalInShelter(animal.getIdAnimal());
+        Mockito.verify(dogsInShelterService, times(1)).deleteDogInShelter(animal.getIdDog());
     }
 
     @Test
     void findAnimalsInShelter() throws Exception{
         DogsInShelter animal = new DogsInShelter();
-        animal.setIdAnimal(1);
-        animal.setNameAnimal("Бобик");
+        animal.setIdDog(1);
+        animal.setNameDog("Бобик");
         animal.setAge(3);
 
         List<DogsInShelter> animals = new LinkedList<>();
         animals.add(animal);
 
-        Mockito.when(dogsInShelterService.findAnimalInShelterById(Mockito.anyLong())).thenReturn(animal);
-        Mockito.when(dogsInShelterService.findAnimalInShelterByName(Mockito.anyString())).thenReturn(animal);
-        Mockito.when(dogsInShelterService.getAllAnimalsInShelter()).thenReturn(animals);
+        Mockito.when(dogsInShelterService.findDogInShelterById(Mockito.anyLong())).thenReturn(animal);
+        Mockito.when(dogsInShelterService.findDogInShelterByName(Mockito.anyString())).thenReturn(animal);
+        Mockito.when(dogsInShelterService.getAllDogsInShelter()).thenReturn(animals);
 
         mockMvc.perform(
                         get("/animalsInShelter?id={id}",1)
