@@ -6,4 +6,5 @@ import org.springframework.stereotype.Component;
 public interface UsersContactService {
     void addUserContact(Long chatId, String name, int phoneNumber);
 
+
 }

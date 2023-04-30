@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface DogsInShelterRepository extends JpaRepository<DogsInShelter, Long> {
 
     DogsInShelter findByNameDog(String name);
+
 }

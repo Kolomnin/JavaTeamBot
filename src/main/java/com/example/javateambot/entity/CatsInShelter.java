@@ -15,6 +15,7 @@ public class CatsInShelter {
      * Id кошки
      * хранится в базе данных
      */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCat;

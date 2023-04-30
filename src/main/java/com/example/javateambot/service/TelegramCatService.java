@@ -16,6 +16,7 @@ public class TelegramCatService {
     }
 
 
+
     //КОНСУЛЬТАЦИЯ С НОВЫМ ПОЛЬЗОВАТЕЛЕМ
     private static final String NAME_OF_SCHELTER = "The Best Shelter";
 

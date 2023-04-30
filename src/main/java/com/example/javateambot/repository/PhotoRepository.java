@@ -19,6 +19,7 @@ public interface PhotoRepository extends JpaRepository<AppPhoto, Long> {
 
 
 
+
 }
 
 

@@ -30,7 +30,6 @@ public class PhotoService {
 
     private TelegramBot telegramBot;
     private PhotoRepository photoRepository;
-
     public PhotoService(TelegramBot telegramBot,
                         PhotoRepository photoRepository) {
         this.telegramBot = telegramBot;

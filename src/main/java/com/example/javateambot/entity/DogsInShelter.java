@@ -15,6 +15,7 @@ public class DogsInShelter {
      * Id собаки
      * хранится в базе данных
      */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idDog;

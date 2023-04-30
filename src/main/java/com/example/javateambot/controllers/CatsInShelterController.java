@@ -19,7 +19,6 @@ public class CatsInShelterController {
     public CatsInShelterController(CatsInShelterService catsInShelterService) {
         this.catsInShelterService = catsInShelterService;
     }
-
     @Operation(summary = "Добавление новой кошки в приют",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Кошка, которую добавляем в приют",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)

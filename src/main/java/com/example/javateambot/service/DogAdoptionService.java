@@ -16,11 +16,6 @@ import java.util.Objects;
 public class DogAdoptionService {
 
 
-    public DogAdoptionService(AnimalsInHouseRepository animalsInHouseRepository) {
-        this.animalsInHouseRepository = animalsInHouseRepository;
-    }
-
-
     AnimalsInHouse animalsInHouse;
 
     @Autowired
