@@ -13,6 +13,7 @@ public class Report {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long idReport;
 
+
     /**
      * Рацион питомца
      */

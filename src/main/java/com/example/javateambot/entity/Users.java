@@ -14,6 +14,7 @@ public class Users {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long idUser;
 
+
     /**
      * Имя владельца питомца
      */

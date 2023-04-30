@@ -14,7 +14,6 @@ import java.util.Objects;
 @Service
 public class CatAdoptionService {
 
-
     private CatsInShelterRepository catsInShelterRepository;
 
 

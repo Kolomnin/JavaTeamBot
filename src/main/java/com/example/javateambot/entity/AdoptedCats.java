@@ -16,6 +16,7 @@ public class AdoptedCats {
      * хранится в базе данных
      */
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long adoption;

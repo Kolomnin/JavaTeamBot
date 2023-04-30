@@ -8,6 +8,7 @@ public class TelegramApiException extends RuntimeException {
         super(message);
     }
 
+
     public TelegramApiException(String message, Throwable cause) {
         super(message, cause);
     }
