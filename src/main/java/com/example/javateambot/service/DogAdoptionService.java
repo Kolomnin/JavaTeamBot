@@ -72,4 +72,6 @@ public class DogAdoptionService {
     public List<Users> getUsersByDataReport(LocalDate localDate){
         return animalsInHouseRepository.findAllByLastReportDateGreaterThan(localDate);
     }
+
+
 }
