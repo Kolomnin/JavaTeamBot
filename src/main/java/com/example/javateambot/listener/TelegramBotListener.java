@@ -46,7 +46,7 @@ public class TelegramBotListener implements UpdatesListener {
     @Autowired
     private SaveReportAndContactData saveReportAndContactData;
 
-
+    @Autowired
     private PhotoService photoService;
 
     @Autowired
@@ -225,7 +225,7 @@ public class TelegramBotListener implements UpdatesListener {
 
                     }
             );
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
