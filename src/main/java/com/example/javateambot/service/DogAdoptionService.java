@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -66,5 +67,9 @@ public class DogAdoptionService {
 
     public Users findUserByChatId(long chatId) {
         return usersRepository.findByChatId(chatId);
+    }
+
+    public List<Users> getUsersByDataReport(LocalDate localDate){
+        return animalsInHouseRepository.findAllByLastReportDateGreaterThan(localDate);
     }
 }
