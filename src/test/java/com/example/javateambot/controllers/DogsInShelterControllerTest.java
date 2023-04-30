@@ -4,7 +4,9 @@ import com.example.javateambot.entity.DogsInShelter;
 import com.example.javateambot.service.DogsInShelterService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ExtendWith(MockitoExtension.class)
 class DogsInShelterControllerTest {
 
     @Autowired
@@ -50,7 +53,7 @@ class DogsInShelterControllerTest {
             Mockito.when(dogsInShelterService.addDogInShelter(Mockito.any())).thenReturn(animal);
 
             mockMvc.perform(
-                            post("/animalsInShelter")
+                            post("/dogsInShelter")
                                     .content(objectMapper.writeValueAsString(animal))
                                     .contentType(MediaType.APPLICATION_JSON)
                     )
@@ -74,13 +77,13 @@ class DogsInShelterControllerTest {
             Mockito.when(dogsInShelterService.editDogInShelter(Mockito.any())).thenReturn(animal);
 
         mockMvc.perform(
-                        put("/animalsInShelter")
+                        put("/dogsInShelter")
                                 .content(objectMapper.writeValueAsString(newAnimal))
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idAnimal").value(1))
-                .andExpect(jsonPath("$.nameAnimal").value("Шарик"));
+                .andExpect(jsonPath("$.idDog").value(1))
+                .andExpect(jsonPath("$.nameDog").value("Шарик"));
     }
 
 
@@ -94,7 +97,7 @@ class DogsInShelterControllerTest {
         Mockito.doNothing().when(dogsInShelterService).deleteDogInShelter(animal.getIdDog());
 
         mockMvc.perform(
-                        delete("/animalsInShelter/{id}",1)
+                        delete("/dogsInShelter/{id}",1)
                                 .content(objectMapper.writeValueAsString(animal))
                                 .contentType(MediaType.APPLICATION_JSON)
 
@@ -118,21 +121,21 @@ class DogsInShelterControllerTest {
         Mockito.when(dogsInShelterService.getAllDogsInShelter()).thenReturn(animals);
 
         mockMvc.perform(
-                        get("/animalsInShelter?id={id}",1)
+                        get("/dogsInShelter?id={id}",1)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(animal)));
 
         mockMvc.perform(
-                        get("/animalsInShelter?name=Бобик")
+                        get("/dogsInShelter?name=Бобик")
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(animal)));
 
         mockMvc.perform(
-                        get("/animalsInShelter"))
+                        get("/dogsInShelter"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(animals)));
     }

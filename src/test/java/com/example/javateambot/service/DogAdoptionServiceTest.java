@@ -1,6 +1,7 @@
 package com.example.javateambot.service;
 
 import com.example.javateambot.entity.AdoptedDogs;
+import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.UsersRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class DogAdoptionServiceTest {
 
