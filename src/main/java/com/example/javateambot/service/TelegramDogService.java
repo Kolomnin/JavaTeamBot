@@ -304,19 +304,19 @@ public class TelegramDogService {
      * @param photo фото животного
      * @return текст о принятии/непринятии отчета
      */
-    public String getReport(String text, MultipartFile photo) {
-        if (text != null && photo != null) {
-            //загрузить фото и текст в базу animals, а также установить сегодняшнюю дату отчетности
-            return "Отчет принят";
-        }
-        if (text == null) {
-            return "Загрузите текст!";
-        }
-        if (photo == null) {
-            return "Загрузите фото!";
-        }
-        return "";
-    }
+//    public String getReport(String text, MultipartFile photo) {
+//        if (text != null && photo != null) {
+//            //загрузить фото и текст в базу animals, а также установить сегодняшнюю дату отчетности
+//            return "Отчет принят";
+//        }
+//        if (text == null) {
+//            return "Загрузите текст!";
+//        }
+//        if (photo == null) {
+//            return "Загрузите фото!";
+//        }
+//        return "";
+//    }
 
     /**
      * Метод, который проверяет дату последнего отчета.
@@ -324,48 +324,48 @@ public class TelegramDogService {
      * @param idAnimal ID животного
      * @param lastReportDate дата последней отчетности
      */
-    public void reminderAboutReport(long idAnimal, LocalDate lastReportDate) {
-        //сравниваем дату отчета и сегодняшнюю, если больше 2, то отправляем напоминание
-    }
-
-    /**
-     * Метод, который проверяет закончился ли испытательный период.
-     * Если испытательный период окончен - направляет поздравления.
-     * @param idAnimal ID животного
-     * @param lastDateProbationReriod дата окончания испытательного срока
-     */
-    public void probationPeriodPassed(long idAnimal, LocalDate lastDateProbationReriod) {
-        //сравниваем дату окончания испыт.срока и сегодняшнюю, если больше, то поздравляем
-    }
-
-    /**
-     * Метод, который позволяет увеличить испытательный срок.
-     * Уведомляет об увеличении испытательного срока хозяина животного.
-     * @param idAnimal ID животного
-     * @param numberOfDays количество дней, на которое будет увеличен испытательный срок
-     * @return новую дату окончания испытательного срока
-     */
-    public LocalDate probationPeriodExtended(long idAnimal, int numberOfDays) {
-        //прибавляем к испыт.сроку кол-во дней и уведомляем об этом по номеру владельца
-        LocalDate newLastDateProbationReriod = null; //ЗАМЕНИТЬ: вместо null по ID животного находим дату окончания испыт.срока
-        return newLastDateProbationReriod;
-    }
-
-    /**
-     * Метод, который уведомляем, что испытательныйсрок не пройден и необходимо обратиться лично к администрации за дальнейшей инструкцией
-     * @param idAnimal ID животного
-     */
-    public void probationPeriodNotPassed(long idAnimal) {
-        //уведомляем, что испыт.срок не пройден и необходимо обратиться лично к администрации за дальнейшей инструкцией
-    }
-
-    /**
-     * Метод, который будет отправлять сообщения
-     * @param chatId ID пользователя
-     * @param s текст отправки
-     */
-    public void sendMessage(Long chatId, String s) {
-    }
+//    public void reminderAboutReport(long idAnimal, LocalDate lastReportDate) {
+//        //сравниваем дату отчета и сегодняшнюю, если больше 2, то отправляем напоминание
+//    }
+//
+//    /**
+//     * Метод, который проверяет закончился ли испытательный период.
+//     * Если испытательный период окончен - направляет поздравления.
+//     * @param idAnimal ID животного
+//     * @param lastDateProbationReriod дата окончания испытательного срока
+//     */
+//    public void probationPeriodPassed(long idAnimal, LocalDate lastDateProbationReriod) {
+//        //сравниваем дату окончания испыт.срока и сегодняшнюю, если больше, то поздравляем
+//    }
+//
+//    /**
+//     * Метод, который позволяет увеличить испытательный срок.
+//     * Уведомляет об увеличении испытательного срока хозяина животного.
+//     * @param idAnimal ID животного
+//     * @param numberOfDays количество дней, на которое будет увеличен испытательный срок
+//     * @return новую дату окончания испытательного срока
+//     */
+//    public LocalDate probationPeriodExtended(long idAnimal, int numberOfDays) {
+//        //прибавляем к испыт.сроку кол-во дней и уведомляем об этом по номеру владельца
+//        LocalDate newLastDateProbationReriod = null; //ЗАМЕНИТЬ: вместо null по ID животного находим дату окончания испыт.срока
+//        return newLastDateProbationReriod;
+//    }
+//
+//    /**
+//     * Метод, который уведомляем, что испытательныйсрок не пройден и необходимо обратиться лично к администрации за дальнейшей инструкцией
+//     * @param idAnimal ID животного
+//     */
+//    public void probationPeriodNotPassed(long idAnimal) {
+//        //уведомляем, что испыт.срок не пройден и необходимо обратиться лично к администрации за дальнейшей инструкцией
+//    }
+//
+//    /**
+//     * Метод, который будет отправлять сообщения
+//     * @param chatId ID пользователя
+//     * @param s текст отправки
+//     */
+//    public void sendMessage(Long chatId, String s) {
+//    }
 
 }
 
