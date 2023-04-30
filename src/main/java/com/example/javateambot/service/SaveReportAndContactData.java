@@ -2,6 +2,7 @@ package com.example.javateambot.service;
 
 import com.example.javateambot.entity.ContactInformation;
 import com.example.javateambot.entity.Report;
+import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.ContactInformationRepository;
 import com.example.javateambot.repository.PhotoRepository;
 import com.example.javateambot.repository.ReportRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class SaveReportAndContactData {
@@ -34,7 +36,8 @@ public class SaveReportAndContactData {
     @Autowired
     UsersRepository usersRepository;
 
-    @Autowired DogAdoptionService dogAdoptionService;
+    @Autowired
+    DogAdoptionService dogAdoptionService;
 
     public void saveReport(String reportMessage, Long chatId) {
         Report report = new Report();
@@ -113,5 +116,7 @@ public class SaveReportAndContactData {
         }
     }
 
-
+    public List<Users> getByDateReport(LocalDate localDate) {
+        return usersRepository.findUsersByDate(localDate);
+    }
 }
