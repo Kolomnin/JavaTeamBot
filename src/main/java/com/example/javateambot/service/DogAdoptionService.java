@@ -1,48 +1,45 @@
 package com.example.javateambot.service;
 
-import com.example.javateambot.entity.AdoptedDogs;
+import com.example.javateambot.entity.AnimalsInHouse;
 import com.example.javateambot.entity.Users;
-import com.example.javateambot.repository.DogAdoptionRepository;
-import com.example.javateambot.repository.DogsInShelterRepository;
+import com.example.javateambot.repository.AnimalsInHouseRepository;
+import com.example.javateambot.repository.AnimalsInShelterRepository;
 import com.example.javateambot.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Service
 public class DogAdoptionService {
 
-    private DogsInShelterRepository dogsInShelterRepository;
 
-    private UsersRepository usersRepository;
-
-
-    private DogAdoptionRepository dogAdoptionRepository;
-
+    AnimalsInHouse animalsInHouse;
 
     @Autowired
-    public DogAdoptionService( DogsInShelterRepository dogsInShelterRepository, UsersRepository usersRepository, DogAdoptionRepository dogAdoptionRepository) {
-        this.dogsInShelterRepository = dogsInShelterRepository;
-        this.usersRepository = usersRepository;
-        this.dogAdoptionRepository = dogAdoptionRepository;
-    }
+    AnimalsInShelterRepository animalsInShelterRepository;
+
+    @Autowired
+    UsersRepository usersRepository;
+
+    @Autowired
+    AnimalsInHouseRepository animalsInHouseRepository;
 
 
+// работает с этим кодом но в нем не красиво доавляется в свагере
 
-// работает с этим кодом, но в нем не красиво добавляется в свагере
+    public AnimalsInHouse adoptionDog2(Long userID,Long animalId,AnimalsInHouse animalsInHouse) {
 
-    public AdoptedDogs adoptionDog2(Long userID, Long dogId, AdoptedDogs adoptedDogs) {
-
-        if (dogsInShelterRepository.findById(dogId).isPresent()||usersRepository.findById(userID).isPresent()){
-            adoptedDogs.setUsers(usersRepository.findById(userID).orElseThrow());
-            adoptedDogs.setDogs(dogsInShelterRepository.findById(dogId).orElseThrow());
-            adoptedDogs.setLastDateProbationPeriod(LocalDate.now().plusDays(30));
+        if (animalsInShelterRepository.findById(animalId).isPresent()||usersRepository.findById(userID).isPresent()){
+            animalsInHouse.setIdUser(userID);
+            animalsInHouse.setIdAnimal(animalId);
+            animalsInHouse.setLastDateProbationPeriod(LocalDate.now().plusDays(30));
 
         }
 
-        return dogAdoptionRepository.save(adoptedDogs);
+        return animalsInHouseRepository.save(animalsInHouse);
     }
 
 //    public void editAnimalInShelter(AnimalsInHouse animal,String report) {
@@ -52,7 +49,7 @@ public class DogAdoptionService {
 //        animalsInHouseRepository.save(animal);
 //    }
 //    public Long getId(String number) {
-//        Long idUser = usersRepository.findByNumberUser(number).getUsers();
+//        Long idUser = usersRepository.findByNumberUser(number).getIdUser();
 //
 //        return idUser;
 //    }
@@ -61,5 +58,13 @@ public class DogAdoptionService {
         if (Objects.equals(usersRepository.findByChatId(chatId).getChatId(), chatId)) {
             return true ;
         } else return false;
+    }
+
+    public Users findUserByChatId(long chatId) {
+        return usersRepository.findByChatId(chatId);
+    }
+
+    public List<Users> getUsersByDataReport(LocalDate localDate){
+        return animalsInHouseRepository.findAllByLastReportDateGreaterThan(localDate);
     }
 }
