@@ -5,6 +5,7 @@ import com.example.javateambot.entity.Report;
 import com.example.javateambot.repository.ContactInformationRepository;
 import com.example.javateambot.repository.PhotoRepository;
 import com.example.javateambot.repository.ReportRepository;
+import com.example.javateambot.repository.UsersRepository;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class SaveReportAndContactData {
     @Autowired
     ContactInformationRepository contactInformationRepository;
 
-//    @Autowired
-//    UsersRepository usersRepository;
+    @Autowired
+    UsersRepository usersRepository;
 
     @Autowired DogAdoptionService dogAdoptionService;
 
@@ -54,7 +55,7 @@ public class SaveReportAndContactData {
             String newHabits = fieldsForReport[3].trim();
             report.setNewHabits(newHabits);
             report.setAppPhoto(photoService.findPhotoLastId(chatId));
-            report.setUser(dogAdoptionService.findUserByChatId(chatId));
+            report.setUser(usersRepository.findByChatId(chatId));
             report.setDate(LocalDate.now());
 
             reportRepository.save(report);
@@ -71,7 +72,7 @@ public class SaveReportAndContactData {
             String newHabits = fieldsForReport1[3].trim();
             report.setNewHabits(newHabits);
             report.setAppPhoto(photoService.findPhotoLastId(chatId));
-            report.setUser(dogAdoptionService.findUserByChatId(chatId));
+            report.setUser(usersRepository.findByChatId(chatId));
             report.setDate(LocalDate.now());
             reportRepository.save(report);
             telegramBot.execute(new SendMessage(chatId, "Ваш отчет сохранен,следующий отчет отправьте завтра"));

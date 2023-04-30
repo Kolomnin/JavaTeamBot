@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -60,8 +61,9 @@ class DogsInShelterServiceTest {
         DogsInShelter dogsInShelter1 = new DogsInShelter();
         DogsInShelter dogsInShelter2 = new DogsInShelter();
         DogsInShelter dogsInShelter3 = new DogsInShelter();
-        when(dogsInShelterRepository.findById(1)).thenReturn(dogsInShelter2);
-        DogsInShelter exp = dogsInShelter2;
+        when(dogsInShelterRepository.save(dogsInShelter1)).thenReturn(dogsInShelter1);
+        when(dogsInShelterRepository.findById(1L)).thenReturn(Optional.of(dogsInShelter1));
+        DogsInShelter exp = dogsInShelter1;
         assertEquals(exp, out.findDogInShelterById(1));
     }
 

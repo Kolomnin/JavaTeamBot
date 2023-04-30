@@ -63,8 +63,4 @@ public class DogAdoptionService {
             return true ;
         } else return false;
     }
-
-    public Users findUserByChatId(long chatId) {
-        return usersRepository.findByChatId(chatId);
-    }
 }
