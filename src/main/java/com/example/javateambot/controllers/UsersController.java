@@ -77,4 +77,5 @@ public class UsersController {
         }
         return ResponseEntity.ok(usersService.getAllUsers());
     }
+
 }

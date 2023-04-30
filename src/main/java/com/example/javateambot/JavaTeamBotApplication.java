@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition
 public class JavaTeamBotApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(JavaTeamBotApplication.class, args);
     }

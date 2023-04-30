@@ -10,6 +10,7 @@ import java.util.Collection;
 public class CatsInShelterService {
     private final CatsInShelterRepository catsInShelterRepository;
 
+
     public CatsInShelterService(CatsInShelterRepository catsInShelterRepository) {
         this.catsInShelterRepository = catsInShelterRepository;
     }

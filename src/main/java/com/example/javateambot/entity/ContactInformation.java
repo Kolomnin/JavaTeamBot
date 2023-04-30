@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class ContactInformation {
 
 
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;

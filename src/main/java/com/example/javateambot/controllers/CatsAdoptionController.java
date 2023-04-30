@@ -23,8 +23,6 @@ public class CatsAdoptionController {
     }
 
 
-
-
     @Operation(summary = "Присваивание владельцу кошки, в которое вносится id кошки (из бд) и владельца (из бд)",
 
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(

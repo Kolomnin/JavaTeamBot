@@ -15,6 +15,7 @@ public class AppPhoto {
      * Id фотографии
      * хранится в базе данных
      */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

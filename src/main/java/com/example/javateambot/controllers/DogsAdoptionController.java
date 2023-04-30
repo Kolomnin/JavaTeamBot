@@ -21,7 +21,6 @@ public class DogsAdoptionController {
     public DogsAdoptionController(DogAdoptionService dogAdoptionService) {
         this.dogAdoptionService = dogAdoptionService;
     }
-
     @Operation(summary = "Присваивание владельцу собаки, в которое вносится id собаки (из бд) и владельца (из бд)",
 
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(

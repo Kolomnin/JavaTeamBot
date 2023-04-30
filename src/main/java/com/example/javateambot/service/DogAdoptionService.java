@@ -16,7 +16,6 @@ public class DogAdoptionService {
 
     private DogsInShelterRepository dogsInShelterRepository;
 
-
     private UsersRepository usersRepository;
 
 

@@ -36,7 +36,6 @@ public class SaveReportAndContactData {
 
     @Autowired DogAdoptionService dogAdoptionService;
 
-
     public void saveReport(String reportMessage, Long chatId) {
         Report report = new Report();
         String reportText = reportMessage;

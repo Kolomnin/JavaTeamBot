@@ -13,7 +13,6 @@ public class DogsInShelterService {
     public DogsInShelterService(DogsInShelterRepository dogsInShelterRepository) {
         this.dogsInShelterRepository = dogsInShelterRepository;
     }
-
    /**
      * Метод, который добавляет собаку в базу приюта
      * @param dog собака, которую необходимо добавить в базу
