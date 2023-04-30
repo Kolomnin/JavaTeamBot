@@ -27,7 +27,6 @@ public class TelegramBotTimer {
         this.dogAdoptionService = dogAdoptionService;
     }
 
-
     @Scheduled(cron = "@daily")
     public void run() {
         List<Users> usersList = dogAdoptionService.getUsersByDataReport(LocalDate.now().minusDays(2));
