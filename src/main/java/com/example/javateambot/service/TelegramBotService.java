@@ -14,8 +14,6 @@ public class TelegramBotService {
 
     @Autowired
     private TelegramBot telegramBot;
-
-
     @Autowired
     ContactInformationRepository contactInformationRepository;
 
@@ -32,7 +30,7 @@ public class TelegramBotService {
     }
 
     public void takeDogFromShelter(Long chatId) {  // кнопки этапа 2, кейсы между 2 и 3
-        SendMessage message = new SendMessage(chatId, "Рекомендации");
+        SendMessage message = new SendMessage(chatId, "Рекомендации для собак");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Правила знакомства с собакой до того, как можно забрать ее из приюта.");
         button1.callbackData("Правила знакомства");
@@ -67,30 +65,30 @@ public class TelegramBotService {
         message.replyMarkup(keyboard);
         telegramBot.execute(message);
     }
-    public void takeCatFromShelter(Long chatId) {  // кнопки этапа 2.1, кейсы между 2 и 3
-        SendMessage message = new SendMessage(chatId, "Рекомендации для кошек");
+    public void takeCatFromShelter1(Long chatId) {  // кнопки этапа 2.1, кейсы между 2 и 3
+        SendMessage message1 = new SendMessage(chatId, "Рекомендации для кошек");
 
         InlineKeyboardButton rulesForCat = new InlineKeyboardButton("Правила знакомства с кошкой до того, как можно забрать ее из приюта.");
-        rulesForCat.callbackData("Правила знакомства с кошкой");
-        InlineKeyboardButton documemts = new InlineKeyboardButton("Список документов, необходимых для того, чтобы взять кошку из приюта.");
-        documemts.callbackData("Список документов для кошки");
+        rulesForCat.callbackData("Правила знакомства c котом");
+        InlineKeyboardButton documents = new InlineKeyboardButton("Список документов, необходимых для того, чтобы взять кошку из приюта.");
+        documents.callbackData("Список документов для кота");
         InlineKeyboardButton b3 = new InlineKeyboardButton("Список рекомендаций по транспортировке кошки.");
-        b3.callbackData("транспортировка кошки");
+        b3.callbackData("Транспортировка животного для кота");
         InlineKeyboardButton b4 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для котенка.");
-        b4.callbackData("дома для котенка");
+        b4.callbackData("дома для кота");
         InlineKeyboardButton b5 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для взрослой кошки-кота.");
-        b5.callbackData("дома для кота");
+        b5.callbackData("дома для взрослого кота");
         InlineKeyboardButton b6 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для кошки с ограниченными возможностями (зрение, передвижение).");
-        b6.callbackData("дома для кошки с ограничениями");
+        b6.callbackData("дома для кота с ограничениями");
         InlineKeyboardButton b7 = new InlineKeyboardButton("Советы кинолога по первичному общению с кошки");
-        b7.callbackData("советы кинолога для кошки");
+        b7.callbackData("советы кинолога для кота");
         InlineKeyboardButton b8 = new InlineKeyboardButton("Рекомендации по проверенным кинологам для дальнейшего обращения .");
-        b8.callbackData("список кинологов для кошек");
+        b8.callbackData("список кинологов для кота");
         InlineKeyboardButton b9 = new InlineKeyboardButton("Список причин, почему могут отказать и не дать забрать кошку из приюта.");
-        b9.callbackData("список причин для отказа для принятия кошек");
+        b9.callbackData("список причин для отказа для кота");
         InlineKeyboardMarkup keyboard1 = new InlineKeyboardMarkup();
         keyboard1.addRow(rulesForCat);
-        keyboard1.addRow(documemts);
+        keyboard1.addRow(documents);
         keyboard1.addRow(b3);
         keyboard1.addRow(b4);
         keyboard1.addRow(b5);
@@ -98,8 +96,8 @@ public class TelegramBotService {
         keyboard1.addRow(b7);
         keyboard1.addRow(b8);
         keyboard1.addRow(b9);
-        message.replyMarkup(keyboard1);
-        telegramBot.execute(message);
+        message1.replyMarkup(keyboard1);
+        telegramBot.execute(message1);
     }
 
     public void sendReport(Long chatId) {  // кнопки этапа 3, кейсы между 2 и 3
