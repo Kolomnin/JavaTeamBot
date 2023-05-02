@@ -118,7 +118,7 @@ public class TelegramBotService {
     }
 
     public void firstMenu(Long chatId) { // меню начальное, кейсы 1/2/3
-        SendMessage helloMessage = new SendMessage(chatId, "Привет,  тут должна быть информация о боте. Выберите интересующий пункт из меню: ");
+        SendMessage helloMessage = new SendMessage(chatId, "Привет, тут должна быть информация о боте. Выберите интересующий пункт из меню: ");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Узнать информацию о приюте!");
         button1.callbackData("1");

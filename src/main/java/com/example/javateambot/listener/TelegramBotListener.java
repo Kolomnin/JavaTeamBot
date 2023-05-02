@@ -4,13 +4,13 @@ package com.example.javateambot.listener;
 import com.example.javateambot.repository.*;
 import com.example.javateambot.service.*;
 
-
+import com.pengrad.telegrambot.model.Message;
+import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.CallbackQuery;
-import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-//import jakarta.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,34 +24,15 @@ import java.util.List;
 @Service
 public class TelegramBotListener implements UpdatesListener {
 
-    @Autowired
-    private TelegramBot telegramBot;
-
-
-    @Autowired
-    UsersRepository usersRepository;
-
-    @Autowired
-    private TelegramBotService telegramBotService;
-
-    @Autowired
-    private DogAdoptionRepository dogAdoptionRepository;
-
-    @Autowired
-    private ContactInformationRepository contactInformationRepository;
-
-    @Autowired
-    private ReportRepository reportRepository;
-
-
-    @Autowired
-    private SaveReportAndContactData saveReportAndContactData;
-
-
-    private PhotoService photoService;
-
-    @Autowired
-    private DogAdoptionService dogAdoptionService;
+    private final TelegramBot telegramBot;
+    private final UsersRepository usersRepository;
+    private final TelegramBotService telegramBotService;
+    private final DogAdoptionRepository dogAdoptionRepository;
+    private final ContactInformationRepository contactInformationRepository;
+    private final ReportRepository reportRepository;
+    private final SaveReportAndContactData saveReportAndContactData;
+    private final PhotoService photoService;
+    private final DogAdoptionService dogAdoptionService;
 
     public static final String INFO_ABOUT_SHELTER = "Информация о приюте";
     public static final String WORK_SCHEDULE = "Расписание работы";
@@ -71,12 +52,22 @@ public class TelegramBotListener implements UpdatesListener {
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
     @Autowired
-    public TelegramBotListener(TelegramBot telegramBot, TelegramBotService telegramBotService,
-                               TelegramDogService telegramDogService, PhotoService photoService) {
+    public TelegramBotListener(TelegramBot telegramBot, UsersRepository usersRepository,
+                               TelegramBotService telegramBotService, DogAdoptionRepository dogAdoptionRepository,
+                               ContactInformationRepository contactInformationRepository,
+                               ReportRepository reportRepository, SaveReportAndContactData saveReportAndContactData,
+                               TelegramDogService telegramDogService, PhotoService photoService,
+                               DogAdoptionService dogAdoptionService) {
         this.telegramBot = telegramBot;
+        this.usersRepository = usersRepository;
         this.telegramBotService = telegramBotService;
+        this.dogAdoptionRepository = dogAdoptionRepository;
+        this.contactInformationRepository = contactInformationRepository;
+        this.reportRepository = reportRepository;
+        this.saveReportAndContactData = saveReportAndContactData;
         this.telegramDogService = telegramDogService;
         this.photoService = photoService;
+        this.dogAdoptionService = dogAdoptionService;
     }
 
     @PostConstruct
@@ -84,28 +75,19 @@ public class TelegramBotListener implements UpdatesListener {
         telegramBot.setUpdatesListener(this);
     }
 
-//    private static final Pattern TELEPHONE_MESSAGE = Pattern.compile(
-//            "(\\d{11})(\\s)([А-яA-z)]+)(\\s)([А-яA-z)\\s\\d]+)"); // парсим сообщение на группы по круглым скобкам
-
     Long chatId;
 
     @Override
     public int process(List<Update> updates) {
         try {
             updates.forEach(update -> {
-                        logger.info("Processing update: {}", update);
-                        //тут две кнопки приют кошки или собаки если
+               logger.info("Processing update: {}", update);
+               //тут две кнопки приют кошки или собаки если
 
                         if (update.callbackQuery() != null) {  // обработка этапа 0
                             chatId = update.callbackQuery().message().chat().id();
                             CallbackQuery callbackQuery = update.callbackQuery();
                             String data = callbackQuery.data();
-                            try {
-                                System.out.println(update.message().text());
-
-                            } catch (Exception e) {
-                                System.out.println("Ошибка");
-                            }
 
                             switch (data) {
 
@@ -165,12 +147,14 @@ public class TelegramBotListener implements UpdatesListener {
                                 }
                             }
                         }
-                        chatId = update.message().chat().id();
 
-                        if ("/start".equals(update.message().text())) {  // этап 0
-                            telegramBotService.firstMenu(chatId);
-
-                        }
+                    if (update.message() != null) {
+                    chatId = update.message().chat().id();
+                    String message = update.message().text();
+                    if ("/start".equals(message)) {
+                        telegramBotService.firstMenu(chatId);
+                    }
+                }
 
                         /**
                          * Проверяем сообщение пользователя на соответствие и сохраняем в БД,
@@ -192,9 +176,11 @@ public class TelegramBotListener implements UpdatesListener {
                          * усыновителей тогда принимаем от него фотографию и создаем обьект отчета, присваиваем ему фото
                          * затем сохраняем в бд
                          */
+                        if (update.message() != null && update.message().photo() != null) {
+                            // ваш код для обработки сообщения с фото
+                        }
+                        if (update.message() != null && update.message().photo() != null && dogAdoptionService.checkChatId(chatId)) { //
 
-                        if (update.message().photo() != null && dogAdoptionService.checkChatId(chatId)) { //
-//
                             photoService.uploadPhoto(update.message());
                             telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе, состоянии поведения питомца," +
                                     "общем самочувствии, привыканию к новому месту, новые обретенные привычки.\n" +
@@ -216,15 +202,20 @@ public class TelegramBotListener implements UpdatesListener {
                         /**
                          * Тут обрабатвается команда записать данные, когда любой пользователь оставляет контактные данные в боте.
                          */
+                        if (update.message() != null && update.message().text() != null) {
+                            saveReportAndContactData.saveContactData(update.message().text(), chatId);
+                        }
 
-                        saveReportAndContactData.saveContactData(update.message().text(), chatId);
 
                         /**
                          * Это обработчик отчетов, когда нам владелец присылает отчет.
                          */
-                        saveReportAndContactData.saveReport(update.message().text(), chatId);
+                        if (update.message() != null && update.message().text() != null) {
+                            saveReportAndContactData.saveReport(update.message().text(), chatId);
+                        }
 
-                    }
+
+               }
             );
         } catch(Exception e){
             e.printStackTrace();
