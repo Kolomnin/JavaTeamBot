@@ -46,6 +46,10 @@ public class AdoptedCats {
     @Column(nullable = false)
     private LocalDate lastDateProbationPeriod;
 
+
+    @Column(nullable = false)
+    private LocalDate adoptionDate;
+
 //    @OneToMany(mappedBy = "animals_in_house")
 //    private Collection<Report> report;
 
@@ -118,5 +122,16 @@ public class AdoptedCats {
     public void setLastReportDate(LocalDate lastReportDate) {
         this.lastReportDate = lastReportDate;
     }
-
+    /**
+     * Метод позволяет получить дату когда было усыновлено животное
+     */
+    public LocalDate getAdoptionDate() {
+        return adoptionDate;
+    }
+    /**
+     * Метод позволяет установить дату когда было усыновлено животное
+     */
+    public void setAdoptionDate(LocalDate adoptionDate) {
+        this.adoptionDate = adoptionDate;
+    }
 }

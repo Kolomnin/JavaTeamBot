@@ -41,6 +41,7 @@ public class DogAdoptionService {
             adoptedDogs.setUsers(usersRepository.findById(userID).orElseThrow());
             adoptedDogs.setDogs(dogsInShelterRepository.findById(dogId).orElseThrow());
             adoptedDogs.setLastDateProbationPeriod(LocalDate.now().plusDays(30));
+            adoptedDogs.setAdoptionDate(LocalDate.now());
 
         }
 

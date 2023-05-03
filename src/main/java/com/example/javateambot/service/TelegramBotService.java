@@ -12,18 +12,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class TelegramBotService {
 
-    @Autowired
     private TelegramBot telegramBot;
 
+    private ContactInformationRepository contactInformationRepository;
 
-    @Autowired
-    ContactInformationRepository contactInformationRepository;
 
-    @Autowired
-    ReportRepository reportRepository;
+    private ReportRepository reportRepository;
 
-    @Autowired
+
     private PhotoService photoService;
+
+    public TelegramBotService(TelegramBot telegramBot, ContactInformationRepository contactInformationRepository, ReportRepository reportRepository, PhotoService photoService) {
+        this.telegramBot = telegramBot;
+        this.contactInformationRepository = contactInformationRepository;
+        this.reportRepository = reportRepository;
+        this.photoService = photoService;
+    }
 
     public InlineKeyboardButton saveInfo() {  // метод записи данных
         InlineKeyboardButton button = new InlineKeyboardButton("записать данные");
@@ -32,7 +36,7 @@ public class TelegramBotService {
     }
 
     public void takeDogFromShelter(Long chatId) {  // кнопки этапа 2, кейсы между 2 и 3
-        SendMessage message = new SendMessage(chatId, "Рекомендации");
+        SendMessage message = new SendMessage(chatId, "Рекомендации для собак");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Правила знакомства с собакой до того, как можно забрать ее из приюта.");
         button1.callbackData("Правила знакомства");
@@ -67,40 +71,40 @@ public class TelegramBotService {
         message.replyMarkup(keyboard);
         telegramBot.execute(message);
     }
-    public void takeCatFromShelter(Long chatId) {  // кнопки этапа 2.1, кейсы между 2 и 3
-        SendMessage message = new SendMessage(chatId, "Рекомендации для кошек");
+        public void takeCatFromShelter1(Long chatId1) {  // кнопки этапа 2.1, кейсы между 2 и 3
+            SendMessage message1 = new SendMessage(chatId1, "Рекомендации для кошек");
 
-        InlineKeyboardButton rulesForCat = new InlineKeyboardButton("Правила знакомства с кошкой до того, как можно забрать ее из приюта.");
-        rulesForCat.callbackData("Правила знакомства с кошкой");
-        InlineKeyboardButton documemts = new InlineKeyboardButton("Список документов, необходимых для того, чтобы взять кошку из приюта.");
-        documemts.callbackData("Список документов для кошки");
-        InlineKeyboardButton b3 = new InlineKeyboardButton("Список рекомендаций по транспортировке кошки.");
-        b3.callbackData("транспортировка кошки");
-        InlineKeyboardButton b4 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для котенка.");
-        b4.callbackData("дома для котенка");
-        InlineKeyboardButton b5 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для взрослой кошки-кота.");
-        b5.callbackData("дома для кота");
-        InlineKeyboardButton b6 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для кошки с ограниченными возможностями (зрение, передвижение).");
-        b6.callbackData("дома для кошки с ограничениями");
-        InlineKeyboardButton b7 = new InlineKeyboardButton("Советы кинолога по первичному общению с кошки");
-        b7.callbackData("советы кинолога для кошки");
-        InlineKeyboardButton b8 = new InlineKeyboardButton("Рекомендации по проверенным кинологам для дальнейшего обращения .");
-        b8.callbackData("список кинологов для кошек");
-        InlineKeyboardButton b9 = new InlineKeyboardButton("Список причин, почему могут отказать и не дать забрать кошку из приюта.");
-        b9.callbackData("список причин для отказа для принятия кошек");
-        InlineKeyboardMarkup keyboard1 = new InlineKeyboardMarkup();
-        keyboard1.addRow(rulesForCat);
-        keyboard1.addRow(documemts);
-        keyboard1.addRow(b3);
-        keyboard1.addRow(b4);
-        keyboard1.addRow(b5);
-        keyboard1.addRow(b6);
-        keyboard1.addRow(b7);
-        keyboard1.addRow(b8);
-        keyboard1.addRow(b9);
-        message.replyMarkup(keyboard1);
-        telegramBot.execute(message);
-    }
+            InlineKeyboardButton rulesForCat = new InlineKeyboardButton("Правила знакомства с кошкой до того, как можно забрать ее из приюта.");
+            rulesForCat.callbackData("Правила знакомства c котом");
+            InlineKeyboardButton documents = new InlineKeyboardButton("Список документов, необходимых для того, чтобы взять кошку из приюта.");
+            documents.callbackData("Список документов для кота");
+            InlineKeyboardButton b3 = new InlineKeyboardButton("Список рекомендаций по транспортировке кошки.");
+            b3.callbackData("Транспортировка животного для кота");
+            InlineKeyboardButton b4 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для котенка.");
+            b4.callbackData("дома для кота");
+            InlineKeyboardButton b5 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для взрослой кошки-кота.");
+            b5.callbackData("дома для взрослого кота");
+            InlineKeyboardButton b6 = new InlineKeyboardButton("Список рекомендаций по обустройству дома для кошки с ограниченными возможностями (зрение, передвижение).");
+            b6.callbackData("дома для кота с ограничениями");
+            InlineKeyboardButton b7 = new InlineKeyboardButton("Советы кинолога по первичному общению с кошки");
+            b7.callbackData("советы кинолога для кота");
+            InlineKeyboardButton b8 = new InlineKeyboardButton("Рекомендации по проверенным кинологам для дальнейшего обращения .");
+            b8.callbackData("список кинологов для кота");
+            InlineKeyboardButton b9 = new InlineKeyboardButton("Список причин, почему могут отказать и не дать забрать кошку из приюта.");
+            b9.callbackData("список причин для отказа для кота");
+            InlineKeyboardMarkup keyboard1 = new InlineKeyboardMarkup();
+            keyboard1.addRow(rulesForCat);
+            keyboard1.addRow(documents);
+            keyboard1.addRow(b3);
+            keyboard1.addRow(b4);
+            keyboard1.addRow(b5);
+            keyboard1.addRow(b6);
+            keyboard1.addRow(b7);
+            keyboard1.addRow(b8);
+            keyboard1.addRow(b9);
+            message1.replyMarkup(keyboard1);
+            telegramBot.execute(message1);
+        }
 
     public void sendReport(Long chatId) {  // кнопки этапа 3, кейсы между 2 и 3
         SendMessage message = new SendMessage(chatId, "Приветствует в нашем приюте");
@@ -129,13 +133,13 @@ public class TelegramBotService {
         InlineKeyboardButton button4 = new InlineKeyboardButton("Позвать волонтера");
         button4.callbackData("позвать волонтера");
         InlineKeyboardButton button5 = new InlineKeyboardButton("Как взять кошку из приюта?");
-        button5.callbackData("5");
+        button5.callbackData("4");
         InlineKeyboardButton button6 = new InlineKeyboardButton("Записать данные");
         button6.callbackData("6");
         InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
         keyboard.addRow(button1,button3);
-        keyboard.addRow(button2,button5);
-        keyboard.addRow(button4,saveInfo());
+        keyboard.addRow(button2,button4);
+        keyboard.addRow(button5,saveInfo());
         helloMessage.replyMarkup(keyboard);
         telegramBot.execute(helloMessage);
     }
