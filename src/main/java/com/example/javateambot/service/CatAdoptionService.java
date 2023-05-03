@@ -56,4 +56,6 @@ public class CatAdoptionService {
     public Users findUserByChatId(long chatId) {
         return usersRepository.findByChatId(chatId);
     }
+
+
 }

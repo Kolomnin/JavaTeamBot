@@ -1,6 +1,8 @@
 package com.example.javateambot.timer;
 
 import com.example.javateambot.entity.Users;
+import com.example.javateambot.repository.CatAdoptionRepository;
+import com.example.javateambot.service.CatAdoptionService;
 import com.example.javateambot.service.SaveReportAndContactData;
 import com.example.javateambot.service.TelegramBotService;
 import com.pengrad.telegrambot.TelegramBot;
@@ -21,10 +23,15 @@ public class TelegramBotTimer {
 
     private SaveReportAndContactData saveReportAndContactData;
 
-    public TelegramBotTimer(TelegramBotService telegramBotService, TelegramBot telegramBot, SaveReportAndContactData saveReportAndContactData) {
+    private CatAdoptionRepository catAdoptionRepository;
+
+    public TelegramBotTimer(TelegramBotService telegramBotService, TelegramBot telegramBot,
+                            SaveReportAndContactData saveReportAndContactData, CatAdoptionRepository catAdoptionRepository) {
         this.telegramBotService = telegramBotService;
         this.telegramBot = telegramBot;
         this.saveReportAndContactData = saveReportAndContactData;
+        this.catAdoptionRepository = catAdoptionRepository;
+
     }
 
 
@@ -37,4 +44,8 @@ public class TelegramBotTimer {
         }
     }
 
+//    @Scheduled(cron = "0 0 * * * *")
+//    public void congratsWithSuccessAdoptionCat() {
+//        var probationDate = catAdoptionRepository.findByLastDateProbationPeriod(LocalDate.now().trunc)
+//    }
 }
