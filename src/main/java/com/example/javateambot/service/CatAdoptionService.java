@@ -40,6 +40,7 @@ public class CatAdoptionService {
             adoptedCats.setUsers(usersRepository.findById(userID).orElseThrow());
             adoptedCats.setCats(catsInShelterRepository.findById(catId).orElseThrow());
             adoptedCats.setLastDateProbationPeriod(LocalDate.now().plusDays(30));
+            adoptedCats.setAdoptionDate(LocalDate.now());
 
         }
 

@@ -23,14 +23,14 @@ import java.util.List;
 @Service
 public class TelegramBotListener implements UpdatesListener {
 
-    @Autowired
+
     private TelegramBot telegramBot;
 
 
-    @Autowired
-    UsersRepository usersRepository;
 
-    @Autowired
+   private UsersRepository usersRepository;
+
+
     private TelegramBotService telegramBotService;
 
     @Autowired
@@ -43,15 +43,31 @@ public class TelegramBotListener implements UpdatesListener {
     private ReportRepository reportRepository;
 
 
-    @Autowired
+
     private SaveReportAndContactData saveReportAndContactData;
 
 
     private PhotoService photoService;
 
-    @Autowired
+
     private DogAdoptionService dogAdoptionService;
-    @Autowired TelegramCatService telegramCatService;
+    private TelegramCatService telegramCatService;
+
+    private final TelegramDogService telegramDogService;
+
+    @Autowired
+    public TelegramBotListener(TelegramBot telegramBot,UsersRepository usersRepository, TelegramBotService telegramBotService,
+                               TelegramDogService telegramDogService, PhotoService photoService,DogAdoptionService dogAdoptionService,
+    TelegramCatService telegramCatService,SaveReportAndContactData saveReportAndContactData) {
+        this.telegramBot = telegramBot;
+        this.usersRepository = usersRepository;
+        this.telegramBotService = telegramBotService;
+        this.telegramDogService = telegramDogService;
+        this.photoService = photoService;
+        this.dogAdoptionService = dogAdoptionService;
+        this.telegramCatService = telegramCatService;
+        this.saveReportAndContactData = saveReportAndContactData;
+    }
 
     public static final String INFO_ABOUT_SHELTER = "Информация о приюте";
     public static final String WORK_SCHEDULE = "Расписание работы";
@@ -79,18 +95,9 @@ public class TelegramBotListener implements UpdatesListener {
     public static final String INFO_ABOUT_DOG_HANDLER1 = "список кинологов для кота";
     public static final String REASONS_FOR_REFUSAL1 = "список причин для отказа для кота";
 
-    private final TelegramDogService telegramDogService;
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
-    @Autowired
-    public TelegramBotListener(TelegramBot telegramBot, TelegramBotService telegramBotService,
-                               TelegramDogService telegramDogService, PhotoService photoService) {
-        this.telegramBot = telegramBot;
-        this.telegramBotService = telegramBotService;
-        this.telegramDogService = telegramDogService;
-        this.photoService = photoService;
-    }
 
     @PostConstruct
     public void init() {
@@ -155,7 +162,7 @@ public class TelegramBotListener implements UpdatesListener {
                                 case REASONS_FOR_REFUSAL ->
                                         telegramBot.execute(new SendMessage(chatId, telegramDogService.ReasonsForRefusal()));
 
-                                case "5" -> telegramBotService.takeCatFromShelter1(chatId);
+                                case "4" -> telegramBotService.takeCatFromShelter1(chatId);
                                 case RULES_FOR_DATING_For_Cat ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.rulesForDating()));
                                 case LIST_OF_DOCUMENTS1 ->

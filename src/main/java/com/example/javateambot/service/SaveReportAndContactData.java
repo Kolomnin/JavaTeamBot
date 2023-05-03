@@ -18,26 +18,39 @@ import java.util.List;
 @Service
 public class SaveReportAndContactData {
 
-    @Autowired
-    ReportRepository reportRepository;
 
-    @Autowired
-    TelegramBot telegramBot;
+   private ReportRepository reportRepository;
 
-    @Autowired
-    PhotoService photoService;
 
-    @Autowired
-    PhotoRepository photoRepository;
+    private TelegramBot telegramBot;
 
-    @Autowired
-    ContactInformationRepository contactInformationRepository;
 
-    @Autowired
-    UsersRepository usersRepository;
+    private PhotoService photoService;
 
-    @Autowired
-    DogAdoptionService dogAdoptionService;
+
+    private PhotoRepository photoRepository;
+
+
+    private ContactInformationRepository contactInformationRepository;
+
+
+    private UsersRepository usersRepository;
+
+
+    private DogAdoptionService dogAdoptionService;
+
+    public SaveReportAndContactData(ReportRepository reportRepository, TelegramBot telegramBot,
+                                    PhotoService photoService, PhotoRepository photoRepository,
+                                    ContactInformationRepository contactInformationRepository,
+                                    UsersRepository usersRepository, DogAdoptionService dogAdoptionService) {
+        this.reportRepository = reportRepository;
+        this.telegramBot = telegramBot;
+        this.photoService = photoService;
+        this.photoRepository = photoRepository;
+        this.contactInformationRepository = contactInformationRepository;
+        this.usersRepository = usersRepository;
+        this.dogAdoptionService = dogAdoptionService;
+    }
 
     public void saveReport(String reportMessage, Long chatId) {
         Report report = new Report();
@@ -119,4 +132,8 @@ public class SaveReportAndContactData {
     public List<Users> getByDateReport(LocalDate localDate) {
         return usersRepository.findUsersByDate(localDate);
     }
+
+//    public List<Report> findLastReport() {
+//        List
+//    }
 }

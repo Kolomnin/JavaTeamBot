@@ -54,6 +54,9 @@ public class AdoptedDogs {
     @Column(nullable = false)
     private LocalDate lastReportDate;
 
+    @Column(nullable = false)
+    private LocalDate adoptionDate;
+
 
     /**
      * Метод позволяет получить Id собаки
@@ -109,6 +112,19 @@ public class AdoptedDogs {
      */
     public void setLastReportDate(LocalDate lastReportDate) {
         this.lastReportDate = lastReportDate;
+    }
+
+    /**
+     * Метод позволяет получить дату когда было усыновлено животное
+     */
+    public LocalDate getAdoptionDate() {
+        return adoptionDate;
+    }
+    /**
+     * Метод позволяет установить дату когда было усыновлено животное
+     */
+    public void setAdoptionDate(LocalDate adoptionDate) {
+        this.adoptionDate = adoptionDate;
     }
 
 
