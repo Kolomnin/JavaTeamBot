@@ -2,6 +2,7 @@ package com.example.javateambot.service;
 
 import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.UsersRepository;
+import com.pengrad.telegrambot.TelegramBot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,12 +19,12 @@ import static org.mockito.Mockito.when;
 class UsersServiceTest {
 
     private final UsersRepository usersRepository = mock(UsersRepository.class);
-
+    private final TelegramBot telegramBot = mock(TelegramBot.class);
     private UsersService out;
 
     @BeforeEach
     public void initOut() {
-        out = new UsersService(usersRepository);
+        out = new UsersService(usersRepository,telegramBot);
     }
 
 

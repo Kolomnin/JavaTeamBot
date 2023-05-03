@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 public class UsersController {
-    @Autowired
+
+
     private final UsersService usersService;
 
     public UsersController(UsersService usersService) {
@@ -78,4 +79,8 @@ public class UsersController {
         return ResponseEntity.ok(usersService.getAllUsers());
     }
 
+    @RequestMapping("/volrep/{id}")
+    public void sendM(@PathVariable Long id){
+        usersService.sendM(id);
+    }
 }
