@@ -5,7 +5,7 @@ import com.example.javateambot.repository.*;
 import com.example.javateambot.service.*;
 
 
-=======
+
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 
@@ -90,7 +90,7 @@ public class TelegramBotListener implements UpdatesListener {
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
 
-    @Autowired
+
     public TelegramBotListener(TelegramBot telegramBot, UsersRepository usersRepository,
                                TelegramBotService telegramBotService, DogAdoptionRepository dogAdoptionRepository,
                                ContactInformationRepository contactInformationRepository,
