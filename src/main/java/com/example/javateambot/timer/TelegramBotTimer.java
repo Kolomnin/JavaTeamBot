@@ -14,6 +14,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Component
@@ -37,7 +41,9 @@ public class TelegramBotTimer {
 
     }
 
-
+    /**
+     * Метод отправляет волонтеру уведомление о том что отчет не присылался
+     */
     @Scheduled(cron = "@Daily")
     public void run() {
         List<Users> usersList = saveReportAndContactData.getByDateReport(LocalDate.now().minusDays(2));
@@ -46,17 +52,23 @@ public class TelegramBotTimer {
                     u.getLastName() + " отчет просрочен"));
         }
     }
-
-    @Scheduled(cron = "0 0 0 * * *")
+    /**
+     * Метод отправляет владельцу поздравление о том что испытательный период пройден
+     */
+    @Scheduled(cron = "0 * * * * *")
     public void congratsWithSuccessAdoptionCat() {
         LocalDate today = LocalDate.now();
         String congratsMessage = "Поздравляем,ваш период усыновления пройден, желаем вам хорошей " +
                 "совместной жизни с вашим питомцем ";
+        AdoptedCats  a1 = catAdoptionRepository.findByLastDateProbationPeriod(today);
 
-        if (today.equals(catAdoptionRepository.findByLastDateProbationPeriod(today))) {
-            AdoptedCats  a1 = catAdoptionRepository.findByLastDateProbationPeriod(today);
+        LocalDate dateLastProbationPeriod = a1.getLastDateProbationPeriod();
+
+        if (dateLastProbationPeriod.equals(today)) {
             Long chatId = a1.getUsers().getChatId();
             telegramBot.execute(new SendMessage(chatId,   congratsMessage));
         }
     }
+
+
 }

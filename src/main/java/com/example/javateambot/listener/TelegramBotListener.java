@@ -96,7 +96,7 @@ public class TelegramBotListener implements UpdatesListener {
                                ContactInformationRepository contactInformationRepository,
                                ReportRepository reportRepository, SaveReportAndContactData saveReportAndContactData,
                                TelegramDogService telegramDogService, PhotoService photoService,
-                               DogAdoptionService dogAdoptionService) {
+                               DogAdoptionService dogAdoptionService,TelegramCatService telegramCatService) {
         this.telegramBot = telegramBot;
         this.usersRepository = usersRepository;
         this.telegramBotService = telegramBotService;
@@ -107,6 +107,7 @@ public class TelegramBotListener implements UpdatesListener {
         this.telegramDogService = telegramDogService;
         this.photoService = photoService;
         this.dogAdoptionService = dogAdoptionService;
+        this.telegramCatService = telegramCatService;
     }
 
 
