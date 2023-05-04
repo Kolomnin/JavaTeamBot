@@ -2,6 +2,7 @@ package com.example.javateambot.controllers;
 
 
 import com.example.javateambot.entity.AdoptedDogs;
+import com.example.javateambot.entity.DogsInShelter;
 import com.example.javateambot.service.DogAdoptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -42,6 +44,12 @@ public class DogsAdoptionController {
                                                @RequestParam(required = false) Long dogId
             , @RequestBody AdoptedDogs adoptedDogs) {
         return dogAdoptionService.adoptionDog2(userId, dogId, adoptedDogs);
+    }
+
+    @PutMapping
+    public void increaseProbationPeriod(@RequestParam(required = false) Long idDog,
+                                        @RequestParam(required = false) int daysToIncrease) {
+        dogAdoptionService.increaseProbationPeriodDog(idDog, daysToIncrease);
     }
 
 

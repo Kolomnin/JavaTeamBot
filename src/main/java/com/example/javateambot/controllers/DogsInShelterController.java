@@ -31,7 +31,7 @@ public class DogsInShelterController {
     }
 
     @Operation(summary = "Изменение параметров собаки",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Ноая собака",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Новая собака",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
             ))
     @PutMapping

@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DogAdoptionRepository extends JpaRepository<AdoptedDogs, Long> {
 
+    AdoptedDogs findByDogs(long idDog);
 
 }

@@ -1,6 +1,7 @@
 package com.example.javateambot.repository;
 
 import com.example.javateambot.entity.AdoptedCats;
+import com.example.javateambot.entity.AdoptedDogs;
 import com.example.javateambot.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,6 @@ public interface CatAdoptionRepository extends JpaRepository<AdoptedCats, Long> 
 //        @Query("SELECT e FROM AdoptedCats e WHERE e.lastDateProbationPeriod = :date")
 //        List<AdoptedCats> findByDate(@Param("date") LocalDate date);
 
-
+        AdoptedCats findByCats(long idCat);
 
 }
