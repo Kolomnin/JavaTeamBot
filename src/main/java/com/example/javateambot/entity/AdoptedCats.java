@@ -1,5 +1,6 @@
 package com.example.javateambot.entity;
 
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "adopted_cats")
 public class AdoptedCats {
+
 
     /**
      * Id кошки

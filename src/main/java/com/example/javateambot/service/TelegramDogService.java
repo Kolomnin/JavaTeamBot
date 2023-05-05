@@ -1,8 +1,11 @@
 package com.example.javateambot.service;
 
+import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.Users;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,6 +13,7 @@ import java.time.LocalDate;
 
 @Service
 public class TelegramDogService {
+    Logger logger = LoggerFactory.getLogger(TelegramDogService.class);
 
     public TelegramDogService(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;

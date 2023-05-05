@@ -1,6 +1,7 @@
 package com.example.javateambot.entity;
 
 
+
 import javax.persistence.*;
 
 /**

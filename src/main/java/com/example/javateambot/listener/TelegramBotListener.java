@@ -1,6 +1,7 @@
 package com.example.javateambot.listener;
 
 
+import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.repository.*;
 import com.example.javateambot.service.*;
 
@@ -26,7 +27,6 @@ import java.util.List;
 
 @Service
 public class TelegramBotListener implements UpdatesListener {
-
 
 
     private TelegramBot telegramBot;
@@ -257,7 +257,7 @@ public class TelegramBotListener implements UpdatesListener {
                         if (update.message() != null && update.message().photo() != null) {
                             // ваш код для обработки сообщения с фото
                         }
-                        if (update.message() != null && update.message().photo() != null && dogAdoptionService.checkChatId(chatId)) { //
+                        if (update.message() != null && update.message().photo() != null) { //
 
                             photoService.uploadPhoto(update.message());
                             telegramBot.execute(new SendMessage(chatId, "Теперь напишите нам о рационе, состоянии поведения питомца," +

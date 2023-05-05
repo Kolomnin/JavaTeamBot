@@ -1,5 +1,6 @@
 package com.example.javateambot.service;
 
+import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.AppPhoto;
 import com.example.javateambot.repository.PhotoRepository;
 import com.pengrad.telegrambot.TelegramBot;
@@ -12,6 +13,8 @@ import com.pengrad.telegrambot.response.GetFileResponse;
 import liquibase.util.StringUtil;
 import okhttp3.internal.http2.Http2Stream;
 import org.apache.catalina.connector.InputBuffer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 
@@ -27,6 +30,7 @@ import java.io.IOException;
  */
 @Service
 public class PhotoService {
+    Logger logger = LoggerFactory.getLogger(PhotoService.class);
 
     private TelegramBot telegramBot;
     private PhotoRepository photoRepository;

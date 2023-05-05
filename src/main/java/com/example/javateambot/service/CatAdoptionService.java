@@ -1,13 +1,19 @@
 package com.example.javateambot.service;
 
+import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.AdoptedCats;
 import com.example.javateambot.entity.AdoptedDogs;
 import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.CatAdoptionRepository;
 import com.example.javateambot.repository.CatsInShelterRepository;
 import com.example.javateambot.repository.UsersRepository;
+
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +22,7 @@ import java.util.Objects;
 
 @Service
 public class CatAdoptionService {
+    Logger logger = LoggerFactory.getLogger(CatAdoptionService.class);
 
     private CatsInShelterRepository catsInShelterRepository;
 

@@ -1,5 +1,6 @@
 package com.example.javateambot.service;
 
+import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.ContactInformation;
 import com.example.javateambot.entity.Report;
 import com.example.javateambot.entity.Users;
@@ -9,6 +10,8 @@ import com.example.javateambot.repository.ReportRepository;
 import com.example.javateambot.repository.UsersRepository;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ import java.util.List;
 
 @Service
 public class SaveReportAndContactData {
+    Logger logger = LoggerFactory.getLogger(SaveReportAndContactData.class);
 
 
    private ReportRepository reportRepository;
