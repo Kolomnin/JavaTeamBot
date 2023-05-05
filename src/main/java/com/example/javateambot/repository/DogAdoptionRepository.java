@@ -10,5 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DogAdoptionRepository extends JpaRepository<AdoptedDogs, Long> {
 
+
+    AdoptedDogs findById(long idDog);
+
+
     Logger logger = LoggerFactory.getLogger(DogAdoptionRepository.class);
+
 }

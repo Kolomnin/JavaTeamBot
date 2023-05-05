@@ -2,6 +2,7 @@ package com.example.javateambot.repository;
 
 import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.AdoptedCats;
+import com.example.javateambot.entity.AdoptedDogs;
 import com.example.javateambot.entity.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,6 @@ public interface CatAdoptionRepository extends JpaRepository<AdoptedCats, Long> 
 //        @Query("SELECT e FROM AdoptedCats e WHERE e.lastDateProbationPeriod = :date")
 //        List<AdoptedCats> findByDate(@Param("date") LocalDate date);
 
-
+        AdoptedCats findById(long idCat);
 
 }

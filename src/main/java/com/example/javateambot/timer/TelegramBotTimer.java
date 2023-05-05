@@ -4,7 +4,8 @@ import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.AdoptedCats;
 import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.CatAdoptionRepository;
-import com.example.javateambot.service.CatAdoptionService;
+import com.example.javateambot.repository.DogAdoptionRepository;
+import com.example.javateambot.repository.DogsInShelterRepository;
 import com.example.javateambot.service.SaveReportAndContactData;
 import com.example.javateambot.service.TelegramBotService;
 import com.pengrad.telegrambot.TelegramBot;
@@ -17,10 +18,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Component
@@ -35,16 +32,19 @@ public class TelegramBotTimer {
     private final TelegramBot telegramBot;
 
     private SaveReportAndContactData saveReportAndContactData;
-
+    private DogAdoptionRepository dogAdoptionRepository;
     private CatAdoptionRepository catAdoptionRepository;
+    private final DogsInShelterRepository dogsInShelterRepository;
 
     public TelegramBotTimer(TelegramBotService telegramBotService, TelegramBot telegramBot,
-                            SaveReportAndContactData saveReportAndContactData, CatAdoptionRepository catAdoptionRepository) {
+                            SaveReportAndContactData saveReportAndContactData, CatAdoptionRepository catAdoptionRepository, DogAdoptionRepository dogAdoptionRepository,
+                            DogsInShelterRepository dogsInShelterRepository) {
         this.telegramBotService = telegramBotService;
         this.telegramBot = telegramBot;
         this.saveReportAndContactData = saveReportAndContactData;
         this.catAdoptionRepository = catAdoptionRepository;
-
+        this.dogAdoptionRepository = dogAdoptionRepository;
+        this.dogsInShelterRepository = dogsInShelterRepository;
     }
 
     /**
@@ -76,6 +76,8 @@ public class TelegramBotTimer {
             telegramBot.execute(new SendMessage(chatId, congratsMessage));
         }
     }
+
+
 
 
 }

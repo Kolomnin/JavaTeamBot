@@ -50,5 +50,11 @@ public class CatsAdoptionController {
         return catAdoptionService.adoptionCat2(userId, catId, adoptedCats);
     }
 
+    @PutMapping
+    public void increaseProbationPeriod(@RequestParam(required = false) Long idCat,
+                                        @RequestParam(required = false) int daysToIncrease) {
+        catAdoptionService.increaseProbationPeriodCat(idCat, daysToIncrease);
+    }
+
 
 }
