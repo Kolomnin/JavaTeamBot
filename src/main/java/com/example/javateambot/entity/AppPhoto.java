@@ -1,5 +1,7 @@
 package com.example.javateambot.entity;
 
+
+
 import javax.persistence.*;
 
 
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "animal_photo")
 public class AppPhoto {
+
 
     /**
      * Id фотографии

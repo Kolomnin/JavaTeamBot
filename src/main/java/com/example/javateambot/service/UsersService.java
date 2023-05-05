@@ -1,15 +1,19 @@
 package com.example.javateambot.service;
 
+import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.Users;
 import com.example.javateambot.repository.UsersRepository;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
 public class UsersService {
+    Logger logger = LoggerFactory.getLogger(UsersService.class);
     private final UsersRepository usersRepository;
 
     private TelegramBot telegramBot;
