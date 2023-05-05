@@ -1,5 +1,7 @@
 package com.example.javateambot.entity;
 
+
+
 import javax.persistence.*;
 import java.time.LocalDate;
 

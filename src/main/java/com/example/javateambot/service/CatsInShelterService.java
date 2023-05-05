@@ -1,13 +1,17 @@
 package com.example.javateambot.service;
 
+import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.CatsInShelter;
 import com.example.javateambot.repository.CatsInShelterRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
 public class CatsInShelterService {
+    Logger logger = LoggerFactory.getLogger(CatsInShelterService.class);
     private final CatsInShelterRepository catsInShelterRepository;
 
 

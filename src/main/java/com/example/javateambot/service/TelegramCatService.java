@@ -1,12 +1,16 @@
 package com.example.javateambot.service;
 
+import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.entity.Users;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TelegramCatService {
+    Logger logger = LoggerFactory.getLogger(TelegramCatService.class);
 
     public TelegramCatService(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
