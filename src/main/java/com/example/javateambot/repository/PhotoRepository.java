@@ -16,7 +16,6 @@ import java.util.Optional;
 @Repository
 public interface PhotoRepository extends JpaRepository<AppPhoto, Long> {
     //    AppPhoto findAppPhotoByChatIdAnd(long chatId);
-    Logger logger = LoggerFactory.getLogger(PhotoRepository.class);
 
     @Query("SELECT MAX(ap)  FROM AppPhoto ap WHERE ap.chatId = :chatId GROUP BY ap.chatId ")
     AppPhoto findLastReport1(long chatId);

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Service
 public class TelegramDogService {
-    Logger logger = LoggerFactory.getLogger(TelegramDogService.class);
+    private final Logger logger = LoggerFactory.getLogger(TelegramDogService.class);
 
     public TelegramDogService(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;

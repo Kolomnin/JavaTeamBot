@@ -17,7 +17,6 @@ import java.util.List;
 @Repository
 public interface ReportRepository extends JpaRepository<Report , Long> {
 
-    Logger logger = LoggerFactory.getLogger(ReportRepository.class);
     List<Report> findByDateAfterAndUser (LocalDate localDate,Users users);
 
     List<Report> findByDateAfter (LocalDate localDate);
