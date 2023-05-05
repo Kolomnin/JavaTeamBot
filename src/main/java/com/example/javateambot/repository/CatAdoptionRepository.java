@@ -20,6 +20,6 @@ public interface CatAdoptionRepository extends JpaRepository<AdoptedCats, Long> 
 //        @Query("SELECT e FROM AdoptedCats e WHERE e.lastDateProbationPeriod = :date")
 //        List<AdoptedCats> findByDate(@Param("date") LocalDate date);
 
-        AdoptedCats findByCats(long idCat);
+        AdoptedCats findById(long idCat);
 
 }

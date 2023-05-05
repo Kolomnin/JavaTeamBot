@@ -63,9 +63,10 @@ public class CatAdoptionService {
         }
 
         //увеличиваем дату
-        AdoptedCats cat = catAdoptionRepository.findByCats(idCat);
+        AdoptedCats cat = catAdoptionRepository.findById(idCat).orElseThrow();
         LocalDate newDate = cat.getLastDateProbationPeriod().plusDays(daysToIncrease);
         cat.setLastDateProbationPeriod(newDate);
+        catAdoptionRepository.save(cat);
 
         //сообщаем пользователю об этом
         String message = "Ваш испытательный срок был продлен на " + daysToIncrease + " дней";

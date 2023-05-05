@@ -72,9 +72,10 @@ public class DogAdoptionService {
         }
 
         //увеличиваем дату
-        AdoptedDogs dog = dogAdoptionRepository.findByDogs(idDog);
+        AdoptedDogs dog = dogAdoptionRepository.findById(idDog).orElseThrow();
         LocalDate newDate = dog.getLastDateProbationPeriod().plusDays(daysToIncrease);
         dog.setLastDateProbationPeriod(newDate);
+        dogAdoptionRepository.save(dog);
 
         //сообщаем пользователю об этом
         String message = "Ваш испытательный срок был продлен на " + daysToIncrease + " дней";
