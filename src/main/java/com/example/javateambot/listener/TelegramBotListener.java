@@ -77,8 +77,8 @@ public class TelegramBotListener implements UpdatesListener {
     public static final String WORK_SCHEDULE1 = "Расписание работы для кота";
     public static final String SAFETY_RECOMMENDATIONS1 = "Рекомендации по ТБ для кота";
     public static final String RULES_FOR_DATING_For_Cat = "Правила знакомства c котом";
-    public static final String LIST_OF_DOCUMENTS1 = "Список документов для кота";
-    public static final String RECOMMENDATIONS_FOR_TRANSPORTATION1 = "Транспортировка животного для кота";
+    public static final String LIST_OF_DOCUMENTS1 = "Список документов для котаа";
+    public static final String RECOMMENDATIONS_FOR_TRANSPORTATION1 = "кота транспортировка";
     public static final String HOME_IMPROVEMENT_FOR_PUPPY1 = "дома для кота";
     public static final String HOME_IMPROVEMENT_FOR_ADULT_DOG1 = "дома для взрослого кота";
     public static final String HOME_IMPROVEMENT_FOR_DOG_WITH_DISABILITIES1 = "дома для кота с ограничениями";
@@ -178,7 +178,7 @@ public class TelegramBotListener implements UpdatesListener {
                                 case REASONS_FOR_REFUSAL ->
                                         telegramBot.execute(new SendMessage(chatId, telegramDogService.ReasonsForRefusal()));
 
-                                case "4" -> telegramBotService.takeCatFromShelter1(chatId);
+//                                case "4" -> telegramBotService.takeCatFromShelter1(chatId);
                                 case RULES_FOR_DATING_For_Cat ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.rulesForDating()));
                                 case LIST_OF_DOCUMENTS1 ->
@@ -221,6 +221,9 @@ public class TelegramBotListener implements UpdatesListener {
                                             "Петров\n" +
                                             "79290463013\n" +
                                             "Или Напишите данные в одну строчку через один пробел"));
+
+                                }case "кошка" -> {
+                                    telegramBotService.catInfo(chatId);
 
                                 }
                             }
