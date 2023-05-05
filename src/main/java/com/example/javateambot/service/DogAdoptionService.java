@@ -68,7 +68,7 @@ public class DogAdoptionService {
 //        return idUser;
 //    }
 
-ExtensionProbationPeriod
+
     public Boolean checkChatId(Long chatId) {
         if (Objects.equals(usersRepository.findByChatId(chatId).getChatId(), chatId)) {
             return true;
