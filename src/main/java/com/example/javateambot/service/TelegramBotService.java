@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TelegramBotService {
 
-    Logger logger = LoggerFactory.getLogger(TelegramBotService.class);
+    private final Logger logger = LoggerFactory.getLogger(TelegramBotService.class);
 
     private TelegramBot telegramBot;
 

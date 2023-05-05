@@ -24,7 +24,7 @@ import java.util.List;
 @EnableScheduling
 public class TelegramBotTimer {
 
-    Logger logger = LoggerFactory.getLogger(TelegramBotTimer.class);
+    private final Logger logger = LoggerFactory.getLogger(TelegramBotTimer.class);
 
     @Value("${volunteer.chat.id}")
     private String volunteerChatId;

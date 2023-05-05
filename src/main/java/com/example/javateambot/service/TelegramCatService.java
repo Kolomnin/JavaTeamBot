@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TelegramCatService {
-    Logger logger = LoggerFactory.getLogger(TelegramCatService.class);
+    private final Logger logger = LoggerFactory.getLogger(TelegramCatService.class);
 
     public TelegramCatService(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
