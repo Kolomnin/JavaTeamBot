@@ -88,6 +88,7 @@ public class TelegramBotListener implements UpdatesListener {
     public static final String RECIEVE_REPORT = "Получить отчет";
     public static final String WRITE_DOWN_CONTACT_DATA = "записать контактные данные";
     public static final String HOW_TAKE_CAT = "Как взять кошку из приюта";
+    public static final String START = "/start";
 
 
 
@@ -226,7 +227,7 @@ public class TelegramBotListener implements UpdatesListener {
                     if (update.message() != null) {
                     chatId = update.message().chat().id();
                     String message = update.message().text();
-                    if ("/start".equals(message)) {
+                    if (START.equals(message)) {
                         telegramBotService.firstMenu(chatId);
                     }
                 }
