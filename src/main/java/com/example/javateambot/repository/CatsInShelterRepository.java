@@ -11,5 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CatsInShelterRepository extends JpaRepository<CatsInShelter, Long> {
 
+     final Logger logger = LoggerFactory.getLogger(CatsInShelterRepository.class);
+
+
     CatsInShelter findByNameCat(String name);
 }

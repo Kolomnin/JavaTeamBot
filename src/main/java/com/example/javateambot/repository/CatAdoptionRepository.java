@@ -18,6 +18,8 @@ import java.util.List;
 @Repository
 public interface CatAdoptionRepository extends JpaRepository<AdoptedCats, Long> {
 
+        final Logger logger = LoggerFactory.getLogger(CatAdoptionRepository.class);
+
         Long findByUsersChatId (Users users);
         AdoptedCats findByLastDateProbationPeriod (LocalDate localDate);
 //        @Query("SELECT e FROM AdoptedCats e WHERE e.lastDateProbationPeriod = :date")
