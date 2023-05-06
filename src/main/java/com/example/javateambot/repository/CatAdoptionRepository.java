@@ -17,6 +17,7 @@ import java.util.List;
 
 @Repository
 public interface CatAdoptionRepository extends JpaRepository<AdoptedCats, Long> {
+
         final Logger logger = LoggerFactory.getLogger(CatAdoptionRepository.class);
 
         Long findByUsersChatId (Users users);

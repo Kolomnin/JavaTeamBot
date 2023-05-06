@@ -11,7 +11,9 @@ import java.util.Collection;
 
 @Service
 public class DogsInShelterService {
-    private final  Logger logger = LoggerFactory.getLogger(DogsInShelterService.class);
+
+    private final Logger logger = LoggerFactory.getLogger(DogsInShelterService.class);
+
     private final DogsInShelterRepository dogsInShelterRepository;
 
     public DogsInShelterService(DogsInShelterRepository dogsInShelterRepository) {

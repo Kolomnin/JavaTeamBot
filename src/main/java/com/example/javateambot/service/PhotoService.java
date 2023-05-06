@@ -30,7 +30,10 @@ import java.io.IOException;
  */
 @Service
 public class PhotoService {
+
     private final  Logger logger = LoggerFactory.getLogger(PhotoService.class);
+
+
 
     private TelegramBot telegramBot;
     private PhotoRepository photoRepository;
