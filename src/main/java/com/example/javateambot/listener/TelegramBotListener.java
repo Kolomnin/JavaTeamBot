@@ -82,6 +82,8 @@ public class TelegramBotListener implements UpdatesListener {
     public static final String HOW_TO_TAKE_DOG = "Как взять собаку из приюту";
     public static final String HOW_TO_TAKE_CAT = "Как взять кошку из приюту";
 
+    public static final String SEND_REPORT = "Отправить отчет";
+
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
@@ -192,7 +194,7 @@ public class TelegramBotListener implements UpdatesListener {
                                 case REASONS_FOR_REFUSAL1 ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.ReasonsForRefusal()));
 
-                                case "3" -> telegramBotService.sendReport(chatId);
+                                case SEND_REPORT -> telegramBotService.sendReport(chatId);
                                 case "Форма ежедневного отчёта" -> {
                                     telegramBot.execute(new SendMessage(chatId, "Форма ежедневного отчёта:" +
                                             "\n1. Фото животного" +

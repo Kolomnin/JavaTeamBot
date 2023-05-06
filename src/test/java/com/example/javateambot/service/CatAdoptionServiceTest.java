@@ -127,7 +127,7 @@ class CatAdoptionServiceTest {
         user.setFirstName("oleg");
         user.setChatId(23123421L);
 
-//        when(usersRepository.findByChatId(chatId)).thenReturn(user);
+        when(usersRepository.findByChatId(chatId)).thenReturn(user);
 
         usersRepository.save(user);
 
