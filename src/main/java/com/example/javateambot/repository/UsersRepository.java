@@ -16,7 +16,7 @@ import java.util.List;
 
 @Repository
 public interface UsersRepository extends JpaRepository<Users,Long> {
-    Logger logger = LoggerFactory.getLogger(UsersRepository.class);
+    final Logger logger = LoggerFactory.getLogger(UsersRepository.class);
     Users findById(long id);
 
     Users findByNumberUser(String numberUser);

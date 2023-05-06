@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 public class SaveReportAndContactData {
-    Logger logger = LoggerFactory.getLogger(SaveReportAndContactData.class);
+    private final  Logger logger = LoggerFactory.getLogger(SaveReportAndContactData.class);
 
 
    private ReportRepository reportRepository;

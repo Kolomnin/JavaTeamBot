@@ -2,6 +2,7 @@ package com.example.javateambot.entity;
 
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Класс является сущностью объекта User,
@@ -99,5 +100,18 @@ public class Users {
 
     public void setChatId(Long chatId) {
         this.chatId = chatId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Users users = (Users) o;
+        return idUser == users.idUser && Objects.equals(firstName, users.firstName) && Objects.equals(lastName, users.lastName) && Objects.equals(numberUser, users.numberUser) && Objects.equals(chatId, users.chatId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idUser, firstName, lastName, numberUser, chatId);
     }
 }

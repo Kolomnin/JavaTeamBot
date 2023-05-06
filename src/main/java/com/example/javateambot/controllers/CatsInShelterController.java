@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("catsInShelter")
 public class CatsInShelterController {
-    Logger logger = LoggerFactory.getLogger(CatsInShelterController.class);
+    private final Logger logger = LoggerFactory.getLogger(CatsInShelterController.class);
 
     private final CatsInShelterService catsInShelterService;
 

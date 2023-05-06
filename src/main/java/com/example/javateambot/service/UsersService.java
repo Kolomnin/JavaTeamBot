@@ -13,7 +13,7 @@ import java.util.Collection;
 
 @Service
 public class UsersService {
-    Logger logger = LoggerFactory.getLogger(UsersService.class);
+    private final Logger logger = LoggerFactory.getLogger(UsersService.class);
     private final UsersRepository usersRepository;
 
     private TelegramBot telegramBot;

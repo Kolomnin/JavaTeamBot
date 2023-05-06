@@ -23,7 +23,7 @@ import java.util.Objects;
 
 @Service
 public class DogAdoptionService {
-    Logger logger = LoggerFactory.getLogger(DogAdoptionService.class);
+    private final  Logger logger = LoggerFactory.getLogger(DogAdoptionService.class);
 
     private DogsInShelterRepository dogsInShelterRepository;
 

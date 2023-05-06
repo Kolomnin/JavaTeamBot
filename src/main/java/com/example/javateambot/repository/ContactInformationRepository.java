@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContactInformationRepository extends JpaRepository<ContactInformation,Long> {
-    Logger logger = LoggerFactory.getLogger(ContactInformationRepository.class);
+    final Logger logger = LoggerFactory.getLogger(ContactInformationRepository.class);
 }

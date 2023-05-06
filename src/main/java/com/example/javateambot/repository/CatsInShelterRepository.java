@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CatsInShelterRepository extends JpaRepository<CatsInShelter, Long> {
-    Logger logger = LoggerFactory.getLogger(CatsInShelterRepository.class);
+     final Logger logger = LoggerFactory.getLogger(CatsInShelterRepository.class);
 
     CatsInShelter findByNameCat(String name);
 }

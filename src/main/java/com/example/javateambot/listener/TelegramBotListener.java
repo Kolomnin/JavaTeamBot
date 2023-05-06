@@ -1,13 +1,10 @@
 package com.example.javateambot.listener;
 
 
-import com.example.javateambot.controllers.UsersController;
 import com.example.javateambot.repository.*;
 import com.example.javateambot.service.*;
 
 
-
-import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 
 import com.pengrad.telegrambot.TelegramBot;
@@ -18,7 +15,6 @@ import com.pengrad.telegrambot.request.SendMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -73,18 +69,18 @@ public class TelegramBotListener implements UpdatesListener {
     public static final String INFO_ABOUT_DOG_HANDLER = "список кинологов";
     public static final String REASONS_FOR_REFUSAL = "список причин для отказа";
 
-    public static final String INFO_ABOUT_SHELTER1 = "Информация о приюте для кота";
-    public static final String WORK_SCHEDULE1 = "Расписание работы для кота";
-    public static final String SAFETY_RECOMMENDATIONS1 = "Рекомендации по ТБ для кота";
     public static final String RULES_FOR_DATING_For_Cat = "Правила знакомства c котом";
     public static final String LIST_OF_DOCUMENTS1 = "Список документов для котаа";
     public static final String RECOMMENDATIONS_FOR_TRANSPORTATION1 = "кота транспортировка";
     public static final String HOME_IMPROVEMENT_FOR_PUPPY1 = "дома для кота";
-    public static final String HOME_IMPROVEMENT_FOR_ADULT_DOG1 = "дома для взрослого кота";
-    public static final String HOME_IMPROVEMENT_FOR_DOG_WITH_DISABILITIES1 = "дома для кота с ограничениями";
-    public static final String TIPS_FROM_DOG_HANDLER1 = "советы кинолога для кота";
-    public static final String INFO_ABOUT_DOG_HANDLER1 = "список кинологов для кота";
+    public static final String HOME_IMPROVEMENT_FOR_ADULT_CAT = "дома для взрослого кота";
+    public static final String HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES1 = "дома для кота с ограничениями";
+    public static final String TIPS_FROM_CAT_HANDLER1 = "советы кинолога для кота";
+    public static final String INFO_ABOUT_CAT_HANDLER1 = "список кинологов для кота";
     public static final String REASONS_FOR_REFUSAL1 = "список причин для отказа для кота";
+    public static final String SHELTER_INFO_MENU = "Меню для информации о приюте";
+    public static final String HOW_TO_TAKE_DOG = "Как взять собаку из приюту";
+    public static final String HOW_TO_TAKE_CAT = "Как взять кошку из приюту";
 
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
@@ -125,8 +121,7 @@ public class TelegramBotListener implements UpdatesListener {
             updates.forEach(update -> {
 
 
-                        logger.info("Processing update: {}", update);
-                        //тут две кнопки приют кошки или собаки если
+
 
                logger.info("Processing update: {}", update);
                //тут две кнопки приют кошки или собаки если
@@ -150,7 +145,7 @@ public class TelegramBotListener implements UpdatesListener {
 
                             switch (data) {
 
-                                case "1" -> telegramBotService.shelterInfo(chatId);
+                                case SHELTER_INFO_MENU -> telegramBotService.shelterInfo(chatId);
                                 case INFO_ABOUT_SHELTER ->
                                         telegramBot.execute(new SendMessage(chatId, telegramDogService.descriptionOfShelter()));
                                 case WORK_SCHEDULE ->
@@ -158,7 +153,7 @@ public class TelegramBotListener implements UpdatesListener {
                                 case SAFETY_RECOMMENDATIONS ->
                                         telegramBot.execute(new SendMessage(chatId, telegramDogService.safetyRecommendations()));
 
-                                case "2" -> telegramBotService.takeDogFromShelter(chatId);
+                                case HOW_TO_TAKE_DOG -> telegramBotService.takeDogFromShelter(chatId);
                                 case RULES_FOR_DATING ->
                                         telegramBot.execute(new SendMessage(chatId, telegramDogService.rulesForDating()));
                                 case LIST_OF_DOCUMENTS ->
@@ -178,7 +173,6 @@ public class TelegramBotListener implements UpdatesListener {
                                 case REASONS_FOR_REFUSAL ->
                                         telegramBot.execute(new SendMessage(chatId, telegramDogService.ReasonsForRefusal()));
 
-//                                case "4" -> telegramBotService.takeCatFromShelter1(chatId);
                                 case RULES_FOR_DATING_For_Cat ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.rulesForDating()));
                                 case LIST_OF_DOCUMENTS1 ->
@@ -187,13 +181,13 @@ public class TelegramBotListener implements UpdatesListener {
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.recommendationsForTransportation()));
                                 case HOME_IMPROVEMENT_FOR_PUPPY1 ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.homeImprovementForPuppy()));
-                                case HOME_IMPROVEMENT_FOR_ADULT_DOG1 ->
+                                case HOME_IMPROVEMENT_FOR_ADULT_CAT ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.homeImprovementForAdultDog()));
-                                case HOME_IMPROVEMENT_FOR_DOG_WITH_DISABILITIES1 ->
+                                case HOME_IMPROVEMENT_FOR_CAT_WITH_DISABILITIES1 ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.homeImprovementForDogWithDisabilities()));
-                                case TIPS_FROM_DOG_HANDLER1 ->
+                                case TIPS_FROM_CAT_HANDLER1 ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.TipsFromDogHandler()));
-                                case INFO_ABOUT_DOG_HANDLER1 ->
+                                case INFO_ABOUT_CAT_HANDLER1 ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.InfoAboutDogHandler()));
                                 case REASONS_FOR_REFUSAL1 ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.ReasonsForRefusal()));
@@ -222,7 +216,8 @@ public class TelegramBotListener implements UpdatesListener {
                                             "79290463013\n" +
                                             "Или Напишите данные в одну строчку через один пробел"));
 
-                                }case "кошка" -> {
+                                }
+                                case "кошка" -> {
                                     telegramBotService.catInfo(chatId);
 
                                 }

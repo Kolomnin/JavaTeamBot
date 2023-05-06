@@ -22,7 +22,7 @@ import java.util.Objects;
 
 @Service
 public class CatAdoptionService {
-    Logger logger = LoggerFactory.getLogger(CatAdoptionService.class);
+    private final Logger logger = LoggerFactory.getLogger(CatAdoptionService.class);
 
     private CatsInShelterRepository catsInShelterRepository;
 
