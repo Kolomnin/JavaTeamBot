@@ -1,27 +1,150 @@
 package com.example.javateambot.service;
 
-import com.example.javateambot.entity.AdoptedDogs;
-import com.example.javateambot.entity.Users;
+import com.example.javateambot.entity.*;
+import com.example.javateambot.repository.DogAdoptionRepository;
+import com.example.javateambot.repository.DogsInShelterRepository;
 import com.example.javateambot.repository.UsersRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class DogAdoptionServiceTest {
 
-    private final UsersRepository repository = mock(UsersRepository.class);
+    @Mock
+    private DogsInShelterRepository dogsInShelterRepository;
 
-    @MockBean
-    AdoptedDogs adoptedDogs;
+    @Mock
+    private UsersRepository usersRepository;
 
+    @Mock
+    private DogAdoptionRepository dogAdoptionRepository;
+
+    @InjectMocks
+    private DogAdoptionService dogAdoptionService;
+
+    private AdoptedDogs adoptedDogs;
+
+    @BeforeEach
+    void setUp() {
+        adoptedDogs = new AdoptedDogs();
+    }
 
     @Test
-    void adoptionDog2() {
+    void testAdoptionCat2() {
+        Long userId = 1L;
+        Long catId = 1L;
+        DogsInShelter dogs = new DogsInShelter();
+        dogs.setNameDog("biba");
+        dogs.setAge(2);
+        dogs.setIdDog(2);
+        Users user = new Users();
+        user.setIdUser(1);
+        user.setNumberUser("222");
+        user.setFirstName("oleg");
+        when(dogsInShelterRepository.findById(catId)).thenReturn(Optional.of(dogs));
+        when(usersRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        AdoptedDogs result = dogAdoptionService.adoptionDog2(userId, catId, adoptedDogs);
+
+//        verify(dogsInShelterRepository, times(1)).findById(catId);
+//        verify(usersRepository, times(1)).findById(userId);
+//        verify(dogAdoptionRepository, times(1)).save(adoptedDogs);
+
+        assertNotNull(result);
+        assertEquals(LocalDate.now().plusDays(30), result.getLastDateProbationPeriod());
+    }
+
+    @Test
+    public void testAdoptionCat2_ValidUserAndCatIDs_ShouldReturnAdoptedCat() {
+        // Arrange
+        Long userID = 1L;
+        Long dogId = 1L;
+        DogsInShelter dogs = new DogsInShelter();
+        dogs.setNameDog("biba");
+        dogs.setAge(2);
+        dogs.setIdDog(1);
+        Users user = new Users();
+        user.setIdUser(1);
+        user.setNumberUser("222");
+        user.setFirstName("oleg");
+        AdoptedDogs adoptedDogs2 = new AdoptedDogs();
+        when(dogsInShelterRepository.findById(dogId)).thenReturn(Optional.of(dogs));
+        when(usersRepository.findById(userID)).thenReturn(Optional.of(user));
+        when(dogAdoptionRepository.save(Mockito.any())).thenReturn(adoptedDogs2);
+        // Act
+        AdoptedDogs result = dogAdoptionService.adoptionDog2(userID, dogId, adoptedDogs2);
+        // Assert
+        assertNotNull(result);
+        assertEquals(userID, result.getUsers().getIdUser());
+        assertEquals(dogId, result.getDogs().getIdDog());
+        assertNotNull(result.getLastDateProbationPeriod());
+    }
+
+    @Test
+    public void testAdoptionCat2_InvalidUserID_ShouldThrowException() {
+        // Arrange
+        Long userID = 1L;
+        Long catId = 1L;
+
+        DogsInShelter dogs = new DogsInShelter();
+        dogs.setNameDog("biba");
+        dogs.setAge(2);
+        dogs.setIdDog(1);
+        AdoptedCats adoptedCats = new AdoptedCats();
+        Mockito.when(dogsInShelterRepository.findById(catId)).thenReturn(Optional.of(dogs));
+        Mockito.when(usersRepository.findById(userID)).thenReturn(Optional.empty());
+        // Act and Assert
+        assertThrows(NoSuchElementException.class, () -> dogAdoptionService.adoptionDog2(userID, catId, adoptedDogs));
+
+    }
+
+    @Test
+    void testCheckChatIdWhenChatIdIsFound() {
+
+        CatsInShelter catsInShelter = mock(CatsInShelter.class);
+
+        Long chatId = 23123421L;
+        Users user = new Users();
+        user.setIdUser(1);
+        user.setNumberUser("222");
+        user.setFirstName("oleg");
+        user.setChatId(23123421L);
+
+        when(usersRepository.findByChatId(chatId)).thenReturn(user);
+
+        usersRepository.save(user);
+
+
+        boolean result = dogAdoptionService.checkChatId(chatId);
+
+        verify(usersRepository, times(1)).findByChatId(chatId);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void testCheckChatIdWhenChatIdIsNotFound() {
+        Long chatId = 1L;
+
+        when(usersRepository.findByChatId(chatId)).thenReturn(null);
+
+        boolean result = dogAdoptionService.checkChatId(chatId);
+
+        verify(usersRepository, times(1)).findByChatId(chatId);
+
+        assertFalse(result);
     }
 
 //    @Test
@@ -102,8 +225,8 @@ class DogAdoptionServiceTest {
 //        // Arrange
 //        Long userID = 1L;
 //        Long animalId = 2L;
-//        AnimalsInHouse animalsInHouse = new AnimalsInHouse();
-//        animalsInHouse.setName("Buddy");
+//        AdoptedCats animalsInHouse = new AdoptedCats();
+//        animalsInHouse.se("Buddy");
 //        animalsInHouse.setAge(2);
 //        animalsInHouse.setSpecies("Dog");
 //

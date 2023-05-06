@@ -39,7 +39,7 @@ public class TelegramBotService {
 
     public InlineKeyboardButton saveInfo() {  // метод записи данных
         InlineKeyboardButton button = new InlineKeyboardButton("записать данные");
-        button.callbackData("записать данные");
+        button.callbackData(WRITE_DOWN_CONTACT_DATA);
         return button;
     }
 
@@ -82,9 +82,9 @@ public class TelegramBotService {
         SendMessage message = new SendMessage(chatId, "Приветствует в нашем приюте");
 
         InlineKeyboardButton button1 = new InlineKeyboardButton("Форма ежедневного отчёта");
-        button1.callbackData("Форма ежедневного отчёта");
+        button1.callbackData(FORM_DAILY_REPORT);
         InlineKeyboardButton button2 = new InlineKeyboardButton("Прислать ежедневный отчёт");
-        button2.callbackData("принимаем отчет");
+        button2.callbackData(RECIEVE_REPORT);
         InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
         keyboard.addRow(button1);
         keyboard.addRow(button2);
@@ -101,13 +101,13 @@ public class TelegramBotService {
         InlineKeyboardButton button2 = new InlineKeyboardButton("Как взять собаку из приюта?");
         button2.callbackData(HOW_TO_TAKE_DOG);
         InlineKeyboardButton button3 = new InlineKeyboardButton("Прислать отчет о питомце");
-        button3.callbackData("3");
+        button3.callbackData(SEND_REPORT);
         InlineKeyboardButton button4 = new InlineKeyboardButton("Позвать волонтера");
-        button4.callbackData("позвать волонтера");
+        button4.callbackData(CALL_VOLUNTEER);
         InlineKeyboardButton button5 = new InlineKeyboardButton("Как взять кошку из приюта?");
         button5.callbackData(HOW_TO_TAKE_CAT);
         InlineKeyboardButton button6 = new InlineKeyboardButton("Записать данные");
-        button6.callbackData("6");
+        button6.callbackData(WRITE_DOWN_CONTACT_DATA);
         InlineKeyboardMarkup keyboard = new InlineKeyboardMarkup();
         keyboard.addRow(button1,button3);
         keyboard.addRow(button2,button4);
@@ -178,12 +178,12 @@ public class TelegramBotService {
 
     public InlineKeyboardButton helpVolunteers() { // метод позвать волонтера
         InlineKeyboardButton button = new InlineKeyboardButton("Позвать волонтера");
-        button.callbackData("позвать волонтера");
+        button.callbackData(CALL_VOLUNTEER);
         return button;
     }
     public InlineKeyboardButton cats() { // метод кнопка кошка
         InlineKeyboardButton button = new InlineKeyboardButton("Как взять кошку из приюта, советы");
-        button.callbackData("кошка");
+        button.callbackData(HOW_TAKE_CAT);
         return button;
     }
 

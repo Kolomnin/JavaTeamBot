@@ -82,6 +82,16 @@ public class TelegramBotListener implements UpdatesListener {
     public static final String HOW_TO_TAKE_DOG = "Как взять собаку из приюту";
     public static final String HOW_TO_TAKE_CAT = "Как взять кошку из приюту";
 
+    public static final String SEND_REPORT = "Отправить отчет";
+    public static final String FORM_DAILY_REPORT = "Форма ежедневного отчета";
+    public static final String CALL_VOLUNTEER = "Зовем волонетра";
+    public static final String RECIEVE_REPORT = "Получить отчет";
+    public static final String WRITE_DOWN_CONTACT_DATA = "записать контактные данные";
+    public static final String HOW_TAKE_CAT = "Как взять кошку из приюта";
+    public static final String START = "/start";
+
+
+
 
     private final Logger logger = LoggerFactory.getLogger(TelegramBotListener.class);
 
@@ -192,32 +202,22 @@ public class TelegramBotListener implements UpdatesListener {
                                 case REASONS_FOR_REFUSAL1 ->
                                         telegramBot.execute(new SendMessage(chatId, telegramCatService.ReasonsForRefusal()));
 
-                                case "3" -> telegramBotService.sendReport(chatId);
-                                case "Форма ежедневного отчёта" -> {
-                                    telegramBot.execute(new SendMessage(chatId, "Форма ежедневного отчёта:" +
-                                            "\n1. Фото животного" +
-                                            "\n2. Рацион животного" +
-                                            "\n3. Общее самочувствие и привыкание к новому месту " +
-                                            "\n4. Изменение в поведении"));
+                                case SEND_REPORT -> telegramBotService.sendReport(chatId);
+                                case FORM_DAILY_REPORT -> {
+                                    telegramBot.execute(new SendMessage(chatId, telegramDogService.formDayReport()));
                                     telegramBotService.sendReport(chatId);
                                 }
-                                case "аудентификация" ->
-                                        telegramBot.execute(new SendMessage(chatId, "Введите номер телефона для подтверждения личности"));
 
-                                case "принимаем отчет" ->
+                                case RECIEVE_REPORT ->
                                         telegramBot.execute(new SendMessage(chatId, "Вышлите фото животного"));
 
-                                case "позвать волонтера" -> telegramBot.execute(new SendMessage(chatId, "Зовем волонтера"));
+                                case CALL_VOLUNTEER -> telegramBot.execute(new SendMessage(chatId, "Зовем волонтера"));
 
-                                case "записать данные" -> {
-                                    telegramBot.execute(new SendMessage(chatId, "Необходимо ввести три поля: имя, фамилию и номер телефона. В формате:\n" +
-                                            "Иван\n" +
-                                            "Петров\n" +
-                                            "79290463013\n" +
-                                            "Или Напишите данные в одну строчку через один пробел"));
+                                case WRITE_DOWN_CONTACT_DATA -> {
+                                    telegramBot.execute(new SendMessage(chatId, telegramDogService.writeContactData()));
 
                                 }
-                                case "кошка" -> {
+                                case HOW_TAKE_CAT -> {
                                     telegramBotService.catInfo(chatId);
 
                                 }
@@ -227,7 +227,7 @@ public class TelegramBotListener implements UpdatesListener {
                     if (update.message() != null) {
                     chatId = update.message().chat().id();
                     String message = update.message().text();
-                    if ("/start".equals(message)) {
+                    if (START.equals(message)) {
                         telegramBotService.firstMenu(chatId);
                     }
                 }
